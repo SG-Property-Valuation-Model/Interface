@@ -4,11 +4,16 @@ Spyder Editor
 
 This is a temporary script file.
 """
-
+import pandas as pd
+import numpy as np
 import dash 
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 import dash_html_components as html
+
+import listing
+from dash.exceptions import PreventUpdate
+
 
 ### Declaring Stylesheets for Layout ##################################
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css', dbc.themes.SANDSTONE]
@@ -33,7 +38,7 @@ form_section = html.Div([
                                                     addon_type = "prepend", 
                                                     #style = {'font-size': 'large'}
                                                     ), 
-                                dbc.Input(style = {'font-size': 'large', 'text-align': 'center'})], 
+                                dbc.Input(id = 'postal-input', style = {'font-size': 'large', 'text-align': 'center'})],
                                 size="lg", 
                                 style = {'width': '-webkit-fill-available'}), 
                 #className="mr-3", #style = {'width': '50%'}
@@ -48,7 +53,7 @@ form_section = html.Div([
                                                  label = "Property Type", 
                                                  style = {'padding-left': 30},
                                                  addon_type = "prepend"), 
-                                dbc.Input(id="property-type-dropdown-input", style = {'font-size': 'large', 'padding-left': 20})], 
+                                dbc.Input(id="property-type-dropdown-input", style = {'font-size': 'large', 'padding-left': 20})],
                                 size="lg", 
                                 style = {'width': '-webkit-fill-available'}), 
                 #className="mr-3", #style = {'width': '50%'}
@@ -67,7 +72,7 @@ form_section = html.Div([
                                                     addon_type = "prepend", 
                                                     #style = {'font-size': 'large'}
                                                     ), 
-                                dbc.Input(style = {'font-size': 'large', 'text-align': 'center'})], 
+                                dbc.Input(id = 'floor-num-input', style = {'font-size': 'large', 'text-align': 'center'})],
                                 size="lg", 
                                 style = {'width': '-webkit-fill-available'}), 
                 #className="mr-3", #style = {'width': '50%'}
@@ -81,7 +86,7 @@ form_section = html.Div([
                                                     addon_type = "prepend", 
                                                     #style = {'font-size': 'large'}
                                                     ), 
-                                dbc.Input(style = {'font-size': 'large', 'text-align': 'center'}), 
+                                dbc.Input(id = 'floor-area-input', style = {'font-size': 'large', 'text-align': 'center'}),
                                 dbc.InputGroupAddon("SQM", addon_type="append")], 
                                 size="lg", 
                                 style = {'width': '-webkit-fill-available'}), 
@@ -96,7 +101,7 @@ form_section = html.Div([
                                                     addon_type = "prepend", 
                                                     #style = {'font-size': 'large'}
                                                     ), 
-                                dbc.Input(style = {'font-size': 'large', 'text-align': 'center'}), 
+                                dbc.Input(id = 'lease-input', style = {'font-size': 'large', 'text-align': 'center'}),
                                 dbc.InputGroupAddon("Years", addon_type="append")], 
                                 size="lg", 
                                 style = {'width': '-webkit-fill-available'}), 
@@ -107,7 +112,7 @@ form_section = html.Div([
         
         # Submit button for form
         dbc.Col(
-            dbc.Button("Submit", 
+            dbc.Button("Submit", id='submit-val', 
                        color = 'secondary',
                        style = {'padding-left': 30, 'padding-right': 30, 'color': 'orange'}
                       
@@ -147,7 +152,7 @@ def derived_feature(logo, title, description):
     
 
 listing_feature = [
-    dbc.CardHeader("Estimated Valuation: " +  '$1,000,000', style = {'font-size': 'x-large', 'padding': 10, 'padding-left': 20}), 
+    dbc.CardHeader(children="", id='predicted-price', style = {'font-size': 'x-large', 'padding': 10, 'padding-left': 20}), 
     dbc.CardBody([
         dbc.Row([
             derived_feature('train.png', 'Clementi . Kent Ridge', "Train stations within 1km"),
@@ -171,7 +176,8 @@ overview = html.Div([
         className = 'breadcrumb', 
         style = {'height': 40, 'font-size': 'large', 'background-color': 'white', 'border-color': 'white', 'padding-left': 0}
     ),
-    html.H1('Halvernia Heights', style = {'font-wieght': 'bold', 'font-size': 'xxx-large'}), 
+    html.H1(children="Enter your property's details!", id='building-name', style = {'font-wieght': 'bold', 'font-size': 'xxx-large'}), 
+    html.Div(children="", id='predicted-price-psm', style={'fontSize': 20}),
     html.Ol(
         [
             html.Li("Anderson Cross", style = {'padding-right': 5}, className = 'breadcrumb-item active'),
@@ -282,7 +288,7 @@ app.layout = html.Div([
 @app.callback(dash.dependencies.Output("property-type-dropdown-input", "value"),
              [dash.dependencies.Input("property-dropdown-ec", "n_clicks"),
               dash.dependencies.Input("property-dropdown-condo", "n_clicks"),
-              dash.dependencies.Input("property-dropdown-apt", "n_clicks"),],)
+              dash.dependencies.Input("property-dropdown-apt", "n_clicks")])
 
 def property_input_dropdown(n1, n2, n_clear):
     ctx = dash.callback_context
@@ -300,6 +306,41 @@ def property_input_dropdown(n1, n2, n_clear):
         return "Apartment"
     else:
         return ""
+
+### Callbacks from the input component -- output predicted price for the listing
+@app.callback(
+    [dash.dependencies.Output("predicted-price-psm", 'children'),
+    dash.dependencies.Output("predicted-price", 'children'),
+    dash.dependencies.Output("building-name", 'children')],
+    dash.dependencies.Input('submit-val', 'n_clicks'),
+    [dash.dependencies.State("postal-input", "value"),
+    dash.dependencies.State("property-type-dropdown-input", "value"),
+    dash.dependencies.State("floor-num-input", "value"),
+    dash.dependencies.State("floor-area-input", "value"),
+    dash.dependencies.State("lease-input", "value")])
+
+def display_predicted_price(n_clicks, postal_input, property_type, floor_num, floor_area, lease):
+    if n_clicks is None or postal_input == '' or property_type == '' or floor_num == '' or floor_area == '' or lease == '':
+        print("NOT CALLED BACK")
+        raise PreventUpdate
+    else:
+        property = listing.Listing(postal_input, property_type, floor_num, floor_area, lease)
+        # Read in dataframes
+        sch = pd.read_csv('datasets/primary_sch_gdf.csv')
+        area_df = pd.read_csv('datasets/area_centroid.csv')
+        modelling = pd.read_csv('datasets/modelling_dataset.csv')
+        police_centre = pd.read_csv('datasets/police_centre_gdf.csv')
+        avg_cases_by_npc = pd.read_csv('datasets/average_cases_by_npc.csv')
+        cols = list(modelling.columns)
+        cols.remove('Unit Price ($ PSM)')
+
+        price_unit, price_psm = property.pred_price('modelling/', cols, area_df, sch, police_centre, avg_cases_by_npc)
+        # Outputs to be displayed on dash
+        price_psm_output = "Predicted price per sqm: ${:,.2f}".format(price_psm)
+        price_output =  "Predicted price: ${:,.2f}".format(price_unit)
+        building = property.get_building()
+        building_output = "Building Name: " + building
+    return [price_psm_output, price_output, building_output]
 
 if __name__ == '__main__': 
     app.run_server(debug = False)
