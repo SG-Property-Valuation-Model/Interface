@@ -1,10 +1,12 @@
+'''
+To get longitude, latitude, building name, planning area and planning region of property based on postal code
+'''
 import pandas as pd
 import numpy as np
 import json, math, os, re, requests, time
 import geopandas as gp
 from shapely import wkt
 from sklearn.neighbors import BallTree
-
 
 # Using requests to call geographic information from OneMap API
 def get_info(searchVal, returnGeom=True, getAddr=True, pageNum=1):
@@ -23,7 +25,7 @@ def get_info(searchVal, returnGeom=True, getAddr=True, pageNum=1):
     #print(url)
     return json.loads(requests.get(url).content.decode("UTF-8"))['results']
 
-# Get (long, lat) for unique postal codes only to reduce runtime
+# Get (long, lat, building name) for unique postal codes only to reduce runtime
 def postal_search(postal_code):
     response = get_info(searchVal=postal_code)[0]
     lon = response['LONGITUDE']

@@ -1,3 +1,8 @@
+'''
+To test model and scaler saving
+Ridge model is a placeholder for now; needs to be replaced by final model
+'''
+
 import pandas as pd
 import numpy as np
 import os
@@ -6,7 +11,7 @@ from sklearn.linear_model import Ridge
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import joblib
 
-df = pd.read_csv('datasets/final_dataset.csv')
+df = pd.read_csv('../datasets/final_dataset.csv')
 df['Sale Date'] = pd.to_datetime(df['Sale Date'])
 df = pd.concat([df, pd.get_dummies(df.pop('Property Type'))], axis=1)
 #df['Time Period'] = df['Sale Date'].apply(lambda x: (x.year - df['Sale Date'][0].year)*12 + (x.month - df['Sale Date'][0].month))
@@ -62,9 +67,9 @@ X_test_df = pd.concat([pd.DataFrame(X_test_std, columns=standardScale_vars),
 regressor = Ridge(alpha = 1.10, fit_intercept = True)
 regressor.fit(X_train_df, y_train)
 
-joblib.dump(regressor, 'modelling/model_test.pkl')
-joblib.dump(s_scaler, 'modelling/standard_scaler.bin')
-joblib.dump(mm_scaler, 'modelling/mm_scaler.bin')
+joblib.dump(regressor, 'model_test.pkl')
+joblib.dump(s_scaler, 'standard_scaler.bin')
+joblib.dump(mm_scaler, 'mm_scaler.bin')
 '''
 
 # Load the model and scalers from the file
