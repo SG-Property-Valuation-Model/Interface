@@ -1,6 +1,6 @@
 '''
-To get the distance to the nearest school within 2km radius of the property
-To get the distance to the nearest police cntre within 5km radius of the property
+To get the distance to the nearest school within 2km radius (can change distance) of the property
+To get the distance to the nearest police centre within 10km radius (can change distance) of the property
 '''
 import pandas as pd
 import numpy as np
