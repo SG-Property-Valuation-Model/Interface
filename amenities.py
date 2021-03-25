@@ -12,29 +12,30 @@ import os
 import warnings
 warnings.filterwarnings("ignore")
 
-def count_sch(src_points, candidates, rad):
-    """Find schools within the stated radius"""
+def count_amenity(src_points, candidates, rad):
+    """Find amenity being searched within the stated radius
+    amenity: school, train station, police centre
+    """
     # Create tree from the candidate points
     tree = BallTree(candidates, leaf_size=15, metric='haversine')
 
-    # Returns number of schools within radius
-    # Get distance of nearest school
-    #print(tree.query(src_points, k=1))
-    dist, ind = tree.query(src_points, k=1)
+    # Get distance and index of nearest amenity
+    dist, nearest_ind = tree.query(src_points, k=1)
 
     dist = dist * 6371000
-    # Count schools within radius
+    # Count number of amenity within radius
     count = tree.query_radius(src_points, r=rad, count_only=True)
-    return count, dist.ravel(), ind
+    # Get indexes of all the amenity within radius
+    all_ind = tree.query_radius(src_points, r=rad)
+
+    return count, dist.ravel(), nearest_ind, all_ind
 
     # Return the number of schools within the distance for each apartment wrt sale date
 
 
 def nearest_sch(property_geom, sch_gdf, dist=2000): # default distance is 2km
     property_copy = pd.DataFrame(data = {'geometry':property_geom})
-    #property_copy = property.copy().reset_index(drop=True)
-    #property_copy = gp.GeoDataFrame(
-        #property_copy, geometry=property_copy.geometry)
+
     sch_copy = sch_gdf.copy().reset_index(drop=True)
     sch_copy['geometry'] = sch_copy['geometry'].apply(wkt.loads)
     sch_copy = gp.GeoDataFrame(sch_copy, geometry='geometry')
@@ -53,19 +54,18 @@ def nearest_sch(property_geom, sch_gdf, dist=2000): # default distance is 2km
     sch_copy['adv_close_date'] = pd.to_datetime(sch_copy['closed_date']).dt.date - pd.DateOffset(years=1)
     property_copy['Sale Date'] = pd.datetime.now()
 
-    results = property_copy.apply(lambda x: count_sch([x['radians']], np.stack(
+    results = property_copy.apply(lambda x: count_amenity([x['radians']], np.stack(
         sch_copy[(sch_copy['adv_open_date'] <= x['Sale Date']) & (sch_copy['adv_close_date'] >= x['Sale Date'])][
             'radians']), radius), axis=1)
 
-    # count: only if need to get number of schools within dist
-    count, nearest_dist, index = zip(*results)
+    count, nearest_dist, nearest_index, all_index = zip(*results)
 
-    index = index[0][0]
+    index = nearest_index[0][0]
     # get distance to the nearest school
     nearest_dist = nearest_dist[0][0]
     # only if need to get nearest school's name
-    # nearest_school =  sch_copy.loc[index].Name
-    return nearest_dist
+    nearest_pri_sch =  str(sch_copy.loc[index].Name)
+    return nearest_pri_sch, nearest_dist
 
 def nearest_police_centre(property_geom, police_centre, dist = 10000):
     property_copy = pd.DataFrame(data = {'geometry':property_geom})
@@ -81,23 +81,50 @@ def nearest_police_centre(property_geom, police_centre, dist = 10000):
     property_copy['radians'] = property_copy[property_geom_col].apply(
         lambda geom: [geom.y * np.pi / 180, geom.x * np.pi / 180])
     police_copy['radians'] = police_copy[police_copy_geom_col].apply(lambda geom: [geom.y * np.pi / 180, geom.x * np.pi / 180])
-    results = property_copy.apply(lambda x: count_sch([x['radians']], np.stack(police_copy['radians']), radius), axis=1)
+    results = property_copy.apply(lambda x: count_amenity([x['radians']], np.stack(police_copy['radians']), radius), axis=1)
 
-    # count: only if need to get number of police centres within dist
-    count, nearest_dist, index = zip(*results)
-    index = index[0][0]
+    count, nearest_dist, nearest_index, all_index = zip(*results)
+    index = nearest_index[0][0]
     nearest_centre = str(police_copy.iloc[index]['Police Centre'].values[0]).replace(u'\xa0', u'')
 
-    return nearest_centre
+    return nearest_dist, nearest_centre
+
+def nearest_train(property_geom, train_gdf, dist = 1000):
+    property_copy = pd.DataFrame(data={'geometry': property_geom})
+    train_gdf_copy = train_gdf.copy().reset_index(drop=True)
+    train_gdf_copy['geometry'] = train_gdf_copy['geometry'].apply(wkt.loads)
+    earth_radius = 6371000  # meters
+    radius = dist / earth_radius
+
+    property_geom_col = property_copy.geometry.name
+    train_gdf_copy_geom_col = train_gdf_copy.geometry.name
+
+    property_copy['radians'] = property_copy[property_geom_col].apply(
+        lambda geom: [geom.y * np.pi / 180, geom.x * np.pi / 180])
+    train_gdf_copy['radians'] = train_gdf_copy[train_gdf_copy_geom_col].apply(lambda geom: [geom.y * np.pi / 180, geom.x * np.pi / 180])
+    results = property_copy.apply(lambda x: count_amenity([x['radians']], np.stack(train_gdf_copy['radians']), radius), axis=1)
+    count, nearest_dist, nearest_index, all_index = zip(*results)
+
+    index = nearest_index[0][0]
+    all_index = np.hstack(all_index).squeeze().tolist()
+    # all lines within radius
+    lines = set(train_gdf_copy.iloc[all_index]['COLOR'].values)
+    # all stations within radius
+    stations = set(train_gdf_copy.iloc[all_index]['STN_NAME'].values)
+    nearest_dist = nearest_dist[0][0]
+
+    return nearest_dist, lines, stations
 
 '''
 #Testing
 path = 'datasets/'
-get_geom = gp.points_from_xy([103.814673696844], [1.26681341314756]) # function get_geom in listing
+get_geom = gp.points_from_xy([103.814674], [1.266813]) # function get_geom in listing
 df = pd.DataFrame(data = {'geometry':get_geom})
 #df = pd.DataFrame(data=d)
 pri_sch = pd.read_csv(path + 'primary_sch_gdf.csv')
 print(nearest_sch(get_geom, pri_sch))
 police = pd.read_csv(path + 'police_centre_gdf.csv')
 print(nearest_police_centre(get_geom, police))
+train = pd.read_csv(path + 'train_gdf.csv')
+print(nearest_train(get_geom, train))
 '''
