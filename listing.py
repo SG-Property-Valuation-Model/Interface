@@ -1,9 +1,3 @@
-'''
-functions to get distance to nearest train station and nearest train line are still incomplete
-distance to station set as 0 for now
-nearest train line set as BLUE for now
-'''
-
 import pandas as pd
 import numpy as np
 import geopandas as gp
