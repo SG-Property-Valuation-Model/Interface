@@ -110,7 +110,6 @@ def nearest_train(property_geom, train_gdf, dist = 1000):
     all_index = np.hstack(all_index).squeeze().tolist()
     # all lines within radius
     lines = set(train_gdf_copy.iloc[all_index]['COLOR'].values)
-    print(lines)
     # all stations within radius
     stations = set(train_gdf_copy.iloc[all_index]['STN_NAME'].values)
     nearest_dist = nearest_dist[0][0]
