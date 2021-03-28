@@ -119,7 +119,7 @@ def nearest_train(property_geom, train_gdf, dist = 1000):
 '''
 #Testing
 path = 'datasets/'
-get_geom = gp.points_from_xy([103.814674], [1.266813]) # function get_geom in listing
+get_geom = gp.points_from_xy([103.878360066595], [1.37415222602816]) # function get_geom in listing
 df = pd.DataFrame(data = {'geometry':get_geom})
 #df = pd.DataFrame(data=d)
 pri_sch = pd.read_csv(path + 'primary_sch_gdf.csv')
@@ -127,5 +127,7 @@ print(nearest_sch(get_geom, pri_sch))
 police = pd.read_csv(path + 'police_centre_gdf.csv')
 print(nearest_police_centre(get_geom, police))
 train = pd.read_csv(path + 'train_gdf.csv')
-print(nearest_train(get_geom, train))
+print(nearest_train(get_geom, train)[0])
+print(nearest_train(get_geom, train)[1])
+print(nearest_train(get_geom, train)[2])
 '''

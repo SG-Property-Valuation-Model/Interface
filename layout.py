@@ -332,10 +332,11 @@ def display_predicted_price(n_clicks, postal_input, property_type, floor_num, fl
         modelling = pd.read_csv('datasets/modelling_dataset.csv')
         police_centre = pd.read_csv('datasets/police_centre_gdf.csv')
         avg_cases_by_npc = pd.read_csv('datasets/average_cases_by_npc.csv')
+        historical_postal_code_area = pd.read_csv('datasets/historical_postal_code_area.csv')
         cols = list(modelling.columns)
         cols.remove('Unit Price ($ PSM)')
 
-        price_unit, price_psm = property.pred_price('modelling/', cols, area_df, sch, train, police_centre, avg_cases_by_npc)
+        price_unit, price_psm = property.pred_price('modelling/', cols, historical_postal_code_area, area_df, sch, train, police_centre, avg_cases_by_npc)
         # Outputs to be displayed on dash
         price_psm_output = "Predicted price per sqm: ${:,.2f}".format(price_psm)
         price_output =  "Predicted price: ${:,.2f}".format(price_unit)
