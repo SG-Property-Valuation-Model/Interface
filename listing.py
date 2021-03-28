@@ -40,13 +40,23 @@ class Listing:
         return geometry
 
     # Get planning area property is in
-    def get_planning_area(self, area_centroid):
-        planning_area = area_region(self.postal, area_centroid)[0]
+    def get_planning_area(self, historical_df, area_centroid):
+        historical_df['Postal Code'] = historical_df['Postal Code'].apply(lambda x: str(x).zfill(6))
+        # Postal code is in our dataset
+        if self.postal in historical_df['Postal Code'].tolist():
+            planning_area = historical_df[historical_df['Postal Code'] == self.postal]['Planning Area'].values[0]
+        else:
+            planning_area = area_region(self.postal, area_centroid)[0]
         return planning_area
 
     # Get planning region property is in
-    def get_planning_region(self, area_centroid):
-        planning_region = area_region(self.postal, area_centroid)[1]
+    def get_planning_region(self, historical_df, area_centroid):
+        historical_df['Postal Code'] = historical_df['Postal Code'].apply(lambda x: str(x).zfill(6))
+        # Postal code is in our dataset
+        if self.postal in historical_df['Postal Code'].tolist():
+            planning_region = historical_df[historical_df['Postal Code'] == self.postal]['Planning Region'].values[0]
+        else:
+            planning_region = area_region(self.postal, area_centroid)[1]
         return planning_region
 
     # Get nearest police centre to property
@@ -98,7 +108,7 @@ class Listing:
         return name
 
     # create dataframe containing property details to be used for prediction
-    def convert_to_df(self, main_df_col, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc): # parse in list of training df col because predict df needs to be in same order
+    def convert_to_df(self, main_df_col, historical_postal_code_area, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc): # parse in list of training df col because predict df needs to be in same order
         # Create dataframe for property for prediction
         df = pd.DataFrame(columns=main_df_col, index=range(1))
         df['Area (SQM)'] = self.floor_area
@@ -110,8 +120,8 @@ class Listing:
         df['Remaining Lease'] = self.remaining_lease
 
         # if the column(s) is not the base dummy column that got dropped
-        if self.get_planning_area(area_centroids) in main_df_col:
-            df[self.get_planning_area(area_centroids)] = 1
+        if self.get_planning_area(historical_postal_code_area, area_centroids) in main_df_col:
+            df[self.get_planning_area(historical_postal_code_area, area_centroids)] = 1
         if self.property_type in main_df_col:
             df[self.property_type] = 1
         # property can have more than 1 line within 1km radius
@@ -124,8 +134,8 @@ class Listing:
         df = df.fillna(0)
         return df
 
-    def pred_psm(self, path, main_df_col, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc):
-        property_df = self.convert_to_df(main_df_col, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc)
+    def pred_psm(self, path, main_df_col, historical_postal_code_area, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc):
+        property_df = self.convert_to_df(main_df_col, historical_postal_code_area, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc)
         s_scaler = joblib.load(path + 'standard_scaler.bin')
         mm_scaler = joblib.load(path + 'mm_scaler.bin')
         standardScale_vars = ['Area (SQM)',
@@ -148,38 +158,41 @@ class Listing:
         return prediction
 
 
-    def pred_price(self, path, main_df_col, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc):
+    def pred_price(self, path, main_df_col, historical_postal_code_area, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc):
         '''
         :param path: takes in path where model weights and scalers are stored
         :param main_df_col: list of training dataset column names so that prediction df tallies
+        :param historical_postal_code_area: to get planning area/region of postal code if it is in our dataset instead of using distance measures due to differences in areas returned for some postal codes
         :param area_centroids: to get the planning area property is in
         :param sch_gdf: to get nearest school distance
         :param police_centre_gdf: to get nearest police centre
         :param avg_cases_by_npc: to get avg crime cases per year for nearest police centre
         :return: predicted price of unit and predicted price per sqm
         '''
-        predicted_psm = self.pred_psm(path, main_df_col, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc)
+        predicted_psm = self.pred_psm(path, main_df_col, historical_postal_code_area, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc)
         unit_price = self.floor_area * predicted_psm
         return unit_price, predicted_psm
 
 '''
 # TESTING
 #Input postal code, property type, floor num, sqm, remaining lease
-property = Listing('098656', 'Condominium', 6, 99, 70)
+property = Listing('597592', 'Condominium', 6, 99, 70)
 sch = pd.read_csv('datasets/primary_sch_gdf.csv')
 train = pd.read_csv('datasets/train_gdf.csv')
 area_df = pd.read_csv('datasets/area_centroid.csv')
 modelling = pd.read_csv('datasets/modelling_dataset.csv')
 police_centre = pd.read_csv('datasets/police_centre_gdf.csv')
 avg_cases = pd.read_csv('datasets/average_cases_by_npc.csv')
+prelim_ds = pd.read_csv('datasets/preliminary_dataset.csv')
+postal_code_area = pd.read_csv('datasets/historical_postal_code_area.csv')
 cols = list(modelling.columns)
 cols.remove('Unit Price ($ PSM)')
-print(cols)
+#print(cols)
 print(property.get_lat())
 print(property.get_lon())
 print(property.get_geom())
-print(property.get_planning_area(area_df))
-print(property.get_planning_region(area_df))
+print(property.get_planning_area(postal_code_area, area_df))
+print(property.get_planning_region(postal_code_area, area_df))
 print(property.train_lines(train))
 print(property.train_dist(train))
 print(property.train_stations(train))
@@ -188,6 +201,6 @@ print(property.sch_name(sch))
 print(property.get_police_centre(police_centre))
 print(property.police_centre_dist(police_centre))
 print(property.get_centre_avg_cases(police_centre, avg_cases))
-print(property.convert_to_df(cols, area_df, sch, train, police_centre, avg_cases))
-print(property.pred_price('modelling/', cols, area_df, sch, train, police_centre, avg_cases))
+print(property.convert_to_df(cols, postal_code_area, area_df, sch, train, police_centre, avg_cases))
+print(property.pred_price('modelling/', cols, postal_code_area, area_df, sch, train, police_centre, avg_cases))
 '''

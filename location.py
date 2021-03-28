@@ -47,6 +47,7 @@ def area_region(postal_code, area_centroids):
         area_centroids_copy[right_geom_col].apply(lambda geom: (geom.y * np.pi / 180, geom.x * np.pi / 180)).to_list())
 
     tree = BallTree(right_radians, leaf_size=15, metric='haversine')
+
     # Find closest planning area
     dist, ind = tree.query([property_radians], k=1)
     indices = ind.transpose()
