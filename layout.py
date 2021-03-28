@@ -10,7 +10,7 @@ import dash
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 import dash_html_components as html
-
+from Sample import Sample
 import listing
 from dash.exceptions import PreventUpdate
 
@@ -281,7 +281,7 @@ app.layout = html.Div([
     input_section, 
     overview, 
     historic_transactions, 
-    resale_climate    
+    resale_climate
 ])
 
 ### Callbacks from the input component
