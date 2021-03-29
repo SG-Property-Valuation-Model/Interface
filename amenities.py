@@ -65,7 +65,7 @@ def nearest_sch(property_geom, sch_gdf, dist=2000): # default distance is 2km
     # get distance to the nearest school
     nearest_dist = nearest_dist[0][0]
     # only if need to get nearest school's name
-    nearest_pri_sch =  str(sch_copy.loc[index].Name)
+    nearest_pri_sch =  str(sch_copy.loc[index].Name.values[0])
     return nearest_pri_sch, nearest_dist
 
 def nearest_police_centre(property_geom, police_centre, dist = 10000):

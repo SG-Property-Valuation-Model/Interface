@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+Contains frontend layout of interface
 
-This is a temporary script file.
 """
 import pandas as pd
 import numpy as np
@@ -10,14 +9,29 @@ import dash
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 import dash_html_components as html
-from Sample import Sample
-import listing
 from dash.exceptions import PreventUpdate
 
+# Importing backend classes
+from Sample import Sample
+from listing import Listing
 
 ### Declaring Stylesheets for Layout ##################################
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css', dbc.themes.SANDSTONE]
 app = dash.Dash(__name__, external_stylesheets = external_stylesheets, suppress_callback_exceptions=True)
+
+
+### Parsing Data Required ##############################################
+sch = pd.read_csv('datasets/primary_sch_gdf.csv')
+train = pd.read_csv('datasets/train_gdf.csv')
+area_df = pd.read_csv('datasets/area_centroid.csv')
+modelling = pd.read_csv('datasets/modelling_dataset.csv')
+police_centre = pd.read_csv('datasets/police_centre_gdf.csv')
+avg_cases = pd.read_csv('datasets/average_cases_by_npc.csv')
+prelim_ds = pd.read_csv('datasets/preliminary_dataset.csv')
+postal_code_area = pd.read_csv('datasets/historical_postal_code_area.csv')
+
+### Global Objects #####################################################
+global curr_listing
 
 ### Input Component ###################################################################
 
@@ -135,6 +149,20 @@ input_section = html.Div(
              'background-size': 'cover'}
 )
 
+### Navigation bar #######################################################################
+nav_bar = html.Div([
+        
+    html.Ol(
+            [
+                html.Li(html.A("overview", href = "#overview", style = {'padding-right': 10}), className = 'breadcrumb-item'),
+                html.Li(html.A("historic transactions", href = "#past_transactions", style = {'color': 'darkgrey', 'padding-right': 10, 'padding-left': 10}), className = 'breadcrumb-item active'), 
+                html.Li(html.A("current resale climate", href = "#resale_climate", style = {'color': 'darkgrey', 'padding-right': 10, 'padding-left': 10}), className = 'breadcrumb-item active')
+            ], 
+            className = 'breadcrumb', 
+            style = {'height': 40, 'font-size': 'large', 'background-color': 'white', 'border-color': 'white', 'padding-left': 0}
+        )
+], style = {'padding': 50, 'padding-bottom': 0})
+
 ### Overview Component ###################################################################
 
 def derived_feature(logo, title, description): 
@@ -150,46 +178,64 @@ def derived_feature(logo, title, description):
 
     return feature
     
-
-listing_feature = [
-    dbc.CardHeader(children="", id='predicted-price', style = {'font-size': 'x-large', 'padding': 10, 'padding-left': 20}), 
-    dbc.CardBody([
-        dbc.Row([
-            derived_feature('train.png', 'Clementi . Kent Ridge', "Train stations within 1km"),
-            derived_feature('train.png', 'Clementi . Kent Ridge', "Train stations within 1km"),
-        ]), 
-        dbc.Row([
-            derived_feature('train.png', 'Clementi . Kent Ridge', "Train stations within 1km"),
-            derived_feature('train.png', 'Clementi . Kent Ridge', "Train stations within 1km"),
-            derived_feature('train.png', 'Clementi . Kent Ridge', "Train stations within 1km")
-        ])
-    ], style = {'paddding': 20})    
-]
-
-overview = html.Div([
-    html.Ol(
-        [
-            html.Li(html.A("overview", href = "#overview", style = {'padding-right': 10}), className = 'breadcrumb-item'),
-            html.Li(html.A("historic transactions", href = "#past_transactions", style = {'color': 'darkgrey', 'padding-right': 10, 'padding-left': 10}), className = 'breadcrumb-item active'), 
-            html.Li(html.A("current resale climate", href = "#resale_climate", style = {'color': 'darkgrey', 'padding-right': 10, 'padding-left': 10}), className = 'breadcrumb-item active')
-        ], 
-        className = 'breadcrumb', 
-        style = {'height': 40, 'font-size': 'large', 'background-color': 'white', 'border-color': 'white', 'padding-left': 0}
-    ),
-    html.H1(children="Enter your property's details!", id='building-name', style = {'font-wieght': 'bold', 'font-size': 'xxx-large'}), 
-    html.Div(children="", id='predicted-price-psm', style={'fontSize': 20}),
-    html.Ol(
-        [
-            html.Li("Anderson Cross", style = {'padding-right': 5}, className = 'breadcrumb-item active'),
-            html.Li("Level 16", style = {'padding-left': 5}, className = 'breadcrumb-item active'), 
-            
-        ], 
-        className = 'breadcrumb', 
-        style = {'height': 25, 'font-size': 'medium', 'background-color': 'white', 'border-color': 'white', 'padding': 0}
-    ),
-    html.Div(dbc.Card(listing_feature, color = 'light'))
+def overview_section(listing, predicted_price,  predicted_price_psm, building_name):
     
-], style = {'padding': 50}, id = 'overview')
+    #predicted_price,  predicted_price_psm, building_name
+    
+    listing_feature = [
+        
+        # Card Header --> Displaying Predicted Price
+        dbc.CardHeader(children = predicted_price, 
+                       id='predicted-price', 
+                       style = {'font-size': 'large', 'padding': 10, 'padding-left': 20}
+        ),
+        
+        # Card Boody --> Displaying derived features and Predicted PSM
+        dbc.CardBody([
+            
+            html.Div(children = predicted_price_psm, id='predicted-price-psm', style={'fontSize': 20, 'padding-left': 20}),
+            
+            # Train Stations Derived Features
+            dbc.Row([
+                derived_feature('train.png', " . ".join(list(listing.train_stations(train))), "Train stations within 1km"),
+                derived_feature('train.png', str(int(listing.train_dist(train))) + " metres", "Distance to Nearest Train Station"),
+            ]), 
+            
+            # Schools Derived Features
+            dbc.Row([
+                derived_feature('train.png', listing.sch_name(sch), "Nearest School"),
+                derived_feature('train.png', str(int(listing.sch_dist(sch))) + " metres", "Distance to Nearest School")
+            ]), 
+            
+            # Schools Derived Features
+            dbc.Row([
+                derived_feature('train.png', listing.get_police_centre(police_centre), "Nearest Police Station"),
+                derived_feature('train.png', listing.get_centre_avg_cases(police_centre, avg_cases), "Average Yearly Crime Rate")
+            ])
+        ], style = {'paddding': 20})    
+    ]
+
+    overview = html.Div([
+        
+        # Listing Details
+        html.H1(listing.get_building() , id='building-name', style = {'font-wieght': 'bold', 'font-size': 'xxx-large'}), 
+    
+        html.Ol(
+            [
+                html.Li(listing.get_road_name(), style = {'padding-right': 5}, className = 'breadcrumb-item active'),
+                html.Li('Level ' + str(listing.get_floor_num()), style = {'padding-left': 5}, className = 'breadcrumb-item active'), 
+                
+            ], 
+            className = 'breadcrumb', 
+            style = {'height': 25, 'font-size': 'medium', 'background-color': 'white', 'border-color': 'white', 'padding': 0}
+        ),
+        
+        # Derived Fatures from Listing
+        html.Div(dbc.Card(listing_feature, color = 'light'))
+        
+    ], style = {'padding': 50, 'padding-top': 15}, id = 'overview')
+    
+    return overview
 
 ### Historic Transactions Component ################################################
 
@@ -258,7 +304,7 @@ historic_transactions = html.Div(
         ])
     
     ],
-    style = {'padding': 50, 'padding-top': 20}, 
+    style = {'padding': 50, 'padding-top': 15}, 
     id = 'past_transactions'
 )
 
@@ -279,12 +325,13 @@ resale_climate = html.Div(
 
 app.layout = html.Div([
     input_section, 
-    overview, 
+    nav_bar,
+    html.Div(id = 'overview-section'), 
     historic_transactions, 
     resale_climate
 ])
 
-### Callbacks from the input component
+### Callbacks for property-type-dropdown within input_section
 @app.callback(dash.dependencies.Output("property-type-dropdown-input", "value"),
              [dash.dependencies.Input("property-dropdown-ec", "n_clicks"),
               dash.dependencies.Input("property-dropdown-condo", "n_clicks"),
@@ -309,40 +356,37 @@ def property_input_dropdown(n1, n2, n_clear):
 
 ### Callbacks from the input component -- output predicted price for the listing
 @app.callback(
-    [dash.dependencies.Output("predicted-price-psm", 'children'),
-    dash.dependencies.Output("predicted-price", 'children'),
-    dash.dependencies.Output("building-name", 'children')],
-    dash.dependencies.Input('submit-val', 'n_clicks'),
-    [dash.dependencies.State("postal-input", "value"),
-    dash.dependencies.State("property-type-dropdown-input", "value"),
-    dash.dependencies.State("floor-num-input", "value"),
-    dash.dependencies.State("floor-area-input", "value"),
-    dash.dependencies.State("lease-input", "value")])
+    #Outputs of Callback
+    [dash.dependencies.Output("overview-section", 'children')],
+    
+    #Inputs of Callback
+    [dash.dependencies.Input('submit-val', 'n_clicks'),
+     dash.dependencies.State("postal-input", "value"),
+     dash.dependencies.State("property-type-dropdown-input", "value"),
+     dash.dependencies.State("floor-num-input", "value"),
+     dash.dependencies.State("floor-area-input", "value"),
+     dash.dependencies.State("lease-input", "value")]
+)
 
 def display_predicted_price(n_clicks, postal_input, property_type, floor_num, floor_area, lease):
-    if n_clicks is None or postal_input == '' or property_type == '' or floor_num == '' or floor_area == '' or lease == '':
-        print("NOT CALLED BACK")
-        raise PreventUpdate
-    else:
-        property = listing.Listing(postal_input, property_type, floor_num, floor_area, lease)
-        # Read in dataframes
-        sch = pd.read_csv('datasets/primary_sch_gdf.csv')
-        train = pd.read_csv('datasets/train_gdf.csv')
-        area_df = pd.read_csv('datasets/area_centroid.csv')
-        modelling = pd.read_csv('datasets/modelling_dataset.csv')
-        police_centre = pd.read_csv('datasets/police_centre_gdf.csv')
-        avg_cases_by_npc = pd.read_csv('datasets/average_cases_by_npc.csv')
-        historical_postal_code_area = pd.read_csv('datasets/historical_postal_code_area.csv')
-        cols = list(modelling.columns)
-        cols.remove('Unit Price ($ PSM)')
+    
+    if n_clicks is None:
+        return [""]
+   
+    else: 
+        
+        value = 302302
+        price_output = 'Predicted Price: $' + str(value)
+        price_psm_output = 'Predicted Price PSM: $' + str(value)
+        building_output = 'Something'
+        
+        global curr_listing
+        curr_listing = Listing(postal_input, property_type, int(floor_num), int(floor_area), int(lease))
+        #curr_listing = Listing('597592', 'Condominium', 6, 99, 70)
+        #curr_listing = Listing('689527', 'Condominium', 6, 99, 70)
+        
+        return [overview_section(curr_listing, price_output, price_psm_output, building_output)]
 
-        price_unit, price_psm = property.pred_price('modelling/', cols, historical_postal_code_area, area_df, sch, train, police_centre, avg_cases_by_npc)
-        # Outputs to be displayed on dash
-        price_psm_output = "Predicted price per sqm: ${:,.2f}".format(price_psm)
-        price_output =  "Predicted price: ${:,.2f}".format(price_unit)
-        building = property.get_building()
-        building_output = "Building Name: " + building
-    return [price_psm_output, price_output, building_output]
 
 if __name__ == '__main__': 
     app.run_server(debug = False)
