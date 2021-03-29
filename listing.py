@@ -22,6 +22,26 @@ class Listing:
         self.remaining_lease = int(remaining_lease)
         return
 
+    # Get postal code of property
+    def get_postal_code(self):
+        return self.postal
+
+    # Get property type of property
+    def get_property_type(self):
+        return self.property_type
+
+    # Get floor number of property
+    def get_floor_num(self):
+        return self.floor_num
+
+    # Get floor area of property
+    def get_floor_area(self):
+        return self.floor_area
+
+    # Get remaining lease of property
+    def get_remaining_lease(self):
+        return self.remaining_lease
+
     # Get longitude of property
     def get_lon(self):
         return postal_search(self.postal)[0]
@@ -38,6 +58,10 @@ class Listing:
     def get_geom(self):
         geometry = gp.points_from_xy([self.get_lon()], [self.get_lat()])
         return geometry
+
+    # Get road name property is at 
+    def get_road_name(self):
+        return postal_search(self.postal)[3]
 
     # Get planning area property is in
     def get_planning_area(self, historical_df, area_centroid):
@@ -135,6 +159,17 @@ class Listing:
         return df
 
     def pred_psm(self, path, main_df_col, historical_postal_code_area, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc):
+        '''
+        :param path: takes in path where model weights and scalers are stored
+        :param main_df_col: list of training dataset column names so that prediction df tallies
+        :param historical_postal_code_area: to get planning area/region of postal code if it is in our dataset instead of using distance measures due to differences in areas returned for some postal codes
+        :param area_centroids: to get the planning area property is in
+        :param sch_gdf: to get nearest school distance
+        :param train_gdf: to get nearest stations/lines
+        :param police_centre_gdf: to get nearest police centre
+        :param avg_cases_by_npc: to get avg crime cases per year for nearest police centre
+        :return: predicted price per sqm
+        '''
         property_df = self.convert_to_df(main_df_col, historical_postal_code_area, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc)
         s_scaler = joblib.load(path + 'standard_scaler.bin')
         mm_scaler = joblib.load(path + 'mm_scaler.bin')
@@ -165,6 +200,7 @@ class Listing:
         :param historical_postal_code_area: to get planning area/region of postal code if it is in our dataset instead of using distance measures due to differences in areas returned for some postal codes
         :param area_centroids: to get the planning area property is in
         :param sch_gdf: to get nearest school distance
+        :param train_gdf: to get nearest stations/lines
         :param police_centre_gdf: to get nearest police centre
         :param avg_cases_by_npc: to get avg crime cases per year for nearest police centre
         :return: predicted price of unit and predicted price per sqm
@@ -191,6 +227,7 @@ cols.remove('Unit Price ($ PSM)')
 print(property.get_lat())
 print(property.get_lon())
 print(property.get_geom())
+print(property.get_road_name())
 print(property.get_planning_area(postal_code_area, area_df))
 print(property.get_planning_region(postal_code_area, area_df))
 print(property.train_lines(train))
