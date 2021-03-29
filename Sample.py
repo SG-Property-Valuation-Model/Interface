@@ -96,6 +96,15 @@ class Sample:
         filtered_df = interm_df[interm_df['distance'] <= radius]
         self.dataframe = filtered_df
         #return filtered_df
+        
+    def get_average_psm(self):
+        return round(self.dataframe['Unit Price ($ PSM)'].mean(),2)
+    
+    def get_average_floor_area(self):
+        return round(self.dataframe['Area (SQM)'].mean(),2)
+    
+    def get_total_transactions(self):
+        return self.dataframe.shape[0]
     
     def get_transaction_table(self):
         df =  self.dataframe
@@ -123,32 +132,45 @@ class Sample:
         )
         return table
     
-    def get_map(self, listing_long, listing_lat, limit):
+    def get_map(self, listing_long, listing_lat, limit = 50):
         
         '''
         Parameters
         - listing_long: Longitude of listing
         - lisiting_lat: Latitude of listing
-        - limit: Maximum number of points to show on map
+        - limit: Maximum number of points to show on map, default = 50
         '''
         # convert listing longitude and latitude to float
         listing_long = float(listing_long)
         listing_lat = float(listing_lat)
-        
         listing_coord = (listing_lat,listing_long)
-        df = self.dataframe.sample(limit) # get a random sample to show on map, might duplicated markers
         
-        df_coord = df[['LATITUDE', 'LONGITUDE', 'BUILDING', 'Planning Area']]
+        # get the filtered dataframe
+        df = self.dataframe[['LATITUDE', 'LONGITUDE', 'BUILDING', 'Unit Price ($ PSM)']]
+        
+        # group the transactions
+        grp_df = df.groupby(['LATITUDE', 'LONGITUDE', 'BUILDING']).agg(avg_psm=('Unit Price ($ PSM)', 'mean'),
+                                                                       num_transactions =('Unit Price ($ PSM)', 'count')).reset_index()
+        grp_df['avg_psm'] = grp_df['avg_psm'].apply(lambda x: round(x,2))
+
+        # limit the number of points shown on the map
+        if len(grp_df) > limit :
+            grp_df = grp_df.sample(limit)
+        else:
+            grp_df = grp_df
+            
         m = folium.Map(location = listing_coord, zoom_start=15)
         
         # add markers
-        for index, row in df_coord.iterrows():
+        for index, row in grp_df.iterrows():
             long = row['LONGITUDE']
             lat = row['LATITUDE']
-            pop_up = folium.Marker(
-                location=[lat, long],
-                popup="<i>" + row['BUILDING']+ ','+ row['Planning Area']+"</i>", 
-            ).add_to(m)
+            pop_up = folium.Marker(location=[lat, long],
+                           popup="<i>" + row['BUILDING']+ ', Average Unit Price ($PSM): '
+                           + str(row['avg_psm'])+ ', Number of Transactions: ' 
+                           + str(row['num_transactions'])+
+                           "</i>"
+                    ).add_to(m)
             
         # return html object
         m.save('sample_map.html')
@@ -217,11 +239,11 @@ class Sample:
         
 
 '''
-TESTING
+### TESTING
 params = {
     'radius' : [0,1], 
     'property' : [1,1,1],
-    'time' : [1,0],
+    'time' : [1,1],
  }
 data = pd.read_csv('datasets/preliminary_dataset.csv')
 data['Sale Date'] = pd.to_datetime(data['Sale Date'], format='%Y-%m-%d')
@@ -229,7 +251,7 @@ data['Sale Date'] = pd.to_datetime(data['Sale Date'], format='%Y-%m-%d')
 
 area_df = pd.read_csv('datasets/area_centroid.csv')
 limit = 50
-try_index = 9
+try_index = 1002
 listing_lat = data.loc[try_index]['LATITUDE']
 listing_long = data.loc[try_index]['LONGITUDE']
 listing_PA = data.loc[try_index]['Planning Area']
@@ -239,21 +261,25 @@ print(sample_instance.dataframe.shape)
 print('max dist' + str(sample_instance.dataframe['distance'].max()))
 print('min year' + str(sample_instance.dataframe['Sale Date'].min()))     
 print('ppt' + str(sample_instance.dataframe['Property Type'].unique()))
+print('avg psm:' + str(sample_instance.get_average_psm()))
+print('avg floor area:' + str(sample_instance.get_average_floor_area()))
+print('N transactions:' + str(sample_instance.get_total_transactions()))
 #sample_instance.get_map(listing_long, listing_lat, limit) 
 print(sample_instance.get_closest_planning_area(area_df, listing_PA,2))
-sample_instance.plot_psm(data, area_df, listing_PA, 2)
+#sample_instance.plot_psm(data, area_df, listing_PA, 2)
+
 
 # try with listing
 import listing
-postal_input = '538683'
+postal_input = '098656'
 property_type = 'Condominium'
-floor_num = 3
-floor_area = 91
+floor_num = 6
+floor_area = 99
 lease = 78
 try_unit = listing.Listing(postal_input, property_type, floor_num, floor_area, lease)
 listing_lat = try_unit.get_lat()
 listing_long = try_unit.get_lon()
-listing_PA = try_unit.get_planning_area(area_df)
+listing_PA = try_unit.get_planning_area(data, area_df)
 print(listing_PA)
 sample_instance2 = Sample(params)
 sample_instance2.get_filtered_df(data, listing_long, listing_lat)
@@ -261,6 +287,9 @@ print(sample_instance2.dataframe.shape)
 print('max dist' + str(sample_instance2.dataframe['distance'].max()))
 print('min year' + str(sample_instance2.dataframe['Sale Date'].min()))     
 print('ppt' + str(sample_instance2.dataframe['Property Type'].unique()))
+print('avg psm:' + str(sample_instance2.get_average_psm()))
+print('avg floor area:' + str(sample_instance2.get_average_floor_area()))
+print('N transactions:' + str(sample_instance2.get_total_transactions()))
 #sample_instance.get_map(listing_long, listing_lat, limit) 
 print(sample_instance2.get_closest_planning_area(area_df, listing_PA,2))
-sample_instance2.plot_psm(data, area_df, listing_PA, 2)'''
+#sample_instance2.plot_psm(data, area_df, listing_PA, 2)'''
