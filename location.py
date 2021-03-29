@@ -24,17 +24,18 @@ def get_info(searchVal, returnGeom=True, getAddr=True, pageNum=1):
     url = url.format(searchVal, returnGeom, getAddr, pageNum)
     #print(url)
     return json.loads(requests.get(url).content.decode("UTF-8"))['results']
-
+    
 # Get (long, lat, building name) for unique postal codes only to reduce runtime
 def postal_search(postal_code):
     response = get_info(searchVal=postal_code)[0]
     lon = response['LONGITUDE']
     lat = response['LATITUDE']
     building = response['BUILDING']
-    return lon, lat, building
+    road_name = response['ROAD_NAME']
+    return lon, lat, building, road_name
 
 def area_region(postal_code, area_centroids):
-    lon, lat, building = postal_search(postal_code)
+    lon, lat, building, road_name = postal_search(postal_code)
     geometry = gp.points_from_xy([lon], [lat])
     property_radians = np.ravel([geometry.y * np.pi / 180, geometry.x * np.pi / 180])
     area_centroids_copy = area_centroids.copy()
@@ -58,9 +59,8 @@ def area_region(postal_code, area_centroids):
 
 '''
 # Testing
-os.chdir('C:/Users/User/Desktop/NOTES/Notes_Y4S2/BT4222/HDB Project/Final Merge of Data/')
-
-df = pd.read_csv('preliminary_dataset.csv')
-area = pd.read_csv('C:/Users/User/Desktop/NOTES/Notes_Y4S2/BT4222/HDB Project/Interface/area_centroid.csv')
+df = pd.read_csv('datasets/preliminary_dataset.csv')
+area = pd.read_csv('datasets/area_centroid.csv')
+print(postal_search('098656'))
 print(area_region('098656', area))
 '''
