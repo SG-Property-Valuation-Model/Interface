@@ -8,6 +8,7 @@ import datetime
 import folium
 import dash_table
 import plotly.express as px
+import plotly.graph_objects as go
 import dash_core_components as dcc
 from math import radians, cos, sin, asin, sqrt
 
@@ -22,11 +23,11 @@ def haversine(lon1, lat1, lon2, lat2): # find distance between 2 lisitng
     return c * r
 
 class Sample:
-    def __init__(self, params):
+    def __init__(self, params, data):
         self.radius = params['radius']
         self.property = params['property']
         self.time = params['time']
-        self.dataframe = None
+        self.dataframe = data
         
     def get_radius(self): # take furthest as filter
         if sum(self.radius) == 2:
@@ -36,8 +37,8 @@ class Sample:
                 radius = 1
             elif self.radius[1] == 1:
                 radius = 2
-            else: # no input, then set to minimum
-                radius = 1
+            else: # no input, then set to maximum
+                radius = 100
         return radius
     
     def get_time(self): # take latest as filter
@@ -48,8 +49,8 @@ class Sample:
                 time = 5
             elif self.time[1] == 1:
                 time = 10
-            else: # no input, set to minimum, past 1 year 
-                time = 1
+            else: # no input, set to minimum, past 20 years 
+                time = 20
         return time
     
     def get_property(self):
@@ -85,14 +86,8 @@ class Sample:
         interm_df = data[(data['Sale Date']>= start_date) & (data['Sale Date']< end_date) & (data['Property Type'].isin(property_type))]
 
         #find past listings within radius
-        interm_df['distance'] = np.nan
-
-        for index, row in interm_df.iterrows():
-            long = row['LONGITUDE']
-            lat = row['LATITUDE']
-            # calculate distance between this and query point
-            interm_df.loc[index, 'distance'] =  haversine(listing_long, listing_lat, long, lat)
-
+        interm_df['distance'] = interm_df.apply(lambda x: haversine(listing_long, listing_lat, x['LONGITUDE'], x['LATITUDE']), axis = 1)
+        
         filtered_df = interm_df[interm_df['distance'] <= radius]
         self.dataframe = filtered_df
         #return filtered_df
@@ -107,33 +102,62 @@ class Sample:
         return self.dataframe.shape[0]
     
     def get_transaction_table(self):
+        
         df =  self.dataframe
-        df = df[['Sale Date', 'Address', 'Floor Number', 'Remaining Lease', 'Unit Price ($ PSM)']]
+        df = df[['Sale Date', 'Address', 'Floor Number', 'Area (SQM)', 'Remaining Lease', 'Unit Price ($ PSM)']].copy()
+        df.rename(columns = {'Area (SQM)': 'Floor Area'})
+        df['Sale Date'] = df['Sale Date'].apply(lambda x: x.date())
+        
         table = dash_table.DataTable(
             data=df.to_dict('records'),
             columns=[{'id': c, 'name': c} for c in df.columns],
-
-        style_cell_conditional=[
-            {
-                'if': {'column_id': c},
-                'textAlign': 'left'
-            } for c in ['Date', 'Region']
-        ],
-        style_data_conditional=[
-            {
-                'if': {'row_index': 'odd'},
-                'backgroundColor': 'rgb(248, 248, 248)'
-            }
-        ],
-        style_header={
-            'backgroundColor': 'rgb(230, 230, 230)',
-            'fontWeight': 'bold'
-            }
+            
+            # Remove Pagination
+            page_action='none',
+            
+            #For sorting by columns
+            sort_action="native",
+            
+            # For filtering rows by column values
+            filter_action="native",
+            
+            #style_as_list_view=True,
+                        
+            style_table={'max-height': '400px', 
+                         'font-size': '13px'}, 
+            
+            style_cell = {'textAlign': 'center', 
+                          'font-family': 'sans-serif', 
+                          'width': '{}%'.format(len(df.columns))
+                          #'minWidth': '20px', 'width': '20px', 'maxWidth': '200px'
+            }, 
+            
+            #Controilling width of columns
+            style_cell_conditional=[{'if': {'column_id': 'Sale Date'},'width': '5%'},
+                                    {'if': {'column_id': 'Address'},'width': '5.5%'},],
+            
+            
+            style_data={'padding-left': 7},
+            
+            #striped rows
+            style_data_conditional=[{'if': {'row_index': 'even'},
+                                     'backgroundColor': '#ebe9e6'#'#f2f2ed'
+                                     #'lightgrey'
+                                     }], 
+            
+            #Fixed row for when scrolling vertically
+            fixed_rows={'headers': True}, 
+            
+            style_header={'backgroundColor': 'rgb(255, 255, 255)',
+                          'fontWeight': 'bold',
+                          'padding-left': 7},
+            
+            
         )
+        
         return table
     
     def get_map(self, listing_long, listing_lat, limit = 50):
-        
         '''
         Parameters
         - listing_long: Longitude of listing
@@ -187,6 +211,13 @@ class Sample:
         # get longitude and latitude of the centroid for listing's planning area
         centroid_long = area_centroids[area_centroids['Planning Area'] == listing_PA]['Centroid Longitude']
         centroid_lat = area_centroids[area_centroids['Planning Area'] == listing_PA]['Centroid Latitude']
+        
+        closest_PA = area_centroids[area_centroids['Planning Area'] != listing_PA].copy()
+        closest_PA['distance'] = closest_PA.apply(lambda x: haversine(centroid_long, centroid_lat, x['Centroid Longitude'], x['Centroid Latitude'] ), axis = 1)
+        
+        return closest_PA.sort_values('distance', ascending = True).head(num_of_closest)['Planning Area'].tolist()
+        
+        """
         closest_PA = {}
         for index, row in area_centroids.iterrows():
             if row['Planning Area'] == listing_PA:
@@ -202,7 +233,8 @@ class Sample:
         final_closest = list(map(lambda x: x[0], sorted_list[:num_of_closest]))
         
         return final_closest
-    
+        """
+        
     def plot_psm(self, historical_df, area_centroids, listing_PA, num_of_closest = 2):
         '''
         Parameters
@@ -215,7 +247,8 @@ class Sample:
         # get the closest Planning area
         closest_PA = self.get_closest_planning_area(area_centroids, listing_PA, num_of_closest = 2)
         closest_PA.append(listing_PA)
-        print(closest_PA)
+        #print(closest_PA)
+        
         # get data based on time and property type filter, radius not applicable since we are filtering based on closest areas
         time = self.get_time()
         property_type = self.get_property()
@@ -223,19 +256,43 @@ class Sample:
         start_date = (datetime.datetime.now() - datetime.timedelta(days=time*365)).strftime('%Y-%m-%d')
         end_date = datetime.datetime.now().strftime('%Y-%m-%d')
         filtered_df = historical_df[(historical_df['Sale Date']>= start_date) & (historical_df['Sale Date']< end_date) & (historical_df['Property Type'].isin(property_type))& (historical_df['Planning Area'].isin(closest_PA))][['Sale Date', 'Planning Area','Unit Price ($ PSM)']]
-        print(filtered_df['Planning Area'].value_counts())
+        #print(filtered_df['Planning Area'].value_counts())
+        
         # Group data to find the mean PSM price
         filtered_df['Sale Month'] = filtered_df['Sale Date'].apply(lambda x : x.strftime('%Y-%m')) # to plot based on Year and Month
         filtered_df['Sale Year'] = filtered_df['Sale Date'].apply(lambda x : x.year) # to plot based on Year
         grp_df = filtered_df.groupby(['Sale Month', 'Planning Area']).mean().reset_index()
-        print(grp_df['Planning Area'].value_counts())
+        #print(grp_df['Planning Area'].value_counts())
+        
         # plot timeseries 
-        ts_plot = dcc.Graph(id='historical_timeseries', 
-                            figure = px.line(grp_df, x="Sale Month", y="Unit Price ($ PSM)", color='Planning Area',
-                             labels = {"Sale Month":"Year", "Unit Price ($ PSM)":"Average Unit Price ($ PSM)"})
-                            )
+        fig = px.line(grp_df, 
+                      x="Sale Month", 
+                      y="Unit Price ($ PSM)", 
+                      color='Planning Area',
+                      labels = {"Sale Month":"Year", "Unit Price ($ PSM)":"Average Unit Price ($ PSM)"})
+
+        fig.update_layout(plot_bgcolor = '#f8f4f0')
+        
+        # To control white space surrounding the plot 
+        fig.update_layout(margin={'t': 15, 'b':20, 'l':20, 'r':30})
+        
+        fig.update_layout(height = 450)
+        
+        ts_plot = dcc.Graph(figure = fig)
+    
         return ts_plot
         
+        """
+        ts_plot = dcc.Graph(id='historical_timeseries', 
+                            figure = {'data': [ px.line(grp_df, 
+                                                x="Sale Month", 
+                                                y="Unit Price ($ PSM)", 
+                                                color='Planning Area',
+                                                labels = {"Sale Month":"Year", "Unit Price ($ PSM)":"Average Unit Price ($ PSM)"})],
+                                      'layout': {'plot_bgcolor': '#f8f4f0'}
+                            }
+        )
+        """
         
 
 '''
