@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_19305c49284b491c8ef4284c0c6564a2 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_19305c49284b491c8ef4284c0c6564a2" ></div>
+        
+</body>
+<script>    
+    
+            var map_19305c49284b491c8ef4284c0c6564a2 = L.map(
+                "map_19305c49284b491c8ef4284c0c6564a2",
+                {
+                    center: [1.3184590944709, 103.776637736934],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_064aa7d6658145bd9ad5480aa67dfa58 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+            var marker_9e12a7eb1da049f4ab595bc5f7c278c8 = L.marker(
+                [1.337941175, 103.9200748],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_f56e6864a41247e6a54274065ce4c827 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_41a26edf5d634add99f0d4020b9bffd4 = $(`<div id="html_41a26edf5d634add99f0d4020b9bffd4" style="width: 100.0%; height: 100.0%;"><i>ARCHIPELAGO, Average Unit Price ($PSM): 13138.0, Number of Transactions: 3</i></div>`)[0];
+            popup_f56e6864a41247e6a54274065ce4c827.setContent(html_41a26edf5d634add99f0d4020b9bffd4);
+        
+
+        marker_9e12a7eb1da049f4ab595bc5f7c278c8.bindPopup(popup_f56e6864a41247e6a54274065ce4c827)
+        ;
+
+        
+    
+    
+            var marker_39378c0aa9e04477901dc05e532b9189 = L.marker(
+                [1.349174958, 103.7740363],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_bdd9b575fe184e07b8ba063cf3ff5291 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_09361f1b9a4f4f64a001283f7afcfdd8 = $(`<div id="html_09361f1b9a4f4f64a001283f7afcfdd8" style="width: 100.0%; height: 100.0%;"><i>THE RAINTREE, Average Unit Price ($PSM): 10627.92, Number of Transactions: 12</i></div>`)[0];
+            popup_bdd9b575fe184e07b8ba063cf3ff5291.setContent(html_09361f1b9a4f4f64a001283f7afcfdd8);
+        
+
+        marker_39378c0aa9e04477901dc05e532b9189.bindPopup(popup_bdd9b575fe184e07b8ba063cf3ff5291)
+        ;
+
+        
+    
+    
+            var marker_87293c47ab104b9ebe173675348a5b25 = L.marker(
+                [1.4186495119999998, 103.848112],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_206e2088a19d41aaa6824916069804fb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_59cbb0fc56c54ed59978eedb5cc32b71 = $(`<div id="html_59cbb0fc56c54ed59978eedb5cc32b71" style="width: 100.0%; height: 100.0%;"><i>SKIES MILTONIA, Average Unit Price ($PSM): 11454.11, Number of Transactions: 9</i></div>`)[0];
+            popup_206e2088a19d41aaa6824916069804fb.setContent(html_59cbb0fc56c54ed59978eedb5cc32b71);
+        
+
+        marker_87293c47ab104b9ebe173675348a5b25.bindPopup(popup_206e2088a19d41aaa6824916069804fb)
+        ;
+
+        
+    
+    
+            var marker_5bf9cd7bd0c54b608079584d32d8b7e5 = L.marker(
+                [1.388535084, 103.896143],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_e02cb7e7c0c24e94a0874f69bb635ca4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_14724c2e5e6d4934aa89c9566de1b4dc = $(`<div id="html_14724c2e5e6d4934aa89c9566de1b4dc" style="width: 100.0%; height: 100.0%;"><i>THE LUXURIE, Average Unit Price ($PSM): 12090.6, Number of Transactions: 10</i></div>`)[0];
+            popup_e02cb7e7c0c24e94a0874f69bb635ca4.setContent(html_14724c2e5e6d4934aa89c9566de1b4dc);
+        
+
+        marker_5bf9cd7bd0c54b608079584d32d8b7e5.bindPopup(popup_e02cb7e7c0c24e94a0874f69bb635ca4)
+        ;
+
+        
+    
+    
+            var marker_57c9481011124b22a5a5d6166aa7452d = L.marker(
+                [1.359716762, 103.883197],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_3cc1e6d4490c42af98b15d52d102c24f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e632f394a083421cb0f74825c38ee09b = $(`<div id="html_e632f394a083421cb0f74825c38ee09b" style="width: 100.0%; height: 100.0%;"><i>KOVAN MELODY, Average Unit Price ($PSM): 10999.07, Number of Transactions: 28</i></div>`)[0];
+            popup_3cc1e6d4490c42af98b15d52d102c24f.setContent(html_e632f394a083421cb0f74825c38ee09b);
+        
+
+        marker_57c9481011124b22a5a5d6166aa7452d.bindPopup(popup_3cc1e6d4490c42af98b15d52d102c24f)
+        ;
+
+        
+    
+    
+            var marker_be1dad50d1344ed6a444390e5d15bfcc = L.marker(
+                [1.385310492, 103.8420883],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_2c3d2907d1654ecbad03b88c9bda89ba = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6b7eba1d7999418fa4a2d7b131f85ff4 = $(`<div id="html_6b7eba1d7999418fa4a2d7b131f85ff4" style="width: 100.0%; height: 100.0%;"><i>NUOVO, Average Unit Price ($PSM): 8723.9, Number of Transactions: 81</i></div>`)[0];
+            popup_2c3d2907d1654ecbad03b88c9bda89ba.setContent(html_6b7eba1d7999418fa4a2d7b131f85ff4);
+        
+
+        marker_be1dad50d1344ed6a444390e5d15bfcc.bindPopup(popup_2c3d2907d1654ecbad03b88c9bda89ba)
+        ;
+
+        
+    
+    
+            var marker_98fef531e17144eb892d6746f4aa6935 = L.marker(
+                [1.394453292, 103.7513415],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_024d4d87da53485086d9ad80180ca24b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b17f4012cbd94e839fdffac29b53c5b7 = $(`<div id="html_b17f4012cbd94e839fdffac29b53c5b7" style="width: 100.0%; height: 100.0%;"><i>YEW MEI GREEN, Average Unit Price ($PSM): 7373.62, Number of Transactions: 98</i></div>`)[0];
+            popup_024d4d87da53485086d9ad80180ca24b.setContent(html_b17f4012cbd94e839fdffac29b53c5b7);
+        
+
+        marker_98fef531e17144eb892d6746f4aa6935.bindPopup(popup_024d4d87da53485086d9ad80180ca24b)
+        ;
+
+        
+    
+    
+            var marker_bdc6c9f635974ccb9b9511d1d2055c33 = L.marker(
+                [1.281050306, 103.7902503],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_443a0c11571e4e268e4ccabc2c641dfc = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c7f76cf89023410f97469d08b01fa7f1 = $(`<div id="html_c7f76cf89023410f97469d08b01fa7f1" style="width: 100.0%; height: 100.0%;"><i>KENT RIDGE HILL RESIDENCES, Average Unit Price ($PSM): 9663.27, Number of Transactions: 11</i></div>`)[0];
+            popup_443a0c11571e4e268e4ccabc2c641dfc.setContent(html_c7f76cf89023410f97469d08b01fa7f1);
+        
+
+        marker_bdc6c9f635974ccb9b9511d1d2055c33.bindPopup(popup_443a0c11571e4e268e4ccabc2c641dfc)
+        ;
+
+        
+    
+    
+            var marker_d9bb47eea19c4230b835055d6361aa5b = L.marker(
+                [1.306311852, 103.8643085],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_1858d0fc4b8a441583d909a5a8d6c2b4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d20900247ffb40ebbacd62e083f4b995 = $(`<div id="html_d20900247ffb40ebbacd62e083f4b995" style="width: 100.0%; height: 100.0%;"><i>SOUTHBANK, Average Unit Price ($PSM): 17364.89, Number of Transactions: 75</i></div>`)[0];
+            popup_1858d0fc4b8a441583d909a5a8d6c2b4.setContent(html_d20900247ffb40ebbacd62e083f4b995);
+        
+
+        marker_d9bb47eea19c4230b835055d6361aa5b.bindPopup(popup_1858d0fc4b8a441583d909a5a8d6c2b4)
+        ;
+
+        
+    
+    
+            var marker_1913a6cb23114d1cae0aa9d7c2f9e429 = L.marker(
+                [1.315775426, 103.9337047],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_c08f0fc093414434a596db5a95a921b3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ec57575d5ef64622817862810a52a9f7 = $(`<div id="html_ec57575d5ef64622817862810a52a9f7" style="width: 100.0%; height: 100.0%;"><i>CASAFINA, Average Unit Price ($PSM): 9287.94, Number of Transactions: 18</i></div>`)[0];
+            popup_c08f0fc093414434a596db5a95a921b3.setContent(html_ec57575d5ef64622817862810a52a9f7);
+        
+
+        marker_1913a6cb23114d1cae0aa9d7c2f9e429.bindPopup(popup_c08f0fc093414434a596db5a95a921b3)
+        ;
+
+        
+    
+    
+            var marker_4bda2d0014e4450eba1eff00012a5939 = L.marker(
+                [1.348829634, 103.8705332],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_305b4618a3de418d8e4c026b54b00680 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_246a5a67fe88429b98dc0d43980da6bc = $(`<div id="html_246a5a67fe88429b98dc0d43980da6bc" style="width: 100.0%; height: 100.0%;"><i>SUNGLADE, Average Unit Price ($PSM): 11428.47, Number of Transactions: 36</i></div>`)[0];
+            popup_305b4618a3de418d8e4c026b54b00680.setContent(html_246a5a67fe88429b98dc0d43980da6bc);
+        
+
+        marker_4bda2d0014e4450eba1eff00012a5939.bindPopup(popup_305b4618a3de418d8e4c026b54b00680)
+        ;
+
+        
+    
+    
+            var marker_2603ed837a124d42adda431308b67c70 = L.marker(
+                [1.292987831, 103.8510468],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_4f470f48c37e427d8c6083d71baa1338 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b371f4bcb5d548a98d9555254be5be56 = $(`<div id="html_b371f4bcb5d548a98d9555254be5be56" style="width: 100.0%; height: 100.0%;"><i>EDEN RESIDENCES CAPITOL, Average Unit Price ($PSM): 34299.0, Number of Transactions: 2</i></div>`)[0];
+            popup_4f470f48c37e427d8c6083d71baa1338.setContent(html_b371f4bcb5d548a98d9555254be5be56);
+        
+
+        marker_2603ed837a124d42adda431308b67c70.bindPopup(popup_4f470f48c37e427d8c6083d71baa1338)
+        ;
+
+        
+    
+    
+            var marker_7c433aaa83e04ae78fb19020ebf1c3e1 = L.marker(
+                [1.317031147, 103.8904996],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_38127eaa2a3b4cf29cdf8ab0819721ad = L.popup({"maxWidth": "100%"});
+
+        
+            var html_67dfa9cec1a74df78767a307ba6f7d7d = $(`<div id="html_67dfa9cec1a74df78767a307ba6f7d7d" style="width: 100.0%; height: 100.0%;"><i>SIMSVILLE, Average Unit Price ($PSM): 8992.74, Number of Transactions: 54</i></div>`)[0];
+            popup_38127eaa2a3b4cf29cdf8ab0819721ad.setContent(html_67dfa9cec1a74df78767a307ba6f7d7d);
+        
+
+        marker_7c433aaa83e04ae78fb19020ebf1c3e1.bindPopup(popup_38127eaa2a3b4cf29cdf8ab0819721ad)
+        ;
+
+        
+    
+    
+            var marker_be4dc16098124d1e8c44fe5eed879c8f = L.marker(
+                [1.309990178, 103.8354997],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_d1f8687160484d9489de4cce81c890e7 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_63ae33036429441499529db5ecc326bf = $(`<div id="html_63ae33036429441499529db5ecc326bf" style="width: 100.0%; height: 100.0%;"><i>THE SCOTTS TOWER, Average Unit Price ($PSM): 26715.0, Number of Transactions: 5</i></div>`)[0];
+            popup_d1f8687160484d9489de4cce81c890e7.setContent(html_63ae33036429441499529db5ecc326bf);
+        
+
+        marker_be4dc16098124d1e8c44fe5eed879c8f.bindPopup(popup_d1f8687160484d9489de4cce81c890e7)
+        ;
+
+        
+    
+    
+            var marker_870de14b6490491abab58d029aed8036 = L.marker(
+                [1.242974246, 103.8391646],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_ee740a78eae4474bb5530113d74321c0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c672f7359af643e49ee49cf9f5d5b150 = $(`<div id="html_c672f7359af643e49ee49cf9f5d5b150" style="width: 100.0%; height: 100.0%;"><i>MARINA COLLECTION, Average Unit Price ($PSM): 20497.37, Number of Transactions: 19</i></div>`)[0];
+            popup_ee740a78eae4474bb5530113d74321c0.setContent(html_c672f7359af643e49ee49cf9f5d5b150);
+        
+
+        marker_870de14b6490491abab58d029aed8036.bindPopup(popup_ee740a78eae4474bb5530113d74321c0)
+        ;
+
+        
+    
+    
+            var marker_8c155f3a2a6148949222da7c17f7d63d = L.marker(
+                [1.327821237, 103.9067383],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_c33f3a86424e436c9295deddc9ab991f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_143dc6490a9f4aa5a2f9e3f46d3e9da0 = $(`<div id="html_143dc6490a9f4aa5a2f9e3f46d3e9da0" style="width: 100.0%; height: 100.0%;"><i>EUHABITAT, Average Unit Price ($PSM): 12418.75, Number of Transactions: 4</i></div>`)[0];
+            popup_c33f3a86424e436c9295deddc9ab991f.setContent(html_143dc6490a9f4aa5a2f9e3f46d3e9da0);
+        
+
+        marker_8c155f3a2a6148949222da7c17f7d63d.bindPopup(popup_c33f3a86424e436c9295deddc9ab991f)
+        ;
+
+        
+    
+    
+            var marker_c154ab4238e94a5f9b1cc9ec6d274f56 = L.marker(
+                [1.3810507369999998, 103.8938843],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_d9f84368e909454e8a240cce75e93147 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6f350ffc36ef4755a001d1b8709dddf3 = $(`<div id="html_6f350ffc36ef4755a001d1b8709dddf3" style="width: 100.0%; height: 100.0%;"><i>THE QUARTZ, Average Unit Price ($PSM): 10343.44, Number of Transactions: 34</i></div>`)[0];
+            popup_d9f84368e909454e8a240cce75e93147.setContent(html_6f350ffc36ef4755a001d1b8709dddf3);
+        
+
+        marker_c154ab4238e94a5f9b1cc9ec6d274f56.bindPopup(popup_d9f84368e909454e8a240cce75e93147)
+        ;
+
+        
+    
+    
+            var marker_c5fba5badf544021a7480e63b94e3d40 = L.marker(
+                [1.339235315, 103.7057403],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_e48e76bc3a4f497a8b2638fa729546da = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f63acd9816c1404aa0906a756947ae16 = $(`<div id="html_f63acd9816c1404aa0906a756947ae16" style="width: 100.0%; height: 100.0%;"><i>THE CENTRIS, Average Unit Price ($PSM): 11317.79, Number of Transactions: 14</i></div>`)[0];
+            popup_e48e76bc3a4f497a8b2638fa729546da.setContent(html_f63acd9816c1404aa0906a756947ae16);
+        
+
+        marker_c5fba5badf544021a7480e63b94e3d40.bindPopup(popup_e48e76bc3a4f497a8b2638fa729546da)
+        ;
+
+        
+    
+    
+            var marker_a14945a8548d4c64b3b2b86e408196ec = L.marker(
+                [1.390121708, 103.8952561],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_e55939e78cc849b7853107b397f2c97c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_42e2d7bca343494ea16f10b6772a94fa = $(`<div id="html_42e2d7bca343494ea16f10b6772a94fa" style="width: 100.0%; height: 100.0%;"><i>LA FIESTA, Average Unit Price ($PSM): 14275.33, Number of Transactions: 3</i></div>`)[0];
+            popup_e55939e78cc849b7853107b397f2c97c.setContent(html_42e2d7bca343494ea16f10b6772a94fa);
+        
+
+        marker_a14945a8548d4c64b3b2b86e408196ec.bindPopup(popup_e55939e78cc849b7853107b397f2c97c)
+        ;
+
+        
+    
+    
+            var marker_b391c9f0468c4bfd89a76f69549e45fb = L.marker(
+                [1.298379943, 103.8321903],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_59e9e6174fea4f3fb193c68492dba42f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e4a1dd754a2e4562bb7ea3ab593e508e = $(`<div id="html_e4a1dd754a2e4562bb7ea3ab593e508e" style="width: 100.0%; height: 100.0%;"><i>LEONIE GARDENS, Average Unit Price ($PSM): 14871.16, Number of Transactions: 19</i></div>`)[0];
+            popup_59e9e6174fea4f3fb193c68492dba42f.setContent(html_e4a1dd754a2e4562bb7ea3ab593e508e);
+        
+
+        marker_b391c9f0468c4bfd89a76f69549e45fb.bindPopup(popup_59e9e6174fea4f3fb193c68492dba42f)
+        ;
+
+        
+    
+    
+            var marker_7afbf3a65bab4d62957c651c48f14cca = L.marker(
+                [1.349837991, 103.9607835],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_24d1b6044b4a4602bc4ab7661f459967 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2a441a08f02c423db3ce598838d0de12 = $(`<div id="html_2a441a08f02c423db3ce598838d0de12" style="width: 100.0%; height: 100.0%;"><i>SAVANNAH CONDOPARK, Average Unit Price ($PSM): 8103.09, Number of Transactions: 23</i></div>`)[0];
+            popup_24d1b6044b4a4602bc4ab7661f459967.setContent(html_2a441a08f02c423db3ce598838d0de12);
+        
+
+        marker_7afbf3a65bab4d62957c651c48f14cca.bindPopup(popup_24d1b6044b4a4602bc4ab7661f459967)
+        ;
+
+        
+    
+    
+            var marker_cdbfcac3d5a74d5abb632289afd13c6a = L.marker(
+                [1.295641953, 103.7683834],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_afd31ab6bee24073967673c48d806e12 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c042f5c2075840f19129eea835cdf476 = $(`<div id="html_c042f5c2075840f19129eea835cdf476" style="width: 100.0%; height: 100.0%;"><i>VARSITY PARK CONDOMINIUM, Average Unit Price ($PSM): 10381.11, Number of Transactions: 9</i></div>`)[0];
+            popup_afd31ab6bee24073967673c48d806e12.setContent(html_c042f5c2075840f19129eea835cdf476);
+        
+
+        marker_cdbfcac3d5a74d5abb632289afd13c6a.bindPopup(popup_afd31ab6bee24073967673c48d806e12)
+        ;
+
+        
+    
+    
+            var marker_79117df9ce66414585e87a923ab07bd4 = L.marker(
+                [1.322941889, 103.8257486],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_a44055d3f9a24eb6840fb3c488857adf = L.popup({"maxWidth": "100%"});
+
+        
+            var html_aa40f8d0e1854ce78f93e208fc77fa49 = $(`<div id="html_aa40f8d0e1854ce78f93e208fc77fa49" style="width: 100.0%; height: 100.0%;"><i>THE TREVOSE, Average Unit Price ($PSM): 12579.48, Number of Transactions: 29</i></div>`)[0];
+            popup_a44055d3f9a24eb6840fb3c488857adf.setContent(html_aa40f8d0e1854ce78f93e208fc77fa49);
+        
+
+        marker_79117df9ce66414585e87a923ab07bd4.bindPopup(popup_a44055d3f9a24eb6840fb3c488857adf)
+        ;
+
+        
+    
+    
+            var marker_7dd0b33b2741476e924fbf3eaeec5fe5 = L.marker(
+                [1.337509317, 103.9313904],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_1ab24dae07ac438c8381df11c8bb6453 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f12522fc0b954a3392e632df96901781 = $(`<div id="html_f12522fc0b954a3392e632df96901781" style="width: 100.0%; height: 100.0%;"><i>WATERFRONT KEY, Average Unit Price ($PSM): 12330.15, Number of Transactions: 40</i></div>`)[0];
+            popup_1ab24dae07ac438c8381df11c8bb6453.setContent(html_f12522fc0b954a3392e632df96901781);
+        
+
+        marker_7dd0b33b2741476e924fbf3eaeec5fe5.bindPopup(popup_1ab24dae07ac438c8381df11c8bb6453)
+        ;
+
+        
+    
+    
+            var marker_ef2640bb95934b5d9f7cb40fa1917b99 = L.marker(
+                [1.245288947, 103.8435457],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_f6b6a9f52f2d48898b55369dae8badc4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c4e8284b620d41d09ff467cb27528be6 = $(`<div id="html_c4e8284b620d41d09ff467cb27528be6" style="width: 100.0%; height: 100.0%;"><i>THE COAST AT SENTOSA COVE, Average Unit Price ($PSM): 19201.98, Number of Transactions: 65</i></div>`)[0];
+            popup_f6b6a9f52f2d48898b55369dae8badc4.setContent(html_c4e8284b620d41d09ff467cb27528be6);
+        
+
+        marker_ef2640bb95934b5d9f7cb40fa1917b99.bindPopup(popup_f6b6a9f52f2d48898b55369dae8badc4)
+        ;
+
+        
+    
+    
+            var marker_972fc467a25c4c92bd0dafd912d5eb5b = L.marker(
+                [1.407176512, 103.9030396],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_28bc0387bf5e4ddf8810b000b9a5c713 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f4b0bc44cf1844e096eb0d25a156d6c1 = $(`<div id="html_f4b0bc44cf1844e096eb0d25a156d6c1" style="width: 100.0%; height: 100.0%;"><i>WATERTOWN, Average Unit Price ($PSM): 15200.75, Number of Transactions: 4</i></div>`)[0];
+            popup_28bc0387bf5e4ddf8810b000b9a5c713.setContent(html_f4b0bc44cf1844e096eb0d25a156d6c1);
+        
+
+        marker_972fc467a25c4c92bd0dafd912d5eb5b.bindPopup(popup_28bc0387bf5e4ddf8810b000b9a5c713)
+        ;
+
+        
+    
+    
+            var marker_2917d50a246c4d059e55ec1c4ba397d6 = L.marker(
+                [1.293516216, 103.8222354],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_84febe17845f4f9f8a6a7daf90d23ff8 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9f78a9fc81b0445b900f6213707c1bfd = $(`<div id="html_9f78a9fc81b0445b900f6213707c1bfd" style="width: 100.0%; height: 100.0%;"><i>MON JERVOIS, Average Unit Price ($PSM): 20623.33, Number of Transactions: 6</i></div>`)[0];
+            popup_84febe17845f4f9f8a6a7daf90d23ff8.setContent(html_9f78a9fc81b0445b900f6213707c1bfd);
+        
+
+        marker_2917d50a246c4d059e55ec1c4ba397d6.bindPopup(popup_84febe17845f4f9f8a6a7daf90d23ff8)
+        ;
+
+        
+    
+    
+            var marker_b0d270e2e24142509612556feb07ef15 = L.marker(
+                [1.327596824, 103.9440235],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_dcc2400376a74f06ac2d2c665ef7a98d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e0b02b9b6ff640d483405629459786b3 = $(`<div id="html_e0b02b9b6ff640d483405629459786b3" style="width: 100.0%; height: 100.0%;"><i>URBAN VISTA, Average Unit Price ($PSM): 15385.0, Number of Transactions: 4</i></div>`)[0];
+            popup_dcc2400376a74f06ac2d2c665ef7a98d.setContent(html_e0b02b9b6ff640d483405629459786b3);
+        
+
+        marker_b0d270e2e24142509612556feb07ef15.bindPopup(popup_dcc2400376a74f06ac2d2c665ef7a98d)
+        ;
+
+        
+    
+    
+            var marker_aab6ee866a7344a58e0934fb42193025 = L.marker(
+                [1.374258379, 103.9539225],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_e7f4ca3811434684bb2d0531299da2ee = L.popup({"maxWidth": "100%"});
+
+        
+            var html_12ccc30fd91a47f6959df3cce9017dd1 = $(`<div id="html_12ccc30fd91a47f6959df3cce9017dd1" style="width: 100.0%; height: 100.0%;"><i>EASTVALE CONDOMINIUM, Average Unit Price ($PSM): 7720.43, Number of Transactions: 30</i></div>`)[0];
+            popup_e7f4ca3811434684bb2d0531299da2ee.setContent(html_12ccc30fd91a47f6959df3cce9017dd1);
+        
+
+        marker_aab6ee866a7344a58e0934fb42193025.bindPopup(popup_e7f4ca3811434684bb2d0531299da2ee)
+        ;
+
+        
+    
+    
+            var marker_649ec2b5fd2b43acbdfc86cf084d0baf = L.marker(
+                [1.388028518, 103.8716517],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_f31174949c45441a93c77547f4306136 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b86e373256b445b48ea9c0f72c0a65b2 = $(`<div id="html_b86e373256b445b48ea9c0f72c0a65b2" style="width: 100.0%; height: 100.0%;"><i>THE TOPIARY, Average Unit Price ($PSM): 10427.2, Number of Transactions: 5</i></div>`)[0];
+            popup_f31174949c45441a93c77547f4306136.setContent(html_b86e373256b445b48ea9c0f72c0a65b2);
+        
+
+        marker_649ec2b5fd2b43acbdfc86cf084d0baf.bindPopup(popup_f31174949c45441a93c77547f4306136)
+        ;
+
+        
+    
+    
+            var marker_4e8befea4e814ad693802fcc97677be7 = L.marker(
+                [1.357807845, 103.8302741],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_0ded897cf7cf4e788323d2a49bdb30ed = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b600754214de4bbea9e787543c269334 = $(`<div id="html_b600754214de4bbea9e787543c269334" style="width: 100.0%; height: 100.0%;"><i>THOMSON THREE, Average Unit Price ($PSM): 16429.31, Number of Transactions: 13</i></div>`)[0];
+            popup_0ded897cf7cf4e788323d2a49bdb30ed.setContent(html_b600754214de4bbea9e787543c269334);
+        
+
+        marker_4e8befea4e814ad693802fcc97677be7.bindPopup(popup_0ded897cf7cf4e788323d2a49bdb30ed)
+        ;
+
+        
+    
+    
+            var marker_f5fa3ca5b4854b4ea2b2ce677b98e825 = L.marker(
+                [1.3811065969999998, 103.9404531],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_9be16010ecbe4e91a42e5287f48e3552 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_026fd118f84c43ef831c811e6fab596e = $(`<div id="html_026fd118f84c43ef831c811e6fab596e" style="width: 100.0%; height: 100.0%;"><i>VUE 8 RESIDENCE, Average Unit Price ($PSM): 11354.0, Number of Transactions: 1</i></div>`)[0];
+            popup_9be16010ecbe4e91a42e5287f48e3552.setContent(html_026fd118f84c43ef831c811e6fab596e);
+        
+
+        marker_f5fa3ca5b4854b4ea2b2ce677b98e825.bindPopup(popup_9be16010ecbe4e91a42e5287f48e3552)
+        ;
+
+        
+    
+    
+            var marker_7ee42e9152bf47709ff8ab1e30e61e0a = L.marker(
+                [1.342675914, 103.7122314],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_27930ed5de1c43c6a1ec4416dc400220 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_eaa1b8f7a64a42d49deb08d17b7f332e = $(`<div id="html_eaa1b8f7a64a42d49deb08d17b7f332e" style="width: 100.0%; height: 100.0%;"><i>SUMMERDALE, Average Unit Price ($PSM): 7140.98, Number of Transactions: 50</i></div>`)[0];
+            popup_27930ed5de1c43c6a1ec4416dc400220.setContent(html_eaa1b8f7a64a42d49deb08d17b7f332e);
+        
+
+        marker_7ee42e9152bf47709ff8ab1e30e61e0a.bindPopup(popup_27930ed5de1c43c6a1ec4416dc400220)
+        ;
+
+        
+    
+    
+            var marker_51e9c5b3c07e4f16b95477f8b21a300b = L.marker(
+                [1.290030671, 103.8171853],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_4433d6a4c4db4c6fbe68da5ca5dd5031 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5d330e8923ca4caa81cbb9f35e831bac = $(`<div id="html_5d330e8923ca4caa81cbb9f35e831bac" style="width: 100.0%; height: 100.0%;"><i>ARTRA, Average Unit Price ($PSM): 20206.0, Number of Transactions: 1</i></div>`)[0];
+            popup_4433d6a4c4db4c6fbe68da5ca5dd5031.setContent(html_5d330e8923ca4caa81cbb9f35e831bac);
+        
+
+        marker_51e9c5b3c07e4f16b95477f8b21a300b.bindPopup(popup_4433d6a4c4db4c6fbe68da5ca5dd5031)
+        ;
+
+        
+    
+    
+            var marker_db62dab0fda8436888d73ba606b0eaea = L.marker(
+                [1.3604119769999998, 103.8839103],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_cdfd42b225914b589fcbc74f1d94a219 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e7d04a8a1c314b3d9e6c286565fdc0cb = $(`<div id="html_e7d04a8a1c314b3d9e6c286565fdc0cb" style="width: 100.0%; height: 100.0%;"><i>KOVAN MELODY, Average Unit Price ($PSM): 10655.83, Number of Transactions: 36</i></div>`)[0];
+            popup_cdfd42b225914b589fcbc74f1d94a219.setContent(html_e7d04a8a1c314b3d9e6c286565fdc0cb);
+        
+
+        marker_db62dab0fda8436888d73ba606b0eaea.bindPopup(popup_cdfd42b225914b589fcbc74f1d94a219)
+        ;
+
+        
+    
+    
+            var marker_837938a778524d74b5d349b9a21b4be1 = L.marker(
+                [1.249188005, 103.8463141],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_d241d6252a4949ae87bb349099640947 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d0992137509b4e33aeff1f46e24cbb47 = $(`<div id="html_d0992137509b4e33aeff1f46e24cbb47" style="width: 100.0%; height: 100.0%;"><i>THE BERTH BY THE COVE, Average Unit Price ($PSM): 14934.29, Number of Transactions: 14</i></div>`)[0];
+            popup_d241d6252a4949ae87bb349099640947.setContent(html_d0992137509b4e33aeff1f46e24cbb47);
+        
+
+        marker_837938a778524d74b5d349b9a21b4be1.bindPopup(popup_d241d6252a4949ae87bb349099640947)
+        ;
+
+        
+    
+    
+            var marker_ca894a21cb3e49aeb64b6e39363f8a7e = L.marker(
+                [1.328400023, 103.9069274],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_153f973ca477477fa0c54ec5e3bfd41a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3f90b77e6bd34a8a86fe3cac32694f3f = $(`<div id="html_3f90b77e6bd34a8a86fe3cac32694f3f" style="width: 100.0%; height: 100.0%;"><i>EUHABITAT, Average Unit Price ($PSM): 12021.0, Number of Transactions: 2</i></div>`)[0];
+            popup_153f973ca477477fa0c54ec5e3bfd41a.setContent(html_3f90b77e6bd34a8a86fe3cac32694f3f);
+        
+
+        marker_ca894a21cb3e49aeb64b6e39363f8a7e.bindPopup(popup_153f973ca477477fa0c54ec5e3bfd41a)
+        ;
+
+        
+    
+    
+            var marker_9c3ff72367eb461b90a7fdcd439f8d93 = L.marker(
+                [1.324832928, 103.8041779],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_3b8d010a018f4b069f3109246655d7cc = L.popup({"maxWidth": "100%"});
+
+        
+            var html_285e374b0630441484c6a57779087c5f = $(`<div id="html_285e374b0630441484c6a57779087c5f" style="width: 100.0%; height: 100.0%;"><i>DUCHESS CREST, Average Unit Price ($PSM): 13586.6, Number of Transactions: 30</i></div>`)[0];
+            popup_3b8d010a018f4b069f3109246655d7cc.setContent(html_285e374b0630441484c6a57779087c5f);
+        
+
+        marker_9c3ff72367eb461b90a7fdcd439f8d93.bindPopup(popup_3b8d010a018f4b069f3109246655d7cc)
+        ;
+
+        
+    
+    
+            var marker_f224085d10514caf970ec44d0f0cd544 = L.marker(
+                [1.38715929, 103.8698329],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_99cd41912eb64758b48fe89ffd92da34 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1598d7f67b094b86b9ef7fe0ff119199 = $(`<div id="html_1598d7f67b094b86b9ef7fe0ff119199" style="width: 100.0%; height: 100.0%;"><i>THE GREENWICH, Average Unit Price ($PSM): 12377.83, Number of Transactions: 6</i></div>`)[0];
+            popup_99cd41912eb64758b48fe89ffd92da34.setContent(html_1598d7f67b094b86b9ef7fe0ff119199);
+        
+
+        marker_f224085d10514caf970ec44d0f0cd544.bindPopup(popup_99cd41912eb64758b48fe89ffd92da34)
+        ;
+
+        
+    
+    
+            var marker_383c0f6d4825499e84ebd61f8d0bd978 = L.marker(
+                [1.337615223, 103.9368502],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_64aa45922462475b9a78094504af4f1d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6e7cd64eb3a1414e857aa59925073ae1 = $(`<div id="html_6e7cd64eb3a1414e857aa59925073ae1" style="width: 100.0%; height: 100.0%;"><i>AQUARIUS BY THE PARK, Average Unit Price ($PSM): 8931.87, Number of Transactions: 38</i></div>`)[0];
+            popup_64aa45922462475b9a78094504af4f1d.setContent(html_6e7cd64eb3a1414e857aa59925073ae1);
+        
+
+        marker_383c0f6d4825499e84ebd61f8d0bd978.bindPopup(popup_64aa45922462475b9a78094504af4f1d)
+        ;
+
+        
+    
+    
+            var marker_7bd90e7b511741e79000edf919d79119 = L.marker(
+                [1.318256313, 103.7748341],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_25570af6c92d4be980bb4fc2c7cf2ca7 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1af07890ad7e4bd5bd104b3cc632502a = $(`<div id="html_1af07890ad7e4bd5bd104b3cc632502a" style="width: 100.0%; height: 100.0%;"><i>PINE GROVE, Average Unit Price ($PSM): 8734.0, Number of Transactions: 1</i></div>`)[0];
+            popup_25570af6c92d4be980bb4fc2c7cf2ca7.setContent(html_1af07890ad7e4bd5bd104b3cc632502a);
+        
+
+        marker_7bd90e7b511741e79000edf919d79119.bindPopup(popup_25570af6c92d4be980bb4fc2c7cf2ca7)
+        ;
+
+        
+    
+    
+            var marker_14e753af691641eeb62400c2b8f1f6c6 = L.marker(
+                [1.287461487, 103.79357009999998],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_6cef7e8b1db9472dbe3a5a62e1a5deb2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f01cbb1b6a17411db20da83c49a6642c = $(`<div id="html_f01cbb1b6a17411db20da83c49a6642c" style="width: 100.0%; height: 100.0%;"><i>NORMANTON PARK, Average Unit Price ($PSM): 10048.43, Number of Transactions: 7</i></div>`)[0];
+            popup_6cef7e8b1db9472dbe3a5a62e1a5deb2.setContent(html_f01cbb1b6a17411db20da83c49a6642c);
+        
+
+        marker_14e753af691641eeb62400c2b8f1f6c6.bindPopup(popup_6cef7e8b1db9472dbe3a5a62e1a5deb2)
+        ;
+
+        
+    
+    
+            var marker_134b7e31d15f46df8441ebd555f4661f = L.marker(
+                [1.296749742, 103.871405],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_842fcad1682d4e02b367c414e4488c42 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d1ba03711229453e983766f6bd0a22e9 = $(`<div id="html_d1ba03711229453e983766f6bd0a22e9" style="width: 100.0%; height: 100.0%;"><i>SANCTUARY GREEN, Average Unit Price ($PSM): 11713.79, Number of Transactions: 19</i></div>`)[0];
+            popup_842fcad1682d4e02b367c414e4488c42.setContent(html_d1ba03711229453e983766f6bd0a22e9);
+        
+
+        marker_134b7e31d15f46df8441ebd555f4661f.bindPopup(popup_842fcad1682d4e02b367c414e4488c42)
+        ;
+
+        
+    
+    
+            var marker_54145f5a9a644c5caa6cc4ef317b0f8b = L.marker(
+                [1.359559682, 103.8836165],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_9027a0aa03134837800b9132ba14f9f6 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b4cac35535a74857aa39208f7e397455 = $(`<div id="html_b4cac35535a74857aa39208f7e397455" style="width: 100.0%; height: 100.0%;"><i>KOVAN MELODY, Average Unit Price ($PSM): 11369.23, Number of Transactions: 26</i></div>`)[0];
+            popup_9027a0aa03134837800b9132ba14f9f6.setContent(html_b4cac35535a74857aa39208f7e397455);
+        
+
+        marker_54145f5a9a644c5caa6cc4ef317b0f8b.bindPopup(popup_9027a0aa03134837800b9132ba14f9f6)
+        ;
+
+        
+    
+    
+            var marker_06a26e6d20f547e6a1e12e840cff3dc0 = L.marker(
+                [1.244403038, 103.8425185],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_c5d5f9f97d8a464a886094bfe39b76fb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_42d34f3228cd4d92af0ac1a939a271cd = $(`<div id="html_42d34f3228cd4d92af0ac1a939a271cd" style="width: 100.0%; height: 100.0%;"><i>THE OCEANFRONT @ SENTOSA COVE, Average Unit Price ($PSM): 15579.71, Number of Transactions: 7</i></div>`)[0];
+            popup_c5d5f9f97d8a464a886094bfe39b76fb.setContent(html_42d34f3228cd4d92af0ac1a939a271cd);
+        
+
+        marker_06a26e6d20f547e6a1e12e840cff3dc0.bindPopup(popup_c5d5f9f97d8a464a886094bfe39b76fb)
+        ;
+
+        
+    
+    
+            var marker_f6892eb6ec584fe1afd6bf80659aa916 = L.marker(
+                [1.338284892, 103.7702135],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_253f40825d84481b94b79fb2c56b1c50 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_67ea2b4de85841319ad562d1470265ed = $(`<div id="html_67ea2b4de85841319ad562d1470265ed" style="width: 100.0%; height: 100.0%;"><i>VIEW AT KISMIS, Average Unit Price ($PSM): 7500.25, Number of Transactions: 4</i></div>`)[0];
+            popup_253f40825d84481b94b79fb2c56b1c50.setContent(html_67ea2b4de85841319ad562d1470265ed);
+        
+
+        marker_f6892eb6ec584fe1afd6bf80659aa916.bindPopup(popup_253f40825d84481b94b79fb2c56b1c50)
+        ;
+
+        
+    
+    
+            var marker_1ee2eb8a96b64828b7b9bb51579c5b69 = L.marker(
+                [1.296951, 103.7654361],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_da41ab6cb8ee45f08da30121a6801a3a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3856a96c329240989e91f3447e9a763f = $(`<div id="html_3856a96c329240989e91f3447e9a763f" style="width: 100.0%; height: 100.0%;"><i>BLUE HORIZON, Average Unit Price ($PSM): 10426.22, Number of Transactions: 55</i></div>`)[0];
+            popup_da41ab6cb8ee45f08da30121a6801a3a.setContent(html_3856a96c329240989e91f3447e9a763f);
+        
+
+        marker_1ee2eb8a96b64828b7b9bb51579c5b69.bindPopup(popup_da41ab6cb8ee45f08da30121a6801a3a)
+        ;
+
+        
+    
+    
+            var marker_719cfcd14a174b30bbcc69fdba55d364 = L.marker(
+                [1.3594888019999998, 103.9407888],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_d7a44608406b4e1c8aca127d7e69d20d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_60da8d9732bb4612b6eb476d96510295 = $(`<div id="html_60da8d9732bb4612b6eb476d96510295" style="width: 100.0%; height: 100.0%;"><i>CITYLIFE@TAMPINES, Average Unit Price ($PSM): 10971.0, Number of Transactions: 2</i></div>`)[0];
+            popup_d7a44608406b4e1c8aca127d7e69d20d.setContent(html_60da8d9732bb4612b6eb476d96510295);
+        
+
+        marker_719cfcd14a174b30bbcc69fdba55d364.bindPopup(popup_d7a44608406b4e1c8aca127d7e69d20d)
+        ;
+
+        
+    
+    
+            var marker_2e64dc5981f243d9b028bbb2c8d7fb2d = L.marker(
+                [1.313728239, 103.8067501],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_99b5189e74f948ed96ba3382cac4f676 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_41cfc49733e34cfb8a3036694c8214b2 = $(`<div id="html_41cfc49733e34cfb8a3036694c8214b2" style="width: 100.0%; height: 100.0%;"><i>POLLEN & BLEU, Average Unit Price ($PSM): 21547.8, Number of Transactions: 25</i></div>`)[0];
+            popup_99b5189e74f948ed96ba3382cac4f676.setContent(html_41cfc49733e34cfb8a3036694c8214b2);
+        
+
+        marker_2e64dc5981f243d9b028bbb2c8d7fb2d.bindPopup(popup_99b5189e74f948ed96ba3382cac4f676)
+        ;
+
+        
+    
+    
+            var marker_c0d3e858cba34771964710cd0c1d5bfe = L.marker(
+                [1.3838508109999998, 103.7491746],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_5505ce6c57264d43bada344ece049060 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_eef6c383c8cc4d8089da1c2b9ab16e85 = $(`<div id="html_eef6c383c8cc4d8089da1c2b9ab16e85" style="width: 100.0%; height: 100.0%;"><i>THE RAINFOREST, Average Unit Price ($PSM): 9562.5, Number of Transactions: 2</i></div>`)[0];
+            popup_5505ce6c57264d43bada344ece049060.setContent(html_eef6c383c8cc4d8089da1c2b9ab16e85);
+        
+
+        marker_c0d3e858cba34771964710cd0c1d5bfe.bindPopup(popup_5505ce6c57264d43bada344ece049060)
+        ;
+
+        
+    
+    
+            var marker_872f456ec84648149c482473865c4637 = L.marker(
+                [1.300471072, 103.8506873],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_2ef5b0e3ad994acead45b51a4ad3b7b4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7d993afe68ab483ba30e966aa444ba37 = $(`<div id="html_7d993afe68ab483ba30e966aa444ba37" style="width: 100.0%; height: 100.0%;"><i>SUNSHINE PLAZA, Average Unit Price ($PSM): 13175.51, Number of Transactions: 78</i></div>`)[0];
+            popup_2ef5b0e3ad994acead45b51a4ad3b7b4.setContent(html_7d993afe68ab483ba30e966aa444ba37);
+        
+
+        marker_872f456ec84648149c482473865c4637.bindPopup(popup_2ef5b0e3ad994acead45b51a4ad3b7b4)
+        ;
+
+        
+    
+    
+            var marker_37d86a4887ce4186aa199697f5165d18 = L.marker(
+                [1.34200448, 103.7166876],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_7e4f2f0332dd4067a6d0c9d5a867832c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_686441e2df244934af79867c43bbb230 = $(`<div id="html_686441e2df244934af79867c43bbb230" style="width: 100.0%; height: 100.0%;"><i>LAKEHOLMZ, Average Unit Price ($PSM): 8944.05, Number of Transactions: 44</i></div>`)[0];
+            popup_7e4f2f0332dd4067a6d0c9d5a867832c.setContent(html_686441e2df244934af79867c43bbb230);
+        
+
+        marker_37d86a4887ce4186aa199697f5165d18.bindPopup(popup_7e4f2f0332dd4067a6d0c9d5a867832c)
+        ;
+
+        
+    
+    
+            var marker_ad17fbfaaaac41ef96f4da91380ee8e3 = L.marker(
+                [1.305351212, 103.7883474],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_57930a60fa29452f8e8cc16f12878e1d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3004feaaba3947dab40029c7131289a4 = $(`<div id="html_3004feaaba3947dab40029c7131289a4" style="width: 100.0%; height: 100.0%;"><i>THE ROCHESTER, Average Unit Price ($PSM): 14717.3, Number of Transactions: 71</i></div>`)[0];
+            popup_57930a60fa29452f8e8cc16f12878e1d.setContent(html_3004feaaba3947dab40029c7131289a4);
+        
+
+        marker_ad17fbfaaaac41ef96f4da91380ee8e3.bindPopup(popup_57930a60fa29452f8e8cc16f12878e1d)
+        ;
+
+        
+    
+    
+            var marker_ec8072edd31745fe800a0251fb597fb7 = L.marker(
+                [1.335921612, 103.869281],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_7e8d97e7bd5747438ab01d3f7b8cb9fc = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f444a38dac1f45c0adde33c46dd1e820 = $(`<div id="html_f444a38dac1f45c0adde33c46dd1e820" style="width: 100.0%; height: 100.0%;"><i>8@WOODLEIGH, Average Unit Price ($PSM): 15508.44, Number of Transactions: 25</i></div>`)[0];
+            popup_7e8d97e7bd5747438ab01d3f7b8cb9fc.setContent(html_f444a38dac1f45c0adde33c46dd1e820);
+        
+
+        marker_ec8072edd31745fe800a0251fb597fb7.bindPopup(popup_7e8d97e7bd5747438ab01d3f7b8cb9fc)
+        ;
+
+        
+    
+    
+            var marker_a3d8ed8a442b4c069d788ca5e8adeb29 = L.marker(
+                [1.439116563, 103.8302537],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_0b769083ed454996a7d5e7d4f325bfba = L.popup({"maxWidth": "100%"});
+
+        
+            var html_63d5b638679346e29dc9dd43585e8c17 = $(`<div id="html_63d5b638679346e29dc9dd43585e8c17" style="width: 100.0%; height: 100.0%;"><i>YISHUN EMERALD, Average Unit Price ($PSM): 7589.89, Number of Transactions: 27</i></div>`)[0];
+            popup_0b769083ed454996a7d5e7d4f325bfba.setContent(html_63d5b638679346e29dc9dd43585e8c17);
+        
+
+        marker_a3d8ed8a442b4c069d788ca5e8adeb29.bindPopup(popup_0b769083ed454996a7d5e7d4f325bfba)
+        ;
+
+        
+    
+    
+            var marker_14915f5f6fae41ae98c24faada95b664 = L.marker(
+                [1.3760814630000002, 103.9610379],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_611a6ed53deb4711bae3198e266c783f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_89670756448c40468ff329cedbbd43e3 = $(`<div id="html_89670756448c40468ff329cedbbd43e3" style="width: 100.0%; height: 100.0%;"><i>SEASTRAND, Average Unit Price ($PSM): 10470.1, Number of Transactions: 21</i></div>`)[0];
+            popup_611a6ed53deb4711bae3198e266c783f.setContent(html_89670756448c40468ff329cedbbd43e3);
+        
+
+        marker_14915f5f6fae41ae98c24faada95b664.bindPopup(popup_611a6ed53deb4711bae3198e266c783f)
+        ;
+
+        
+    
+    
+            var marker_420df79c5d894c179896bdf69f3afe2f = L.marker(
+                [1.320988419, 103.9558821],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_613cb6e71cd8473fbf079d50d09f3739 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_93016dee23894dfbb85d0f6147422518 = $(`<div id="html_93016dee23894dfbb85d0f6147422518" style="width: 100.0%; height: 100.0%;"><i>FAIRMOUNT CONDOMINIUM, Average Unit Price ($PSM): 8454.15, Number of Transactions: 34</i></div>`)[0];
+            popup_613cb6e71cd8473fbf079d50d09f3739.setContent(html_93016dee23894dfbb85d0f6147422518);
+        
+
+        marker_420df79c5d894c179896bdf69f3afe2f.bindPopup(popup_613cb6e71cd8473fbf079d50d09f3739)
+        ;
+
+        
+    
+    
+            var marker_c4500ac5ddba41bab5e163360752cdcf = L.marker(
+                [1.416683532, 103.8475089],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_8796fc0fd9da42d5ab66be7443eb7437 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7d6a5b8a8131431c8958cb846ee92a19 = $(`<div id="html_7d6a5b8a8131431c8958cb846ee92a19" style="width: 100.0%; height: 100.0%;"><i>THE MILTONIA RESIDENCES, Average Unit Price ($PSM): 9166.33, Number of Transactions: 3</i></div>`)[0];
+            popup_8796fc0fd9da42d5ab66be7443eb7437.setContent(html_7d6a5b8a8131431c8958cb846ee92a19);
+        
+
+        marker_c4500ac5ddba41bab5e163360752cdcf.bindPopup(popup_8796fc0fd9da42d5ab66be7443eb7437)
+        ;
+
+        
+    
+    
+            var marker_764d65000748487bbc29259f270b062c = L.marker(
+                [1.313123265, 103.9388324],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_5dd096a29d9c464881c132cd33a61ff7 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5880be2733c647a1a0237f259e570a52 = $(`<div id="html_5880be2733c647a1a0237f259e570a52" style="width: 100.0%; height: 100.0%;"><i>THE BAYSHORE, Average Unit Price ($PSM): 9670.73, Number of Transactions: 44</i></div>`)[0];
+            popup_5dd096a29d9c464881c132cd33a61ff7.setContent(html_5880be2733c647a1a0237f259e570a52);
+        
+
+        marker_764d65000748487bbc29259f270b062c.bindPopup(popup_5dd096a29d9c464881c132cd33a61ff7)
+        ;
+
+        
+    
+    
+            var marker_54abc39b7135492daefa30ca36cac540 = L.marker(
+                [1.287361443, 103.7934495],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_8b12bb99f45643d2968411a12c527cc9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8acfaf5d3e36462b937d755f9d1e76f7 = $(`<div id="html_8acfaf5d3e36462b937d755f9d1e76f7" style="width: 100.0%; height: 100.0%;"><i>NORMANTON PARK, Average Unit Price ($PSM): 10709.0, Number of Transactions: 1</i></div>`)[0];
+            popup_8b12bb99f45643d2968411a12c527cc9.setContent(html_8acfaf5d3e36462b937d755f9d1e76f7);
+        
+
+        marker_54abc39b7135492daefa30ca36cac540.bindPopup(popup_8b12bb99f45643d2968411a12c527cc9)
+        ;
+
+        
+    
+    
+            var marker_91c8dff0cb984ab583204f0cea84dfb2 = L.marker(
+                [1.2995341740000002, 103.7662581],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_543a1b91832749c490436e3ec8f020ab = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d9c6bf849d664052b7d0c2c9d6afc721 = $(`<div id="html_d9c6bf849d664052b7d0c2c9d6afc721" style="width: 100.0%; height: 100.0%;"><i>WEST BAY CONDOMINIUM, Average Unit Price ($PSM): 8987.17, Number of Transactions: 46</i></div>`)[0];
+            popup_543a1b91832749c490436e3ec8f020ab.setContent(html_d9c6bf849d664052b7d0c2c9d6afc721);
+        
+
+        marker_91c8dff0cb984ab583204f0cea84dfb2.bindPopup(popup_543a1b91832749c490436e3ec8f020ab)
+        ;
+
+        
+    
+    
+            var marker_1c7366b2d83b4d13966be924a60065eb = L.marker(
+                [1.266813413, 103.8146737],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_878ec71f9b1e4a659fb5a993c9e31319 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f0ba50c408244129956fda1f0ad018ea = $(`<div id="html_f0ba50c408244129956fda1f0ad018ea" style="width: 100.0%; height: 100.0%;"><i>CARIBBEAN AT KEPPEL BAY, Average Unit Price ($PSM): 16164.32, Number of Transactions: 47</i></div>`)[0];
+            popup_878ec71f9b1e4a659fb5a993c9e31319.setContent(html_f0ba50c408244129956fda1f0ad018ea);
+        
+
+        marker_1c7366b2d83b4d13966be924a60065eb.bindPopup(popup_878ec71f9b1e4a659fb5a993c9e31319)
+        ;
+
+        
+    
+    
+            var marker_a1414a4953224fb7b9ecd96558ff413c = L.marker(
+                [1.3812844780000002, 103.8920047],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_d5e751f7a88749ffb2850cf3433ef38e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_78730f0c06094f54bebe7432f9bd577a = $(`<div id="html_78730f0c06094f54bebe7432f9bd577a" style="width: 100.0%; height: 100.0%;"><i>JEWEL @ BUANGKOK, Average Unit Price ($PSM): 13431.5, Number of Transactions: 4</i></div>`)[0];
+            popup_d5e751f7a88749ffb2850cf3433ef38e.setContent(html_78730f0c06094f54bebe7432f9bd577a);
+        
+
+        marker_a1414a4953224fb7b9ecd96558ff413c.bindPopup(popup_d5e751f7a88749ffb2850cf3433ef38e)
+        ;
+
+        
+    
+    
+            var marker_5fd6c1f46dee4548948b28bff0039073 = L.marker(
+                [1.311452162, 103.7971283],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_39eadbf00e804b919c16a35078d53949 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fa5471dd71e14d3c89ef0c37f17e7175 = $(`<div id="html_fa5471dd71e14d3c89ef0c37f17e7175" style="width: 100.0%; height: 100.0%;"><i>THE MERASAGA, Average Unit Price ($PSM): 15355.46, Number of Transactions: 13</i></div>`)[0];
+            popup_39eadbf00e804b919c16a35078d53949.setContent(html_fa5471dd71e14d3c89ef0c37f17e7175);
+        
+
+        marker_5fd6c1f46dee4548948b28bff0039073.bindPopup(popup_39eadbf00e804b919c16a35078d53949)
+        ;
+
+        
+    
+    
+            var marker_927aa52c65bc47b8affe7a4ca1f87a02 = L.marker(
+                [1.322931186, 103.9451256],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_6c40d4ec7bc64fc089524ca22b3ce055 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0c77e34e0e6546719f62875702a5245f = $(`<div id="html_0c77e34e0e6546719f62875702a5245f" style="width: 100.0%; height: 100.0%;"><i>ECO, Average Unit Price ($PSM): 14128.65, Number of Transactions: 17</i></div>`)[0];
+            popup_6c40d4ec7bc64fc089524ca22b3ce055.setContent(html_0c77e34e0e6546719f62875702a5245f);
+        
+
+        marker_927aa52c65bc47b8affe7a4ca1f87a02.bindPopup(popup_6c40d4ec7bc64fc089524ca22b3ce055)
+        ;
+
+        
+    
+    
+            var marker_7323cf51bc1a4dacb8f77eaba5b672c2 = L.marker(
+                [1.418243471, 103.848263],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_ef6c11d410d841a0967b4baa0f4fb84b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e76f11d209464f7f82aaefc1a74a08d9 = $(`<div id="html_e76f11d209464f7f82aaefc1a74a08d9" style="width: 100.0%; height: 100.0%;"><i>SKIES MILTONIA, Average Unit Price ($PSM): 10952.7, Number of Transactions: 10</i></div>`)[0];
+            popup_ef6c11d410d841a0967b4baa0f4fb84b.setContent(html_e76f11d209464f7f82aaefc1a74a08d9);
+        
+
+        marker_7323cf51bc1a4dacb8f77eaba5b672c2.bindPopup(popup_ef6c11d410d841a0967b4baa0f4fb84b)
+        ;
+
+        
+    
+    
+            var marker_f60d3d04e7734146acad7f0abae5569c = L.marker(
+                [1.337420741, 103.8465385],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_4dee8ab6f4834eaa8eae07e6b44b6cf5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d58bbbf4e61b46cc966083123d650a64 = $(`<div id="html_d58bbbf4e61b46cc966083123d650a64" style="width: 100.0%; height: 100.0%;"><i>TREVISTA, Average Unit Price ($PSM): 14670.52, Number of Transactions: 66</i></div>`)[0];
+            popup_4dee8ab6f4834eaa8eae07e6b44b6cf5.setContent(html_d58bbbf4e61b46cc966083123d650a64);
+        
+
+        marker_f60d3d04e7734146acad7f0abae5569c.bindPopup(popup_4dee8ab6f4834eaa8eae07e6b44b6cf5)
+        ;
+
+        
+    
+    
+            var marker_801191b083fe4bbca18cccce4d49249d = L.marker(
+                [1.354543787, 103.9675517],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_9a566bea67d94f90bc91b31e2da40e6e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d30ed3c9e67b48a5b3f1972f3a67f79d = $(`<div id="html_d30ed3c9e67b48a5b3f1972f3a67f79d" style="width: 100.0%; height: 100.0%;"><i>HEDGES PARK CONDOMINIUM, Average Unit Price ($PSM): 9951.27, Number of Transactions: 11</i></div>`)[0];
+            popup_9a566bea67d94f90bc91b31e2da40e6e.setContent(html_d30ed3c9e67b48a5b3f1972f3a67f79d);
+        
+
+        marker_801191b083fe4bbca18cccce4d49249d.bindPopup(popup_9a566bea67d94f90bc91b31e2da40e6e)
+        ;
+
+        
+    
+    
+            var marker_a1fb77d7ceee49e2851e41d1e2e66aa6 = L.marker(
+                [1.3567662, 103.9664716],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_925026d24130485d93392c6e1a5b0369 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0098f7af1f4944e38520bbcd82b369c0 = $(`<div id="html_0098f7af1f4944e38520bbcd82b369c0" style="width: 100.0%; height: 100.0%;"><i>THE INFLORA, Average Unit Price ($PSM): 12230.56, Number of Transactions: 9</i></div>`)[0];
+            popup_925026d24130485d93392c6e1a5b0369.setContent(html_0098f7af1f4944e38520bbcd82b369c0);
+        
+
+        marker_a1fb77d7ceee49e2851e41d1e2e66aa6.bindPopup(popup_925026d24130485d93392c6e1a5b0369)
+        ;
+
+        
+    
+    
+            var marker_9453b844917448adb31697d87dac46dd = L.marker(
+                [1.372464154, 103.9451958],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_808ebd2d80ba43d5b5f5e7c27f3fbab0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8c9ab0063fb34d61ba573fd6fc92ecc9 = $(`<div id="html_8c9ab0063fb34d61ba573fd6fc92ecc9" style="width: 100.0%; height: 100.0%;"><i>COCO PALMS, Average Unit Price ($PSM): 12971.67, Number of Transactions: 6</i></div>`)[0];
+            popup_808ebd2d80ba43d5b5f5e7c27f3fbab0.setContent(html_8c9ab0063fb34d61ba573fd6fc92ecc9);
+        
+
+        marker_9453b844917448adb31697d87dac46dd.bindPopup(popup_808ebd2d80ba43d5b5f5e7c27f3fbab0)
+        ;
+
+        
+    
+    
+            var marker_d1d70f085b6b42128f9528ce92f5a438 = L.marker(
+                [1.360579794, 103.8846954],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_394c5b8d68a44362ae1b86d152da2e26 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0fc8614e1bbd44c3b79191e82e829d3f = $(`<div id="html_0fc8614e1bbd44c3b79191e82e829d3f" style="width: 100.0%; height: 100.0%;"><i>KOVAN RESIDENCES, Average Unit Price ($PSM): 12264.0, Number of Transactions: 23</i></div>`)[0];
+            popup_394c5b8d68a44362ae1b86d152da2e26.setContent(html_0fc8614e1bbd44c3b79191e82e829d3f);
+        
+
+        marker_d1d70f085b6b42128f9528ce92f5a438.bindPopup(popup_394c5b8d68a44362ae1b86d152da2e26)
+        ;
+
+        
+    
+    
+            var marker_66718bea7c0047e3854070d31b5faa71 = L.marker(
+                [1.375884494, 103.8342266],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_560bbd235bc34614bfc28e3e6b7725f2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_150bb3cf3f364d7595510a0e911f93d3 = $(`<div id="html_150bb3cf3f364d7595510a0e911f93d3" style="width: 100.0%; height: 100.0%;"><i>THE PANORAMA, Average Unit Price ($PSM): 15914.25, Number of Transactions: 4</i></div>`)[0];
+            popup_560bbd235bc34614bfc28e3e6b7725f2.setContent(html_150bb3cf3f364d7595510a0e911f93d3);
+        
+
+        marker_66718bea7c0047e3854070d31b5faa71.bindPopup(popup_560bbd235bc34614bfc28e3e6b7725f2)
+        ;
+
+        
+    
+    
+            var marker_2ee46ff3ed9e405782b8557303787d31 = L.marker(
+                [1.347521837, 103.8520478],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_e25e1b5f3e2a4375ab34e0b2a7d92eec = L.popup({"maxWidth": "100%"});
+
+        
+            var html_bd71fcf1fe5542da8d7a4350d72f659d = $(`<div id="html_bd71fcf1fe5542da8d7a4350d72f659d" style="width: 100.0%; height: 100.0%;"><i>BISHAN LOFT, Average Unit Price ($PSM): 11425.85, Number of Transactions: 85</i></div>`)[0];
+            popup_e25e1b5f3e2a4375ab34e0b2a7d92eec.setContent(html_bd71fcf1fe5542da8d7a4350d72f659d);
+        
+
+        marker_2ee46ff3ed9e405782b8557303787d31.bindPopup(popup_e25e1b5f3e2a4375ab34e0b2a7d92eec)
+        ;
+
+        
+    
+    
+            var marker_5dde166bde3a4606a9d2078686885d55 = L.marker(
+                [1.3235746000000002, 103.9447078],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_12144b28b9e04159a07123b81787f431 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ed2b12fab61947e7a44476236a18c11b = $(`<div id="html_ed2b12fab61947e7a44476236a18c11b" style="width: 100.0%; height: 100.0%;"><i>ECO, Average Unit Price ($PSM): 13734.5, Number of Transactions: 6</i></div>`)[0];
+            popup_12144b28b9e04159a07123b81787f431.setContent(html_ed2b12fab61947e7a44476236a18c11b);
+        
+
+        marker_5dde166bde3a4606a9d2078686885d55.bindPopup(popup_12144b28b9e04159a07123b81787f431)
+        ;
+
+        
+    
+    
+            var marker_8b4d2112a72a411f9c77659ae9cbe2ec = L.marker(
+                [1.290242596, 103.8413851],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_d6441fb6194f4821861408be88361219 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2e561b0ee57146c7b1f9c30460192c84 = $(`<div id="html_2e561b0ee57146c7b1f9c30460192c84" style="width: 100.0%; height: 100.0%;"><i>RIVER PLACE, Average Unit Price ($PSM): 13965.08, Number of Transactions: 25</i></div>`)[0];
+            popup_d6441fb6194f4821861408be88361219.setContent(html_2e561b0ee57146c7b1f9c30460192c84);
+        
+
+        marker_8b4d2112a72a411f9c77659ae9cbe2ec.bindPopup(popup_d6441fb6194f4821861408be88361219)
+        ;
+
+        
+    
+    
+            var marker_da5ed6f913c34671a7643f3658021620 = L.marker(
+                [1.343082163, 103.8408157],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_40a92bed557b4e02bc31d0b9806968ee = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ae291f4a58e04e5492ffc3a35da23e1d = $(`<div id="html_ae291f4a58e04e5492ffc3a35da23e1d" style="width: 100.0%; height: 100.0%;"><i>BRADDELL VIEW, Average Unit Price ($PSM): 8118.69, Number of Transactions: 26</i></div>`)[0];
+            popup_40a92bed557b4e02bc31d0b9806968ee.setContent(html_ae291f4a58e04e5492ffc3a35da23e1d);
+        
+
+        marker_da5ed6f913c34671a7643f3658021620.bindPopup(popup_40a92bed557b4e02bc31d0b9806968ee)
+        ;
+
+        
+    
+    
+            var marker_53d92adfe43744b1b527fca04605f90e = L.marker(
+                [1.350764534, 103.9273573],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_5932c52f99324c8fb24c410c9a10312c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a99ed8dbd550407894862176475f0dd4 = $(`<div id="html_a99ed8dbd550407894862176475f0dd4" style="width: 100.0%; height: 100.0%;"><i>Q BAY RESIDENCES, Average Unit Price ($PSM): 11604.78, Number of Transactions: 9</i></div>`)[0];
+            popup_5932c52f99324c8fb24c410c9a10312c.setContent(html_a99ed8dbd550407894862176475f0dd4);
+        
+
+        marker_53d92adfe43744b1b527fca04605f90e.bindPopup(popup_5932c52f99324c8fb24c410c9a10312c)
+        ;
+
+        
+    
+    
+            var marker_43c8c6eb94874a2c9d44bef32224090d = L.marker(
+                [1.373879324, 103.8779318],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_8a00846170e943718940e08d05c299f6 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6f562f30072f4050adfc24aeada9a465 = $(`<div id="html_6f562f30072f4050adfc24aeada9a465" style="width: 100.0%; height: 100.0%;"><i>REGENT VILLE, Average Unit Price ($PSM): 7616.22, Number of Transactions: 72</i></div>`)[0];
+            popup_8a00846170e943718940e08d05c299f6.setContent(html_6f562f30072f4050adfc24aeada9a465);
+        
+
+        marker_43c8c6eb94874a2c9d44bef32224090d.bindPopup(popup_8a00846170e943718940e08d05c299f6)
+        ;
+
+        
+    
+    
+            var marker_a0c943b2face4c6795a535e18f0a655f = L.marker(
+                [1.372134741, 103.9459742],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_38451b28172845acb179d904fab4bd98 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fca52f053bf44c15a4e620da7b5c82fa = $(`<div id="html_fca52f053bf44c15a4e620da7b5c82fa" style="width: 100.0%; height: 100.0%;"><i>COCO PALMS, Average Unit Price ($PSM): 12622.5, Number of Transactions: 4</i></div>`)[0];
+            popup_38451b28172845acb179d904fab4bd98.setContent(html_fca52f053bf44c15a4e620da7b5c82fa);
+        
+
+        marker_a0c943b2face4c6795a535e18f0a655f.bindPopup(popup_38451b28172845acb179d904fab4bd98)
+        ;
+
+        
+    
+    
+            var marker_788db65ee6974846a851aab50002e7ff = L.marker(
+                [1.380482405, 103.7598018],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_c4f380a9948c4615b0d4d7d752992bca = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e85f723587fe4b12b38dfaaae58024e5 = $(`<div id="html_e85f723587fe4b12b38dfaaae58024e5" style="width: 100.0%; height: 100.0%;"><i>THE TENNERY, Average Unit Price ($PSM): 11231.0, Number of Transactions: 4</i></div>`)[0];
+            popup_c4f380a9948c4615b0d4d7d752992bca.setContent(html_e85f723587fe4b12b38dfaaae58024e5);
+        
+
+        marker_788db65ee6974846a851aab50002e7ff.bindPopup(popup_c4f380a9948c4615b0d4d7d752992bca)
+        ;
+
+        
+    
+    
+            var marker_7974f71cdea54aba936cb3453e6e112d = L.marker(
+                [1.3809578930000002, 103.8909811],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_285477961a7e4686bbc35e65915da3a5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3d24ef42cc904941a5659ef4fc3c5636 = $(`<div id="html_3d24ef42cc904941a5659ef4fc3c5636" style="width: 100.0%; height: 100.0%;"><i>ESPARINA RESIDENCES, Average Unit Price ($PSM): 11519.71, Number of Transactions: 21</i></div>`)[0];
+            popup_285477961a7e4686bbc35e65915da3a5.setContent(html_3d24ef42cc904941a5659ef4fc3c5636);
+        
+
+        marker_7974f71cdea54aba936cb3453e6e112d.bindPopup(popup_285477961a7e4686bbc35e65915da3a5)
+        ;
+
+        
+    
+    
+            var marker_6ba25116cf9d4b229e3d36ce1c96f3d9 = L.marker(
+                [1.4132941769999998, 103.8365191],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_d48fbe9c2a8b43a19a25b2b0f2369a50 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9dc691de87e54d41b457b302560e0466 = $(`<div id="html_9dc691de87e54d41b457b302560e0466" style="width: 100.0%; height: 100.0%;"><i>ORCHID PARK CONDOMINIUM, Average Unit Price ($PSM): 7509.91, Number of Transactions: 32</i></div>`)[0];
+            popup_d48fbe9c2a8b43a19a25b2b0f2369a50.setContent(html_9dc691de87e54d41b457b302560e0466);
+        
+
+        marker_6ba25116cf9d4b229e3d36ce1c96f3d9.bindPopup(popup_d48fbe9c2a8b43a19a25b2b0f2369a50)
+        ;
+
+        
+    
+    
+            var marker_2dc906c87a1548c9b740cbccab8fa45e = L.marker(
+                [1.443838001, 103.820219],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_ef7381fb04854f1d9910e2f9c2198440 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9ec80510f2ec458abbd4c5b08d152e99 = $(`<div id="html_9ec80510f2ec458abbd4c5b08d152e99" style="width: 100.0%; height: 100.0%;"><i>SKYPARK RESIDENCES, Average Unit Price ($PSM): 8679.0, Number of Transactions: 1</i></div>`)[0];
+            popup_ef7381fb04854f1d9910e2f9c2198440.setContent(html_9ec80510f2ec458abbd4c5b08d152e99);
+        
+
+        marker_2dc906c87a1548c9b740cbccab8fa45e.bindPopup(popup_ef7381fb04854f1d9910e2f9c2198440)
+        ;
+
+        
+    
+    
+            var marker_376939344bcb4e548ffaba17cec69d9c = L.marker(
+                [1.35862622, 103.9330726],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_6d418e3b1f134ad784bd2790185a54bd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_bd4575c07a904212863c546b1b2c67f0 = $(`<div id="html_bd4575c07a904212863c546b1b2c67f0" style="width: 100.0%; height: 100.0%;"><i>PINEVALE, Average Unit Price ($PSM): 7306.17, Number of Transactions: 29</i></div>`)[0];
+            popup_6d418e3b1f134ad784bd2790185a54bd.setContent(html_bd4575c07a904212863c546b1b2c67f0);
+        
+
+        marker_376939344bcb4e548ffaba17cec69d9c.bindPopup(popup_6d418e3b1f134ad784bd2790185a54bd)
+        ;
+
+        
+    
+    
+            var marker_3166fd06b15c458b8d5007030fa7c5d5 = L.marker(
+                [1.31817797, 103.7754652],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_49e6413642994a91b43e1b9a8f262aa4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3ffdb651d1204f0fbe3b760a788cc6f8 = $(`<div id="html_3ffdb651d1204f0fbe3b760a788cc6f8" style="width: 100.0%; height: 100.0%;"><i>PINE GROVE, Average Unit Price ($PSM): 9396.0, Number of Transactions: 4</i></div>`)[0];
+            popup_49e6413642994a91b43e1b9a8f262aa4.setContent(html_3ffdb651d1204f0fbe3b760a788cc6f8);
+        
+
+        marker_3166fd06b15c458b8d5007030fa7c5d5.bindPopup(popup_49e6413642994a91b43e1b9a8f262aa4)
+        ;
+
+        
+    
+    
+            var marker_823a615e80f24034bc6df564b7d1f539 = L.marker(
+                [1.431164518, 103.7853739],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_fc9c1535db6a407eb53c0e3cdc2a5486 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e654aeb4126b4977b9559da73a214cda = $(`<div id="html_e654aeb4126b4977b9559da73a214cda" style="width: 100.0%; height: 100.0%;"><i>ROSEWOOD, Average Unit Price ($PSM): 7832.6, Number of Transactions: 25</i></div>`)[0];
+            popup_fc9c1535db6a407eb53c0e3cdc2a5486.setContent(html_e654aeb4126b4977b9559da73a214cda);
+        
+
+        marker_823a615e80f24034bc6df564b7d1f539.bindPopup(popup_fc9c1535db6a407eb53c0e3cdc2a5486)
+        ;
+
+        
+    
+    
+            var marker_7af62f59681549ad92a47f8c81a467fb = L.marker(
+                [1.3723254930000002, 103.9430182],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_a36e3ff33602440f8f426b1323a9030a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1c4074bcccb64a9594d6f1d0720c2fa1 = $(`<div id="html_1c4074bcccb64a9594d6f1d0720c2fa1" style="width: 100.0%; height: 100.0%;"><i>LIVIA, Average Unit Price ($PSM): 9365.72, Number of Transactions: 18</i></div>`)[0];
+            popup_a36e3ff33602440f8f426b1323a9030a.setContent(html_1c4074bcccb64a9594d6f1d0720c2fa1);
+        
+
+        marker_7af62f59681549ad92a47f8c81a467fb.bindPopup(popup_a36e3ff33602440f8f426b1323a9030a)
+        ;
+
+        
+    
+    
+            var marker_474cc35820fd4b478bd43c02cf6e0574 = L.marker(
+                [1.378665878, 103.7639584],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_5f57ac5d399f44a3ba56ba3c0c784470 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_38dcb0bbd361422aa81d462b5c0ff54a = $(`<div id="html_38dcb0bbd361422aa81d462b5c0ff54a" style="width: 100.0%; height: 100.0%;"><i>HILLION RESIDENCES, Average Unit Price ($PSM): 15807.75, Number of Transactions: 8</i></div>`)[0];
+            popup_5f57ac5d399f44a3ba56ba3c0c784470.setContent(html_38dcb0bbd361422aa81d462b5c0ff54a);
+        
+
+        marker_474cc35820fd4b478bd43c02cf6e0574.bindPopup(popup_5f57ac5d399f44a3ba56ba3c0c784470)
+        ;
+
+        
+    
+    
+            var marker_1b7644847e1e4aae89b46e3d81f1cac7 = L.marker(
+                [1.274617941, 103.8443196],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_b60b061d410c4094bd9e6523570de109 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d63c1728657847b7a85748efc63d4886 = $(`<div id="html_d63c1728657847b7a85748efc63d4886" style="width: 100.0%; height: 100.0%;"><i>ALTEZ, Average Unit Price ($PSM): 22242.29, Number of Transactions: 34</i></div>`)[0];
+            popup_b60b061d410c4094bd9e6523570de109.setContent(html_d63c1728657847b7a85748efc63d4886);
+        
+
+        marker_1b7644847e1e4aae89b46e3d81f1cac7.bindPopup(popup_b60b061d410c4094bd9e6523570de109)
+        ;
+
+        
+    
+    
+            var marker_4eeae7c7be414b59b00dd4e95fe4a189 = L.marker(
+                [1.339920483, 103.8409875],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_cf55ce0c84cc4b9cb93475da083d65a3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_68595999b1ec4faba47ca59abc7770a2 = $(`<div id="html_68595999b1ec4faba47ca59abc7770a2" style="width: 100.0%; height: 100.0%;"><i>BRADDELL VIEW, Average Unit Price ($PSM): 8257.33, Number of Transactions: 3</i></div>`)[0];
+            popup_cf55ce0c84cc4b9cb93475da083d65a3.setContent(html_68595999b1ec4faba47ca59abc7770a2);
+        
+
+        marker_4eeae7c7be414b59b00dd4e95fe4a189.bindPopup(popup_cf55ce0c84cc4b9cb93475da083d65a3)
+        ;
+
+        
+    
+    
+            var marker_d73051cb3a6042e3beddc08e254ef951 = L.marker(
+                [1.378617446, 103.96166540000002],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_8a8080f332f049829334709553831a55 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_662f636280df4269834fcdbd25936259 = $(`<div id="html_662f636280df4269834fcdbd25936259" style="width: 100.0%; height: 100.0%;"><i>RIPPLE BAY, Average Unit Price ($PSM): 11197.67, Number of Transactions: 15</i></div>`)[0];
+            popup_8a8080f332f049829334709553831a55.setContent(html_662f636280df4269834fcdbd25936259);
+        
+
+        marker_d73051cb3a6042e3beddc08e254ef951.bindPopup(popup_8a8080f332f049829334709553831a55)
+        ;
+
+        
+    
+    
+            var marker_de50e06951d145708d8a622d9b2c0ef5 = L.marker(
+                [1.343111776, 103.8812009],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_9dd8131366eb4cba90a0d6d7ce7cb34e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_276d9f7cde86466aac1f3633a88ee40c = $(`<div id="html_276d9f7cde86466aac1f3633a88ee40c" style="width: 100.0%; height: 100.0%;"><i>BARTLEY RESIDENCES, Average Unit Price ($PSM): 13996.14, Number of Transactions: 7</i></div>`)[0];
+            popup_9dd8131366eb4cba90a0d6d7ce7cb34e.setContent(html_276d9f7cde86466aac1f3633a88ee40c);
+        
+
+        marker_de50e06951d145708d8a622d9b2c0ef5.bindPopup(popup_9dd8131366eb4cba90a0d6d7ce7cb34e)
+        ;
+
+        
+    
+    
+            var marker_b310c549d2304207b68125c286b97812 = L.marker(
+                [1.37842919, 103.7634271],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_77bc165c58034261b07e607d12dc47dd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_292878965a3d48169967ffe39a3443ae = $(`<div id="html_292878965a3d48169967ffe39a3443ae" style="width: 100.0%; height: 100.0%;"><i>HILLION RESIDENCES, Average Unit Price ($PSM): 15291.5, Number of Transactions: 6</i></div>`)[0];
+            popup_77bc165c58034261b07e607d12dc47dd.setContent(html_292878965a3d48169967ffe39a3443ae);
+        
+
+        marker_b310c549d2304207b68125c286b97812.bindPopup(popup_77bc165c58034261b07e607d12dc47dd)
+        ;
+
+        
+    
+    
+            var marker_173b60d8df9441f68e5ec5540366d42e = L.marker(
+                [1.4022689919999998, 103.8970115],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_ff25160e400847dab7cf12def53cc06b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_51a4ecfb3b3a4907a892125f3dc58e0d = $(`<div id="html_51a4ecfb3b3a4907a892125f3dc58e0d" style="width: 100.0%; height: 100.0%;"><i>TWIN WATERFALLS, Average Unit Price ($PSM): 10407.0, Number of Transactions: 5</i></div>`)[0];
+            popup_ff25160e400847dab7cf12def53cc06b.setContent(html_51a4ecfb3b3a4907a892125f3dc58e0d);
+        
+
+        marker_173b60d8df9441f68e5ec5540366d42e.bindPopup(popup_ff25160e400847dab7cf12def53cc06b)
+        ;
+
+        
+    
+    
+            var marker_721bcf42c5114239898314fcd07e3eec = L.marker(
+                [1.428373775, 103.7862547],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_605598e9be464e44bcdfc10d59867517 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7064f9d6518e4f7d89f30bb31fbd8fa0 = $(`<div id="html_7064f9d6518e4f7d89f30bb31fbd8fa0" style="width: 100.0%; height: 100.0%;"><i>PARC ROSEWOOD, Average Unit Price ($PSM): 12749.32, Number of Transactions: 25</i></div>`)[0];
+            popup_605598e9be464e44bcdfc10d59867517.setContent(html_7064f9d6518e4f7d89f30bb31fbd8fa0);
+        
+
+        marker_721bcf42c5114239898314fcd07e3eec.bindPopup(popup_605598e9be464e44bcdfc10d59867517)
+        ;
+
+        
+    
+    
+            var marker_d9175faf566d475c891f63332c63a014 = L.marker(
+                [1.3565061859999998, 103.9645702],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_ac43595075444d538246e54609e3e13f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_264118e4a9a540b8b7045f2522863392 = $(`<div id="html_264118e4a9a540b8b7045f2522863392" style="width: 100.0%; height: 100.0%;"><i>PALM ISLES, Average Unit Price ($PSM): 9785.47, Number of Transactions: 15</i></div>`)[0];
+            popup_ac43595075444d538246e54609e3e13f.setContent(html_264118e4a9a540b8b7045f2522863392);
+        
+
+        marker_d9175faf566d475c891f63332c63a014.bindPopup(popup_ac43595075444d538246e54609e3e13f)
+        ;
+
+        
+    
+    
+            var marker_aef31a341b3a4be48f68f48d887d233d = L.marker(
+                [1.34962201, 103.8786011],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_243aff5c4b774e8294ae0a9b8b0e7b76 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fc193e2c65b34003b320ce17548abe9a = $(`<div id="html_fc193e2c65b34003b320ce17548abe9a" style="width: 100.0%; height: 100.0%;"><i>CHERRY GARDENS, Average Unit Price ($PSM): 8135.77, Number of Transactions: 13</i></div>`)[0];
+            popup_243aff5c4b774e8294ae0a9b8b0e7b76.setContent(html_fc193e2c65b34003b320ce17548abe9a);
+        
+
+        marker_aef31a341b3a4be48f68f48d887d233d.bindPopup(popup_243aff5c4b774e8294ae0a9b8b0e7b76)
+        ;
+
+        
+    
+    
+            var marker_3892a4c4182e489ca9090b739a49854e = L.marker(
+                [1.356790867, 103.9636976],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_53316266d799441db057e3c62fc4409f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_107cc2aee4434b1bb794f4c178d322da = $(`<div id="html_107cc2aee4434b1bb794f4c178d322da" style="width: 100.0%; height: 100.0%;"><i>PALM ISLES, Average Unit Price ($PSM): 10903.61, Number of Transactions: 18</i></div>`)[0];
+            popup_53316266d799441db057e3c62fc4409f.setContent(html_107cc2aee4434b1bb794f4c178d322da);
+        
+
+        marker_3892a4c4182e489ca9090b739a49854e.bindPopup(popup_53316266d799441db057e3c62fc4409f)
+        ;
+
+        
+    
+    
+            var marker_9f224b3c67524c869e02f588d10e1fe4 = L.marker(
+                [1.352324214, 103.8653232],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_a5196addc7e54d8085ddc1f59baf37c9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2e50b99f8ae4479db1cd4227dba7dd8a = $(`<div id="html_2e50b99f8ae4479db1cd4227dba7dd8a" style="width: 100.0%; height: 100.0%;"><i>CHUAN PARK, Average Unit Price ($PSM): 9420.17, Number of Transactions: 42</i></div>`)[0];
+            popup_a5196addc7e54d8085ddc1f59baf37c9.setContent(html_2e50b99f8ae4479db1cd4227dba7dd8a);
+        
+
+        marker_9f224b3c67524c869e02f588d10e1fe4.bindPopup(popup_a5196addc7e54d8085ddc1f59baf37c9)
+        ;
+
+        
+    
+    
+            var marker_786dfaaf664a4e08a29eee29dcb555af = L.marker(
+                [1.264496996, 103.8163099],
+                {}
+            ).addTo(map_19305c49284b491c8ef4284c0c6564a2);
+        
+    
+        var popup_12631c0427bb4222b3040796513a2b76 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0a8dec5f44b44d98844c30e8d0297e96 = $(`<div id="html_0a8dec5f44b44d98844c30e8d0297e96" style="width: 100.0%; height: 100.0%;"><i>CORALS AT KEPPEL BAY, Average Unit Price ($PSM): 29352.0, Number of Transactions: 2</i></div>`)[0];
+            popup_12631c0427bb4222b3040796513a2b76.setContent(html_0a8dec5f44b44d98844c30e8d0297e96);
+        
+
+        marker_786dfaaf664a4e08a29eee29dcb555af.bindPopup(popup_12631c0427bb4222b3040796513a2b76)
+        ;
+
+        
+    
+</script>
