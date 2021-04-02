@@ -84,7 +84,7 @@ class Sample:
         start_date = (datetime.datetime.now() - datetime.timedelta(days=time*365)).strftime('%Y-%m-%d')
         end_date = datetime.datetime.now().strftime('%Y-%m-%d')
         interm_df = data[(data['Sale Date']>= start_date) & (data['Sale Date']< end_date) & (data['Property Type'].isin(property_type))]
-
+        
         #find past listings within radius
         interm_df['distance'] = interm_df.apply(lambda x: haversine(listing_long, listing_lat, x['LONGITUDE'], x['LATITUDE']), axis = 1)
         
