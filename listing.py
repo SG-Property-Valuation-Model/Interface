@@ -5,6 +5,7 @@ from amenities import nearest_sch, nearest_police_centre, nearest_train
 from location import postal_search, area_region
 import joblib
 import xgboost
+from xgboost import XGBRegressor
 
 class Listing:
     def __init__(self, postal, property_type, floor_num, floor_area, remaining_lease):
@@ -187,7 +188,13 @@ class Listing:
         property_df_scaled = pd.concat([s_scaled,
                         mm_scaled,
                         property_df.loc[:, 'Ang Mo Kio':'Executive Condominium'].copy()], axis=1)
-        model = joblib.load(path + 'model_test.pkl')
+        
+        # Initialize model 
+        model = XGBRegressor()
+
+        # Load model
+        model.load_model(path + 'model_xgboost.bin')
+
         # Use the loaded model to make predictions
         prediction = model.predict(property_df_scaled)[0]
         return prediction

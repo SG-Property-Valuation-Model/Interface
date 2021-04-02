@@ -31,7 +31,7 @@ police_centre = pd.read_csv('datasets/police_centre_gdf.csv')
 avg_cases = pd.read_csv('datasets/average_cases_by_npc.csv')
 prelim_ds = pd.read_csv('datasets/preliminary_dataset.csv')
 postal_code_area = pd.read_csv('datasets/historical_postal_code_area.csv')
-
+cols = list(modelling.columns)
 prelim_ds['Sale Date'] = pd.to_datetime(prelim_ds['Sale Date'], format = '%Y-%m-%d')
 
 ### Global Objects #####################################################
@@ -297,7 +297,7 @@ def overview_section(listing, predicted_price,  predicted_price_psm):
             dbc.Card([
                 
                 dbc.Row([
-                    dbc.Col('$' + str(predicted_price), 
+                    dbc.Col("${:,.2f}".format(predicted_price), 
                             style = {'font-size': 'xx-large', 'text-align': 'center', 'margin': 'auto', 'color': '#93C54B', 'padding-left': 0}, 
                             width = 6
                     ),
@@ -312,7 +312,7 @@ def overview_section(listing, predicted_price,  predicted_price_psm):
                 html.Hr(style = {'padding': 0}),
                 
                 dbc.Row([
-                    dbc.Col('$' + str(predicted_price_psm), 
+                    dbc.Col("${:,.2f}".format(predicted_price_psm), 
                             style = {'font-size': 'xx-large', 'text-align': 'center', 'margin': 'auto', 'color': '#93C54B', 'padding-left': 0}, 
                             width = 6
                     ),
@@ -686,15 +686,14 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
         return ["", 'Island Wide', transaction_features(full_sample), map_component, transaction_table, ts_plot]
    
     else: 
-        
-        value = 302302
-        price_output = str(value)
-        price_psm_output = str(value)
-        
+
         ##### Current Global Listing Object #####
         global curr_listing
         curr_listing = Listing(postal_input, property_type, int(floor_num), int(floor_area), int(lease))
         
+        global price_output, price_psm_output
+        price_output, price_psm_output = curr_listing.pred_price("modelling/", cols, postal_code_area, area_df, sch, train, police_centre, avg_cases)
+
         # For testing
         #curr_listing = Listing('597592', 'Condominium', 6, 99, 70)
         #curr_listing = Listing('689527', 'Condominium', 6, 99, 70)
