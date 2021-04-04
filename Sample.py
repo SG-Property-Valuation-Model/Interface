@@ -70,7 +70,7 @@ class Sample:
         Parameters
         - data: Dataframe with all historical listing; Preliminary dataset
         - listing_long: Longitude of listing
-        - lisiting_lat: Latitude of listing
+        - listing_lat: Latitude of listing
         '''
         radius = self.get_radius()
         time = self.get_time()
@@ -157,11 +157,11 @@ class Sample:
         
         return table
     
-    def get_map(self, listing_long, listing_lat, limit = 50):
+    def get_map(self, listing_long, listing_lat, listing_price_psm_output, listing_building_name, limit = 50):
         '''
         Parameters
         - listing_long: Longitude of listing
-        - lisiting_lat: Latitude of listing
+        - listing_lat: Latitude of listing
         - limit: Maximum number of points to show on map, default = 50
         '''
         # convert listing longitude and latitude to float
@@ -176,26 +176,46 @@ class Sample:
         grp_df = df.groupby(['LATITUDE', 'LONGITUDE', 'BUILDING']).agg(avg_psm=('Unit Price ($ PSM)', 'mean'),
                                                                        num_transactions =('Unit Price ($ PSM)', 'count')).reset_index()
         grp_df['avg_psm'] = grp_df['avg_psm'].apply(lambda x: round(x,2))
-
+        
+        # check if filtered data has past transactions of the same listing, get the number of past transactions
+        if len(grp_df[(grp_df['LATITUDE'] == listing_lat) & (grp_df['LONGITUDE'] == listing_long)]) > 0:
+            num_past_transactions = grp_df[(grp_df['LATITUDE'] == listing_lat) & (grp_df['LONGITUDE'] == listing_long)].iloc[0]['num_transactions']
+        else: 
+            num_past_transactions = 0 
+        
         # limit the number of points shown on the map
         if len(grp_df) > limit :
             grp_df = grp_df.sample(limit)
         else:
             grp_df = grp_df
             
-        m = folium.Map(location = listing_coord, zoom_start=15)
-        
+        m = folium.Map(location = listing_coord, zoom_start=14)
+
         # add markers
         for index, row in grp_df.iterrows():
             long = row['LONGITUDE']
             lat = row['LATITUDE']
-            pop_up = folium.Marker(location=[lat, long],
-                           popup="<i>" + row['BUILDING']+ ', Average Unit Price ($PSM): '
-                           + str(row['avg_psm'])+ ', Number of Transactions: ' 
-                           + str(row['num_transactions'])+
-                           "</i>"
-                    ).add_to(m)
-            
+
+            if (long == listing_long) & (lat == listing_lat):
+                continue 
+            else: 
+                pop_up = folium.Marker(
+                                location=[lat, long],
+                                popup="<i>" + row['BUILDING']+ ', Average Unit Price ($PSM): '
+                                    + str(row['avg_psm'])+ ', Number of Past Transactions: ' 
+                                    + str(row['num_transactions'])+ "</i>",
+                                icon = folium.Icon(color= 'darkblue')
+                        ).add_to(m)
+                
+        # adding marker for listing in red
+        pop_up = folium.Marker(
+                        location=[listing_lat, listing_long],
+                        popup="<i>" + listing_building_name + 
+                            ', Predicted Unit Price ($PSM): ' + str(listing_price_psm_output)+ 
+                            ', Number of Past Transactions: ' + str(num_past_transactions) + "</i>",
+                        icon = folium.Icon(color='red')
+                ).add_to(m)
+          
         # return html object
         m.save('sample_map.html')
         
@@ -308,11 +328,14 @@ data['Sale Date'] = pd.to_datetime(data['Sale Date'], format='%Y-%m-%d')
 
 area_df = pd.read_csv('datasets/area_centroid.csv')
 limit = 50
-try_index = 1002
+try_index = 1
 listing_lat = data.loc[try_index]['LATITUDE']
 listing_long = data.loc[try_index]['LONGITUDE']
 listing_PA = data.loc[try_index]['Planning Area']
-sample_instance = Sample(params)
+listing_building_name =  data.loc[try_index]['BUILDING']
+print(listing_PA, listing_lat, listing_long)
+listing_price_psm_output = 1000
+sample_instance = Sample(params,data)
 sample_instance.get_filtered_df(data, listing_long, listing_lat)
 print(sample_instance.dataframe.shape)
 print('max dist' + str(sample_instance.dataframe['distance'].max()))
@@ -321,24 +344,41 @@ print('ppt' + str(sample_instance.dataframe['Property Type'].unique()))
 print('avg psm:' + str(sample_instance.get_average_psm()))
 print('avg floor area:' + str(sample_instance.get_average_floor_area()))
 print('N transactions:' + str(sample_instance.get_total_transactions()))
-#sample_instance.get_map(listing_long, listing_lat, limit) 
+sample_instance.get_map(listing_long, listing_lat, listing_price_psm_output,listing_building_name,1)  
 print(sample_instance.get_closest_planning_area(area_df, listing_PA,2))
 #sample_instance.plot_psm(data, area_df, listing_PA, 2)
 
 
 # try with listing
 import listing
+params = {
+    'radius' : [0,1], 
+    'property' : [1,1,1],
+    'time' : [1,1],
+ }
+data = pd.read_csv('datasets/preliminary_dataset.csv')
+postal_code_area = pd.read_csv('datasets/historical_postal_code_area.csv')
+postal_code_area['Postal Code'] = postal_code_area['Postal Code'].apply(lambda x: str(x).zfill(6))
+police_centre = pd.read_csv('datasets/police_centre_gdf.csv')
+avg_cases = pd.read_csv('datasets/average_cases_by_npc.csv')
+data['Sale Date'] = pd.to_datetime(data['Sale Date'], format='%Y-%m-%d')
+area_df = pd.read_csv('datasets/area_centroid.csv')
 postal_input = '098656'
 property_type = 'Condominium'
 floor_num = 6
 floor_area = 99
 lease = 78
 try_unit = listing.Listing(postal_input, property_type, floor_num, floor_area, lease)
-listing_lat = try_unit.get_lat()
-listing_long = try_unit.get_lon()
+listing_lat = try_unit.get_lat(postal_code_area)
+listing_long = try_unit.get_lon(postal_code_area)
+listing_building_name = try_unit.get_building()
+listing_price_psm_output = 10000
 listing_PA = try_unit.get_planning_area(data, area_df)
-print(listing_PA)
-sample_instance2 = Sample(params)
+print(listing_PA, listing_lat, listing_long)
+print(try_unit.get_police_centre(police_centre, postal_code_area))
+print(try_unit.police_centre_dist(police_centre, postal_code_area))
+print(try_unit.get_centre_avg_cases(police_centre, avg_cases, postal_code_area))
+sample_instance2 = Sample(params,data)
 sample_instance2.get_filtered_df(data, listing_long, listing_lat)
 print(sample_instance2.dataframe.shape)
 print('max dist' + str(sample_instance2.dataframe['distance'].max()))
@@ -347,6 +387,6 @@ print('ppt' + str(sample_instance2.dataframe['Property Type'].unique()))
 print('avg psm:' + str(sample_instance2.get_average_psm()))
 print('avg floor area:' + str(sample_instance2.get_average_floor_area()))
 print('N transactions:' + str(sample_instance2.get_total_transactions()))
-#sample_instance.get_map(listing_long, listing_lat, limit) 
-print(sample_instance2.get_closest_planning_area(area_df, listing_PA,2))
+sample_instance2.get_map(listing_long, listing_lat, listing_price_psm_output,listing_building_name,1) 
+#print(sample_instance2.get_closest_planning_area(area_df, listing_PA,2))
 #sample_instance2.plot_psm(data, area_df, listing_PA, 2)'''
