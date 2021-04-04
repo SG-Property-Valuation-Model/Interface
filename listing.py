@@ -226,7 +226,7 @@ class Listing:
         unit_price = self.floor_area * predicted_psm
         return unit_price, predicted_psm
 
-
+'''
 # TESTING
 #Input postal code, property type, floor num, sqm, remaining lease
 property = Listing('098656', 'Condominium', 6, 99, 70)
@@ -256,4 +256,4 @@ print(property.get_police_centre(police_centre, postal_code_area))
 print(property.police_centre_dist(police_centre, postal_code_area))
 print(property.get_centre_avg_cases(police_centre, avg_cases, postal_code_area))
 print(property.convert_to_df(cols, postal_code_area, area_df, sch, train, police_centre, avg_cases))
-print(property.pred_price('modelling/', cols, postal_code_area, area_df, sch, train, police_centre, avg_cases))
+print(property.pred_price('modelling/', cols, postal_code_area, area_df, sch, train, police_centre, avg_cases))'''

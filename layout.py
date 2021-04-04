@@ -727,8 +727,7 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
         }
         curr_sample = Sample(params, prelim_ds)
         curr_sample.get_filtered_df(prelim_ds, curr_listing.get_lon(postal_code_area), curr_listing.get_lat(postal_code_area))
-        
-        curr_sample.get_map(curr_listing.get_lon(postal_code_area), curr_listing.get_lat(postal_code_area), 100)
+        curr_sample.get_map(curr_listing.get_lon(postal_code_area), curr_listing.get_lat(postal_code_area), price_psm_output, curr_listing.get_building(), 100)
         map_component = html.Iframe(srcDoc = open('sample_map.html', 'r').read(), height = '600')
         
         transaction_table = curr_sample.get_transaction_table()
