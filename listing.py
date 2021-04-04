@@ -45,6 +45,7 @@ class Listing:
 
     # Get longitude of property
     def get_lon(self, historical_df):
+        historical_df['Postal Code'] = historical_df['Postal Code'].apply(lambda x: str(x).zfill(6))
         if self.postal in historical_df['Postal Code'].tolist():
             lon = historical_df[historical_df['Postal Code'] == self.postal]['LONGITUDE'].values[0]
         else:
@@ -53,6 +54,7 @@ class Listing:
 
     # Get latitude of property
     def get_lat(self, historical_df):
+        historical_df['Postal Code'] = historical_df['Postal Code'].apply(lambda x: str(x).zfill(6))
         if self.postal in historical_df['Postal Code'].tolist():
             lat = historical_df[historical_df['Postal Code'] == self.postal]['LATITUDE'].values[0]
         else:
@@ -224,10 +226,10 @@ class Listing:
         unit_price = self.floor_area * predicted_psm
         return unit_price, predicted_psm
 
-'''
+
 # TESTING
 #Input postal code, property type, floor num, sqm, remaining lease
-property = Listing('768445', 'Condominium', 6, 99, 70)
+property = Listing('098656', 'Condominium', 6, 99, 70)
 sch = pd.read_csv('datasets/primary_sch_gdf.csv')
 train = pd.read_csv('datasets/train_gdf.csv')
 area_df = pd.read_csv('datasets/area_centroid.csv')
@@ -255,4 +257,3 @@ print(property.police_centre_dist(police_centre, postal_code_area))
 print(property.get_centre_avg_cases(police_centre, avg_cases, postal_code_area))
 print(property.convert_to_df(cols, postal_code_area, area_df, sch, train, police_centre, avg_cases))
 print(property.pred_price('modelling/', cols, postal_code_area, area_df, sch, train, police_centre, avg_cases))
-'''

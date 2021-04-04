@@ -86,7 +86,7 @@ def nearest_police_centre(property_geom, police_centre, dist = 10000):
 
     count, nearest_dist, nearest_index, all_index = zip(*results)
     index = nearest_index[0][0]
-    nearest_centre = str(police_copy.iloc[index]['Police Centre'].values[0]).replace(u'\xa0', u'')
+    nearest_centre = str(police_copy.iloc[index]['Police Centre'].values[0]).replace(u'\xa0', u' ').strip()
 
     return nearest_dist, nearest_centre
 
@@ -119,9 +119,10 @@ def nearest_train(property_geom, train_gdf, dist = 1000):
 '''
 #Testing
 path = 'datasets/'
-get_geom = gp.points_from_xy([103.878360066595], [1.37415222602816]) # function get_geom in listing
+get_geom = gp.points_from_xy([103.8480354], [1.418854709]) # function get_geom in listing
 df = pd.DataFrame(data = {'geometry':get_geom})
 #df = pd.DataFrame(data=d)
+history = pd.read_csv(path + "historical_postal_code_area.csv")
 pri_sch = pd.read_csv(path + 'primary_sch_gdf.csv')
 print(nearest_sch(get_geom, pri_sch))
 police = pd.read_csv(path + 'police_centre_gdf.csv')
