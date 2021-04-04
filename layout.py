@@ -335,18 +335,18 @@ def overview_section(listing, predicted_price,  predicted_price_psm):
                 
                 # Train Stations Derived Features
                 dbc.Row([
-                    derived_feature('train.png', " . ".join(list(listing.train_stations(train))), "Train stations within 1km"),
+                    derived_feature('train.png', " . ".join(list(listing.train_stations(train, postal_code_area))), "Train stations within 1km"),
                     dbc.Col([
-                        html.Div(str(int(listing.train_dist(train))) + " metres", style = {'font-size': 'large'}),
+                        html.Div(str(int(listing.train_dist(train, postal_code_area))) + " metres", style = {'font-size': 'large'}),
                         html.Div("Distance to Nearest Train Station", style = {'font-size': 'small', 'color': 'grey'})
                     ], style = {'padding-top': 10})
                 ], style = {'align-items': 'center'}), 
                 
                 # Schools Derived Features
                 dbc.Row([
-                    derived_feature('school.png', listing.sch_name(sch), "Nearest School"),
+                    derived_feature('school.png', listing.sch_name(sch, postal_code_area), "Nearest School"),
                     dbc.Col([
-                        html.Div(str(int(listing.sch_dist(sch))) + " metres", style = {'font-size': 'large'}),
+                        html.Div(str(int(listing.sch_dist(sch, postal_code_area))) + " metres", style = {'font-size': 'large'}),
                         html.Div("Distance to Nearest School", style = {'font-size': 'small', 'color': 'grey'})
                     ], style = {'padding-top': 10})
                     #derived_feature('', str(int(listing.sch_dist(sch))) + " metres", "Distance to Nearest School")
@@ -354,9 +354,9 @@ def overview_section(listing, predicted_price,  predicted_price_psm):
                 
                 # Schools Derived Features
                 dbc.Row([
-                    derived_feature('police-station.png', listing.get_police_centre(police_centre), "Nearest Police Station"),
+                    derived_feature('police-station.png', listing.get_police_centre(police_centre, postal_code_area), "Nearest Police Station"),
                     dbc.Col([
-                        html.Div(listing.get_centre_avg_cases(police_centre, avg_cases), style = {'font-size': 'large'}),
+                        html.Div(listing.get_centre_avg_cases(police_centre, avg_cases, postal_code_area), style = {'font-size': 'large'}),
                         html.Div("Average Yearly Crime Rate", style = {'font-size': 'small', 'color': 'grey'})
                     ], style = {'padding-top': 10})
                     #derived_feature('', listing.get_centre_avg_cases(police_centre, avg_cases), "Average Yearly Crime Rate")
@@ -726,9 +726,9 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
                    'time' : time_param
         }
         curr_sample = Sample(params, prelim_ds)
-        curr_sample.get_filtered_df(prelim_ds, curr_listing.get_lon(), curr_listing.get_lat())
+        curr_sample.get_filtered_df(prelim_ds, curr_listing.get_lon(postal_code_area), curr_listing.get_lat(postal_code_area))
         
-        curr_sample.get_map(curr_listing.get_lon(), curr_listing.get_lat(), 100)
+        curr_sample.get_map(curr_listing.get_lon(postal_code_area), curr_listing.get_lat(postal_code_area), 100)
         map_component = html.Iframe(srcDoc = open('sample_map.html', 'r').read(), height = '600')
         
         transaction_table = curr_sample.get_transaction_table()
