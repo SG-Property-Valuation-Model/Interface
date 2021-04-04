@@ -44,20 +44,28 @@ class Listing:
         return self.remaining_lease
 
     # Get longitude of property
-    def get_lon(self):
-        return postal_search(self.postal)[0]
+    def get_lon(self, historical_df):
+        if self.postal in historical_df['Postal Code'].tolist():
+            lon = historical_df[historical_df['Postal Code'] == self.postal]['LONGITUDE'].values[0]
+        else:
+            lon = postal_search(self.postal)[0]
+        return lon
 
     # Get latitude of property
-    def get_lat(self):
-        return postal_search(self.postal)[1]
+    def get_lat(self, historical_df):
+        if self.postal in historical_df['Postal Code'].tolist():
+            lat = historical_df[historical_df['Postal Code'] == self.postal]['LATITUDE'].values[0]
+        else:
+            lat = postal_search(self.postal)[1]
+        return lat
 
     # Get building name of property
     def get_building(self):
         return postal_search(self.postal)[2]
 
     # Get geometry Point of property
-    def get_geom(self):
-        geometry = gp.points_from_xy([self.get_lon()], [self.get_lat()])
+    def get_geom(self, historical_df):
+        geometry = gp.points_from_xy([self.get_lon(historical_df)], [self.get_lat(historical_df)])
         return geometry
 
     # Get road name property is at 
@@ -85,50 +93,50 @@ class Listing:
         return planning_region
 
     # Get nearest police centre to property
-    def get_police_centre(self, police_centre_gdf):
-        geom = self.get_geom()
+    def get_police_centre(self, police_centre_gdf, historical_df):
+        geom = self.get_geom(historical_df)
         police_centre = nearest_police_centre(geom, police_centre_gdf)[1]
         return police_centre
 
     # Get distance to nearest police centre
-    def police_centre_dist(self, police_centre_gdf):
-        geom = self.get_geom()
+    def police_centre_dist(self, police_centre_gdf, historical_df):
+        geom = self.get_geom(historical_df)
         centre_dist = nearest_police_centre(geom, police_centre_gdf)[0]
         return centre_dist
 
     # Get average number of cases per year for nearest police centre to property
-    def get_centre_avg_cases(self, police_centre_gdf, avg_cases_by_npc):
-        police_centre = self.get_police_centre(police_centre_gdf)
+    def get_centre_avg_cases(self, police_centre_gdf, avg_cases_by_npc, historical_df):
+        police_centre = self.get_police_centre(police_centre_gdf, historical_df)
         avg_case = int(avg_cases_by_npc[avg_cases_by_npc['Police Centre'] == police_centre]['Average Cases Per Year'].values[0])
         return avg_case
 
     # Get distance to nearest train station
-    def train_dist(self, train_gdf):
-        geom = self.get_geom()
+    def train_dist(self, train_gdf, historical_df):
+        geom = self.get_geom(historical_df)
         nearest_dist = nearest_train(geom, train_gdf)[0]
         return nearest_dist
 
     # Get train stations within 1km
-    def train_stations(self, train_gdf):
-        geom = self.get_geom()
+    def train_stations(self, train_gdf, historical_df):
+        geom = self.get_geom(historical_df)
         stations = nearest_train(geom, train_gdf)[2]
         return stations
 
     # Get lines within 1km
-    def train_lines(self, train_gdf):
-        geom = self.get_geom()
+    def train_lines(self, train_gdf, historical_df):
+        geom = self.get_geom(historical_df)
         lines = nearest_train(geom, train_gdf)[1]
         return lines
 
     # Get distance to nearest school
-    def sch_dist(self, sch_gdf):
-        geom = self.get_geom()
+    def sch_dist(self, sch_gdf, historical_df):
+        geom = self.get_geom(historical_df)
         nearest_dist = nearest_sch(geom, sch_gdf)[1]
         return nearest_dist
 
     # Get nearest school name
-    def sch_name(self, sch_gdf):
-        geom = self.get_geom()
+    def sch_name(self, sch_gdf, historical_df):
+        geom = self.get_geom(historical_df)
         name = nearest_sch(geom, sch_gdf)[0]
         return name
 
@@ -139,9 +147,9 @@ class Listing:
         df['Area (SQM)'] = self.floor_area
         df['Floor Number'] = self.floor_num
         df['PPI'] = 153.3 #2020 Q4 PPI
-        df['Average Cases Per Year'] = self.get_centre_avg_cases(police_centre_gdf, avg_cases_by_npc)
-        df['Nearest Primary School'] = self.sch_dist(sch_gdf)
-        df['nearest_station_distance'] = self.train_dist(train_gdf)
+        df['Average Cases Per Year'] = self.get_centre_avg_cases(police_centre_gdf, avg_cases_by_npc, historical_postal_code_area)
+        df['Nearest Primary School'] = self.sch_dist(sch_gdf, historical_postal_code_area)
+        df['nearest_station_distance'] = self.train_dist(train_gdf, historical_postal_code_area)
         df['Remaining Lease'] = self.remaining_lease
 
         # if the column(s) is not the base dummy column that got dropped
@@ -150,7 +158,7 @@ class Listing:
         if self.property_type in main_df_col:
             df[self.property_type] = 1
         # property can have more than 1 line within 1km radius
-        lines = self.train_lines(train_gdf)
+        lines = self.train_lines(train_gdf, historical_postal_code_area)
         for i in lines:
             if i in main_df_col:
                 df[i] = 1
@@ -219,7 +227,7 @@ class Listing:
 '''
 # TESTING
 #Input postal code, property type, floor num, sqm, remaining lease
-property = Listing('597592', 'Condominium', 6, 99, 70)
+property = Listing('768445', 'Condominium', 6, 99, 70)
 sch = pd.read_csv('datasets/primary_sch_gdf.csv')
 train = pd.read_csv('datasets/train_gdf.csv')
 area_df = pd.read_csv('datasets/area_centroid.csv')
@@ -231,20 +239,20 @@ postal_code_area = pd.read_csv('datasets/historical_postal_code_area.csv')
 cols = list(modelling.columns)
 cols.remove('Unit Price ($ PSM)')
 #print(cols)
-print(property.get_lat())
-print(property.get_lon())
-print(property.get_geom())
+print(property.get_lat(postal_code_area))
+print(property.get_lon(postal_code_area))
+print(property.get_geom(postal_code_area))
 print(property.get_road_name())
 print(property.get_planning_area(postal_code_area, area_df))
 print(property.get_planning_region(postal_code_area, area_df))
-print(property.train_lines(train))
-print(property.train_dist(train))
-print(property.train_stations(train))
-print(property.sch_dist(sch))
-print(property.sch_name(sch))
-print(property.get_police_centre(police_centre))
-print(property.police_centre_dist(police_centre))
-print(property.get_centre_avg_cases(police_centre, avg_cases))
+print(property.train_lines(train, postal_code_area))
+print(property.train_dist(train, postal_code_area))
+print(property.train_stations(train, postal_code_area))
+print(property.sch_dist(sch, postal_code_area))
+print(property.sch_name(sch, postal_code_area))
+print(property.get_police_centre(police_centre, postal_code_area))
+print(property.police_centre_dist(police_centre, postal_code_area))
+print(property.get_centre_avg_cases(police_centre, avg_cases, postal_code_area))
 print(property.convert_to_df(cols, postal_code_area, area_df, sch, train, police_centre, avg_cases))
 print(property.pred_price('modelling/', cols, postal_code_area, area_df, sch, train, police_centre, avg_cases))
 '''
