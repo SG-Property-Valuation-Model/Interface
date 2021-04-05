@@ -103,9 +103,9 @@ class Sample:
     
     def get_transaction_table(self):
         
-        df =  self.dataframe
-        df = df[['Sale Date', 'Address', 'Floor Number', 'Area (SQM)', 'Remaining Lease', 'Unit Price ($ PSM)']].copy()
-        df.rename(columns = {'Area (SQM)': 'Floor Area'})
+        df =  self.dataframe.copy()
+        df = df[['Sale Date', 'Address', 'BUILDING','Floor Number', 'Area (SQM)', 'Remaining Lease', 'Unit Price ($ PSM)']].copy()
+        df.rename(columns = {'Area (SQM)': 'Floor Area', 'BUILDING': 'Building Name'}, inplace = True)
         df['Sale Date'] = df['Sale Date'].apply(lambda x: x.date())
         
         table = dash_table.DataTable(
