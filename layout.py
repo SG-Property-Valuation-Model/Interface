@@ -394,7 +394,7 @@ def transaction_features(sample):
     transaction_features = [
         
         dbc.Row([
-            dbc.Col('$' + str(sample.get_average_psm()), 
+            dbc.Col("${:,.2f}".format(sample.get_average_psm()), 
                     style = {'font-size': 'xx-large', 'text-align': 'center', 'margin': 'auto', 'color': '#93C54B', 'padding-left': 0}, 
                     width = 7
             ),
