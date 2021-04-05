@@ -89,7 +89,9 @@ form_section = html.Div([
                                                  label = "Property Type", 
                                                  #style = {'padding-left': 30},
                                                  addon_type = "prepend"), 
-                                dbc.Input(id="property-type-dropdown-input", style = {'font-size': 'large', 'padding-left': 20})],
+                                dbc.Input(id="property-type-dropdown-input",
+                                          placeholder = '← Select from here',
+                                          style = {'font-size': 'large', 'padding-left': 20})],
                                 size="lg", 
                                 style = {'width': '-webkit-fill-available'}), 
                 #className="mr-3", #style = {'width': '50%'}
@@ -148,6 +150,9 @@ form_section = html.Div([
         
     ], style = {'padding': 50, 'padding-bottom': 20, 'padding-top': 0}), 
     
+    html.H1('Search Filters', style = {'padding': 50, 'padding-bottom': 20, 'padding-top': 0, 'font-weight': 'bold', 'color': 'antiquewhite', 'font-size': 'x-large'}),
+    
+    # Filters
     dbc.Row([
         dbc.Col(
             dbc.FormGroup(
@@ -157,7 +162,9 @@ form_section = html.Div([
                                                  color = 'dark',
                                                  style = {'color': '#93C54B'},
                                                  addon_type = "prepend"), 
-                                dbc.Input(id="radius-dropdown-input", style = {'font-size': 'large', 'padding-left': 20, 'textAlign': 'center'})],
+                                dbc.Input(id="radius-dropdown-input", 
+                                          placeholder = '← Select from here',
+                                          style = {'font-size': 'large', 'padding-left': 20})],
                                 size="lg", 
                                 style = {'width': '-webkit-fill-available'}), 
                 #className="mr-3", #style = {'width': '50%'}
@@ -173,7 +180,9 @@ form_section = html.Div([
                                                  color = 'dark',
                                                  #style = {'color': '#93C54B'},
                                                  addon_type = "prepend"), 
-                                dbc.Input(id="time-dropdown-input", style = {'font-size': 'large', 'padding-left': 20, 'textAlign': 'center'})],
+                                dbc.Input(id="time-dropdown-input", 
+                                          placeholder = '← Select from here',
+                                          style = {'font-size': 'large', 'padding-left': 20, })],
                                 size="lg", 
                                 style = {'width': '-webkit-fill-available'}), 
                 #className="mr-3", #style = {'width': '50%'}
@@ -448,7 +457,6 @@ historic_transactions = html.Div(
                     [
                         dbc.CardHeader(
                             [
-                                #html.Div('Planning Area', style = {'font-size': 'large', 'color': 'darkgrey'}),
                                 html.Div(id = 'planning-area-val',  style = {'font-size': 'xx-large', 'height': 40}), 
                                 html.Div('Planning Area', style = {'font-size': 'large', 'color': 'darkgrey'})
                             ], style = {'padding-bottom': 10, 'padding-left': 20, 'padding-top': 7}
@@ -493,21 +501,11 @@ resale_climate = html.Div(
 
 app.layout = html.Div([
     input_section,
-    dbc.Spinner(id = 'loading'),
     nav_bar,
-    html.Div(id = 'overview-section'), 
-    historic_transactions, 
+    dcc.Loading(children = html.Div(id = 'overview-section'), type="cube", color = '#93C54B'), 
+    dcc.Loading(children = historic_transactions, type="cube", color = '#93C54B'), 
     resale_climate
 ])
-
-@app.callback(dash.dependencies.Output('loading', 'children'), 
-              [dash.dependencies.Input('submit-val', 'n_clicks')])
-
-def load_output(n):
-    if n: 
-        return " "
-    else: 
-        return" "
 
 ### Callbacks for property-type-dropdown within input_section
 @app.callback(dash.dependencies.Output("property-type-dropdown-input", "value"),
@@ -582,11 +580,11 @@ def time_input_dropdown(n1, n_clear):
     
     #Inputs of Callback
     [dash.dependencies.Input('submit-val', 'n_clicks'),
-     dash.dependencies.Input('apt-selected', 'checked'), 
-     dash.dependencies.Input('ec-selected', 'checked'), 
-     dash.dependencies.Input('condo-selected', 'checked'),
-     dash.dependencies.Input("time-dropdown-input", "value"), 
-     dash.dependencies.Input("radius-dropdown-input", "value"),
+     dash.dependencies.State('apt-selected', 'checked'), 
+     dash.dependencies.State('ec-selected', 'checked'), 
+     dash.dependencies.State('condo-selected', 'checked'),
+     dash.dependencies.State("time-dropdown-input", "value"), 
+     dash.dependencies.State("radius-dropdown-input", "value"),
      dash.dependencies.State("postal-input", "value"),
      dash.dependencies.State("property-type-dropdown-input", "value"),
      dash.dependencies.State("floor-num-input", "value"),
@@ -596,100 +594,11 @@ def time_input_dropdown(n1, n_clear):
 
 def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input, property_type, floor_num, floor_area, lease):
     
-    if n_clicks is None:
-        
-        # Map 
-        map_component = html.Iframe(srcDoc = open('assets/default_map.html', 'r').read(), height = '600')
-        
-        # Timeseries 
-        
-        filtered_df = prelim_ds.copy()
-        filtered_df['Sale Month'] = filtered_df['Sale Date'].apply(lambda x : x.strftime('%Y-%m')) # to plot based on Year and Month
-        filtered_df['Sale Year'] = filtered_df['Sale Date'].apply(lambda x : x.year) # to plot based on Year
-        grp_df = filtered_df.groupby(['Sale Month', 'Planning Area']).mean().reset_index()
-        
-        
-        fig = px.line(grp_df, 
-                      x="Sale Month", 
-                      y="PPI", 
-                      #color='Planning Area',
-                      labels = {"Sale Month":"Year", "PPI":"Property Price Index"})
-
-        fig.update_layout(plot_bgcolor = '#f8f4f0')
-        
-        # To control white space surrounding the plot 
-        fig.update_layout(margin={'t': 15, 'b':20, 'l':20, 'r':30})
-        
-        fig.update_layout(height = 450)
-        
-        ts_plot = dcc.Graph(figure = fig)
-        
-        
-        # Transaction Table
-        df = prelim_ds[['Sale Date', 'Address', 'Floor Number', 'Area (SQM)', 'Remaining Lease', 'Unit Price ($ PSM)']].copy()
-        df = df.rename(columns ={'Area (SQM)': 'Floor Area (SQM)'})
-        df = df.sort_values(by = ['Sale Date'], ascending = False).head(100)
-        df['Sale Date'] = df['Sale Date'].apply(lambda x: x.date())
-        
-        table = dash_table.DataTable(
-            data=df.to_dict('records'),
-            columns=[{'id': c, 'name': c} for c in df.columns],
-            
-            # Remove Pagination
-            page_action='none',
-            
-            #For sorting by columns
-            sort_action="native",
-            
-            # For filtering rows by column values
-            filter_action="native",
-            
-            #style_as_list_view=True,
-                        
-            style_table={'max-height': '400px', 
-                         'font-size': '13px'}, 
-            
-            style_cell = {'textAlign': 'center', 
-                          'font-family': 'sans-serif', 
-                          'width': '{}%'.format(len(df.columns))
-                          #'minWidth': '20px', 'width': '20px', 'maxWidth': '200px'
-            }, 
-            
-            #Controilling width of columns
-            style_cell_conditional=[{'if': {'column_id': 'Sale Date'},'width': '5%'},
-                                    {'if': {'column_id': 'Address'},'width': '5.5%'},],
-            
-            
-            style_data={'padding-left': 7},
-            
-            #striped rows
-            style_data_conditional=[{'if': {'row_index': 'even'},
-                                     'backgroundColor': '#f2f2ed'
-                                     #'lightgrey'
-                                     }], 
-            
-            #Fixed row for when scrolling vertically
-            fixed_rows={'headers': True}, 
-            
-            style_header={'backgroundColor': 'rgb(255, 255, 255)',
-                          'fontWeight': 'bold',
-                          'padding-left': 7},
-            
-            
-        )
-        
-        transaction_table = html.Div([
-            html.Div('Past 100 Recent Transactions', style = {'padding-bottom': 2, 'font-size': 'xx-large'}), 
-            table
-        ])
-        
-        return ["", 'Island Wide', transaction_features(full_sample), map_component, transaction_table, ts_plot]
-   
-    else: 
+    if n_clicks:
 
         ##### Current Global Listing Object #####
         global curr_listing
-        curr_listing = Listing(postal_input, property_type, int(floor_num), int(floor_area), int(lease))
+        curr_listing = Listing(postal_input, property_type, int(floor_num), float(floor_area), int(lease))
         
         global price_output, price_psm_output
         price_output, price_psm_output = curr_listing.pred_price("modelling/", cols, postal_code_area, area_df, sch, train, police_centre, avg_cases)
@@ -697,6 +606,7 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
         # For testing
         #curr_listing = Listing('597592', 'Condominium', 6, 99, 70)
         #curr_listing = Listing('689527', 'Condominium', 6, 99, 70)
+        
         
         ##### Parameters of Sample Object #####
         time_param = [0,0]
@@ -712,12 +622,23 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
             radius_param[1] = 1
             
         ec_param, condo_param, apt_param = 0, 0, 0
-        if ec: 
-            ec_param = 1
-        if condo: 
-            condo_param = 1
-        if apt: 
-            apt_param = 1
+        
+        # Setting default property_filter to property_type of listing
+        if ((not apt) and (not condo) and (not ec)): 
+            if (property_type == 'Condominium'):
+                condo_param = 1
+            elif (property_type == 'Apartment'): 
+                apt_param = 1
+            elif (property_type == 'Executive Condominium'):
+                ec_param = 1
+        else: 
+            
+            if ec: 
+                ec_param = 1
+            if condo: 
+                condo_param = 1
+            if apt: 
+                apt_param = 1
         
         ##### Current Global Sample Object #####
         global curr_sample
@@ -740,7 +661,97 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
                 transaction_features(curr_sample), 
                 map_component, 
                 transaction_table, 
-                psm_timeseries_plot]
+                psm_timeseries_plot]    
+    
+    #### Default output
+        
+    # Map 
+    map_component = html.Iframe(srcDoc = open('assets/default_map.html', 'r').read(), height = '600')
+    
+    # Timeseries 
+    
+    filtered_df = prelim_ds.copy()
+    filtered_df['Sale Month'] = filtered_df['Sale Date'].apply(lambda x : x.strftime('%Y-%m')) # to plot based on Year and Month
+    filtered_df['Sale Year'] = filtered_df['Sale Date'].apply(lambda x : x.year) # to plot based on Year
+    grp_df = filtered_df.groupby(['Sale Month', 'Planning Area']).mean().reset_index()
+    
+    
+    fig = px.line(grp_df, 
+                  x="Sale Month", 
+                  y="PPI", 
+                  #color='Planning Area',
+                  labels = {"Sale Month":"Year", "PPI":"Property Price Index"})
+
+    fig.update_layout(plot_bgcolor = '#f8f4f0')
+    
+    # To control white space surrounding the plot 
+    fig.update_layout(margin={'t': 15, 'b':20, 'l':20, 'r':30})
+    
+    fig.update_layout(height = 450)
+    
+    ts_plot = dcc.Graph(figure = fig)
+    
+    
+    # Transaction Table
+    df = prelim_ds[['Sale Date', 'Address', 'BUILDING', 'Floor Number', 'Area (SQM)', 'Remaining Lease', 'Unit Price ($ PSM)']].copy()
+    df = df.rename(columns ={'Area (SQM)': 'Floor Area (SQM)', 'BUILDING': 'Building Name'})
+    df = df.sort_values(by = ['Sale Date'], ascending = False).head(100)
+    df['Sale Date'] = df['Sale Date'].apply(lambda x: x.date())
+    
+    table = dash_table.DataTable(
+        data=df.to_dict('records'),
+        columns=[{'id': c, 'name': c} for c in df.columns],
+        
+        # Remove Pagination
+        page_action='none',
+        
+        #For sorting by columns
+        sort_action="native",
+        
+        # For filtering rows by column values
+        filter_action="native",
+        
+        #style_as_list_view=True,
+                    
+        style_table={'max-height': '400px', 
+                     'font-size': '13px'}, 
+        
+        style_cell = {'textAlign': 'center', 
+                      'font-family': 'sans-serif', 
+                      'width': '{}%'.format(len(df.columns))
+                      #'minWidth': '20px', 'width': '20px', 'maxWidth': '200px'
+        }, 
+        
+        #Controilling width of columns
+        style_cell_conditional=[{'if': {'column_id': 'Sale Date'},'width': '5%'},
+                                {'if': {'column_id': 'Address'},'width': '5.5%'},],
+        
+        
+        style_data={'padding-left': 7},
+        
+        #striped rows
+        style_data_conditional=[{'if': {'row_index': 'even'},
+                                 'backgroundColor': '#f2f2ed'
+                                 #'lightgrey'
+                                 }], 
+        
+        #Fixed row for when scrolling vertically
+        fixed_rows={'headers': True}, 
+        
+        style_header={'backgroundColor': 'rgb(255, 255, 255)',
+                      'fontWeight': 'bold',
+                      'padding-left': 7},
+        
+        
+    )
+    
+    transaction_table = html.Div([
+        html.Div('Past 100 Recent Transactions', style = {'padding-bottom': 2, 'font-size': 'xx-large'}), 
+        table
+    ])
+    
+    return ["", 'Island Wide', transaction_features(full_sample), map_component, transaction_table, ts_plot]
+   
 
 
 if __name__ == '__main__': 
