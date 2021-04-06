@@ -43,6 +43,7 @@ default_params = {'radius': [0,0],
                   'property': [1,1,1]}
 
 full_sample = Sample(default_params, prelim_ds)
+curr_sample = full_sample
 
 ### Input Component ###################################################################
 
@@ -125,7 +126,7 @@ form_section = html.Div([
                                                     #style = {'font-size': 'large'}
                                                     ), 
                                 dbc.Input(id = 'floor-area-input', style = {'font-size': 'large', 'text-align': 'center'}),
-                                dbc.InputGroupAddon("SQM", addon_type="append")], 
+                                dbc.InputGroupAddon("SQFT", addon_type="append")], 
                                 size="lg", 
                                 style = {'width': '-webkit-fill-available'}), 
                 #className="mr-3", #style = {'width': '50%'}
@@ -150,7 +151,7 @@ form_section = html.Div([
         
     ], style = {'padding': 50, 'padding-bottom': 20, 'padding-top': 0}), 
     
-    html.H1('Search Filters', style = {'padding': 50, 'padding-bottom': 20, 'padding-top': 0, 'font-weight': 'bold', 'color': 'antiquewhite', 'font-size': 'x-large'}),
+    html.H1('Search Filters', style = {'padding': 50, 'padding-bottom': 20, 'padding-top': 0, 'font-weight': 'bold', 'color': 'antiquewhite', 'font-size': 'xx-large'}),
     
     # Filters
     dbc.Row([
@@ -246,14 +247,15 @@ form_section = html.Div([
 
 input_section = html.Div( 
     [
-        html.H1('UrbanZoom', style = {'padding': 50, 'padding-bottom': 20, 'font-weight': 'bold', 'color': 'antiquewhite', 'font-size': 'xx-large'}),
+        html.H1('TreeHouse', style = {'padding': 50, 'padding-bottom': 20, 'font-weight': 'bold', 'color': 'antiquewhite', 'font-size': 'xx-large', 'color': '#93C54B'}),
         form_section
     ], 
         
     style = {'background-image': 'url("/assets/background4.jpg")', 
              'background-position': 'center', 
              'background-repeat': 'no-repeat', 
-             'background-size': 'cover'}
+             'background-size': 'cover', 
+             'background-attachment': 'fixed'}
 )
 
 ### Navigation bar #######################################################################
@@ -293,14 +295,6 @@ def overview_section(listing, predicted_price,  predicted_price_psm):
     
     listing_feature = dbc.Row([
         
-        # Card Header --> Displaying Predicted Price
-        #dbc.CardHeader(children = predicted_price, 
-        #               id='predicted-price', 
-        #               style = {'font-size': 'large', 'padding': 10, 'padding-left': 20}
-        #),
-        
-        # Card Boody --> Displaying derived features and Predicted PSM
-        
         dbc.Col([
             
             dbc.Card([
@@ -308,7 +302,7 @@ def overview_section(listing, predicted_price,  predicted_price_psm):
                 dbc.Row([
                     dbc.Col("${:,.2f}".format(predicted_price), 
                             style = {'font-size': 'xx-large', 'text-align': 'center', 'margin': 'auto', 'color': '#93C54B', 'padding-left': 0}, 
-                            width = 6
+                            width = 7
                     ),
                     dbc.Col([
                         html.P(['Estimated Valuation of Property', 
@@ -323,11 +317,11 @@ def overview_section(listing, predicted_price,  predicted_price_psm):
                 dbc.Row([
                     dbc.Col("${:,.2f}".format(predicted_price_psm), 
                             style = {'font-size': 'xx-large', 'text-align': 'center', 'margin': 'auto', 'color': '#93C54B', 'padding-left': 0}, 
-                            width = 6
+                            width = 7
                     ),
                     dbc.Col([
                         html.P(['Estimated Price Per Unit Area ', 
-                                html.Span('(per SQM)', style = {'font-size': 'medium', 'color': 'darkgrey'})
+                                html.Span('(per SQFT)', style = {'font-size': 'medium', 'color': 'darkgrey'})
                         ], style = {'font-size': 'large'}), #'height': 25 
                         #html.Div('(SQM)', style = {'font-size': 'medium', 'color': 'darkgrey'})
                     ], style = {'font-size': 'large', 'padding-left': 0})
@@ -403,13 +397,13 @@ def transaction_features(sample):
     transaction_features = [
         
         dbc.Row([
-            dbc.Col("${:,.2f}".format(sample.get_average_psm()), 
+            dbc.Col("${:,.2f}".format(sample.get_average_psf()), 
                     style = {'font-size': 'xx-large', 'text-align': 'center', 'margin': 'auto', 'color': '#93C54B', 'padding-left': 0}, 
                     width = 7
             ),
             dbc.Col([
                 html.P(['Average Unit Price ', 
-                        html.Span('(per SQM)', style = {'font-size': 'medium', 'color': 'darkgrey'})
+                        html.Span('(per SQF)', style = {'font-size': 'medium', 'color': 'darkgrey'})
                 ], style = {'font-size': 'large', 'height': 25}), 
             ], style = {'font-size': 'large', 'padding-left': 0})
         ]),
@@ -424,7 +418,7 @@ def transaction_features(sample):
             ),
             dbc.Col([
                 html.P(['Average Floor Area ', 
-                        html.Span('(SQM)', style = {'font-size': 'medium', 'color': 'darkgrey'})
+                        html.Span('(SQFT)', style = {'font-size': 'medium', 'color': 'darkgrey'})
                 ], style = {'font-size': 'large', 'height': 25}), 
                 #html.Div('(SQM)', style = {'font-size': 'medium', 'color': 'darkgrey'})
             ], style = {'font-size': 'large', 'padding-left': 0})
@@ -436,7 +430,7 @@ def transaction_features(sample):
         dbc.Row([
             dbc.Col(sample.get_total_transactions(), 
                     style = {'font-size': 'xx-large', 'text-align': 'center', 'margin': 'auto', 'color': '#93C54B', 'padding-left': 0}, 
-                    width = 6
+                    width = 7
             ),
             dbc.Col([
                 html.Div('Number of Past Transactions', style = {'font-size': 'large', 'height': 25, 'line-height': '1.35'}), 
@@ -446,9 +440,11 @@ def transaction_features(sample):
     ]
     return transaction_features
 
+
 historic_transactions = html.Div(
     [   
         html.H1('Past Transactions', style = {'font-size': 'xxx-large'}), 
+        html.Div(id = 'transaction-description', style = {'font-size': 'medium'}),
         html.Br(),
         dbc.Row([
             # Details of Transactions
@@ -483,6 +479,7 @@ historic_transactions = html.Div(
     style = {'padding': 50, 'padding-top': 15}, 
     id = 'past_transactions'
 )
+    
 
 ### Resale Climate Component #######################################################
 
@@ -576,7 +573,8 @@ def time_input_dropdown(n1, n_clear):
      dash.dependencies.Output("transaction-features", 'children'), 
      dash.dependencies.Output("map", 'children'), 
      dash.dependencies.Output("transaction-table", 'children'), 
-     dash.dependencies.Output('psm-timeseries-plot', 'children')],
+     dash.dependencies.Output('psm-timeseries-plot', 'children'), 
+     dash.dependencies.Output('transaction-description', 'children')],
     
     #Inputs of Callback
     [dash.dependencies.Input('submit-val', 'n_clicks'),
@@ -650,10 +648,18 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
         curr_sample.get_filtered_df(prelim_ds, curr_listing.get_lon(postal_code_area), curr_listing.get_lat(postal_code_area))
         curr_sample.get_map(curr_listing.get_lon(postal_code_area), curr_listing.get_lat(postal_code_area), price_psm_output, curr_listing.get_building(), 100)
         map_component = html.Iframe(srcDoc = open('sample_map.html', 'r').read(), height = '600')
+    
         
         transaction_table = curr_sample.get_transaction_table()
         
-        psm_timeseries_plot = curr_sample.plot_psm(prelim_ds, area_df, curr_listing.get_planning_area(postal_code_area, area_df), 2)
+        psm_timeseries_plot = html.Div([
+            html.Div(['Aggregated resale market conditions for ', 
+                      html.B(curr_listing.get_planning_area(postal_code_area, area_df).title()),
+                      " planning area together with its 2 closest neighbours in the past "  + str(curr_sample.get_time()) + ' years'
+            ], style = {'font-size': 'medium'}),
+            html.Div('Only resale transactions of ' + ", ".join([property + "s" for property in curr_sample.get_property()]) + "  within each planning area are included within the computation", style = {'font-size': 'medium'}),
+            curr_sample.plot_psm(prelim_ds, area_df, curr_listing.get_planning_area(postal_code_area, area_df), 2), 
+        ])
         
         
         return [overview_section(curr_listing, price_output, price_psm_output), 
@@ -661,9 +667,15 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
                 transaction_features(curr_sample), 
                 map_component, 
                 transaction_table, 
-                psm_timeseries_plot]    
+                psm_timeseries_plot, 
+                ['All resale transactions of ' + ", ".join([property + "s" for property in curr_sample.get_property()]) + "  in the past ", 
+                 html.B(str(curr_sample.get_time()) + " years"),
+                 " that are within a radius of ", 
+                 html.B(str(curr_sample.get_radius()) + "km"),
+                 " from your property"]]    
     
     #### Default output
+  
         
     # Map 
     map_component = html.Iframe(srcDoc = open('assets/default_map.html', 'r').read(), height = '600')
@@ -693,8 +705,8 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
     
     
     # Transaction Table
-    df = prelim_ds[['Sale Date', 'Address', 'BUILDING', 'Floor Number', 'Area (SQM)', 'Remaining Lease', 'Unit Price ($ PSM)']].copy()
-    df = df.rename(columns ={'Area (SQM)': 'Floor Area (SQM)', 'BUILDING': 'Building Name'})
+    df = prelim_ds[['Sale Date', 'Address', 'BUILDING', 'Floor Number', 'Area (SQFT)', 'Remaining Lease', 'Unit Price ($ PSF)']].copy()
+    df = df.rename(columns ={'Area (SQFT)': 'Floor Area', 'BUILDING': 'Building Name'})
     df = df.sort_values(by = ['Sale Date'], ascending = False).head(100)
     df['Sale Date'] = df['Sale Date'].apply(lambda x: x.date())
     
@@ -750,7 +762,7 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
         table
     ])
     
-    return ["", 'Island Wide', transaction_features(full_sample), map_component, transaction_table, ts_plot]
+    return ["", 'Island Wide', transaction_features(full_sample), map_component, transaction_table, ts_plot, "Showing all resale transactions of Apartments, Condominiums, Executive Condominiums within the past 10 years"]
    
 
 
