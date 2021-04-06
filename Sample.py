@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pandas as pd
+from pandas.api.types import is_string_dtype
 import numpy as np
 import dash
 import datetime
@@ -92,11 +93,14 @@ class Sample:
         self.dataframe = filtered_df
         #return filtered_df
         
-    def get_average_psm(self):
-        return round(self.dataframe['Unit Price ($ PSM)'].mean(),2)
+    def get_average_psf(self):
+        if (is_string_dtype(self.dataframe['Unit Price ($ PSF)'])):
+            self.dataframe['Unit Price ($ PSF)'] = self.dataframe['Unit Price ($ PSF)'].apply(lambda x: int(x.replace(',', "")))
+        return round(self.dataframe['Unit Price ($ PSF)'].mean(),2)
     
     def get_average_floor_area(self):
-        return round(self.dataframe['Area (SQM)'].mean(),2)
+        # Average floor area in SQFT
+        return round(self.dataframe['Area (SQFT)'].mean(),2)
     
     def get_total_transactions(self):
         return self.dataframe.shape[0]
@@ -104,8 +108,8 @@ class Sample:
     def get_transaction_table(self):
         
         df =  self.dataframe.copy()
-        df = df[['Sale Date', 'Address', 'BUILDING','Floor Number', 'Area (SQM)', 'Remaining Lease', 'Unit Price ($ PSM)']].copy()
-        df.rename(columns = {'Area (SQM)': 'Floor Area', 'BUILDING': 'Building Name'}, inplace = True)
+        df = df[['Sale Date', 'BUILDING','Floor Number', 'Area (SQFT)', 'Remaining Lease', 'Unit Price ($ PSF)']].copy()
+        df.rename(columns = {'Area (SQFT)': 'Floor Area', 'BUILDING': 'Building Name'}, inplace = True)
         df['Sale Date'] = df['Sale Date'].apply(lambda x: x.date())
         
         table = dash_table.DataTable(
@@ -129,12 +133,7 @@ class Sample:
             style_cell = {'textAlign': 'center', 
                           'font-family': 'sans-serif', 
                           'width': '{}%'.format(len(df.columns))
-                          #'minWidth': '20px', 'width': '20px', 'maxWidth': '200px'
             }, 
-            
-            #Controilling width of columns
-            style_cell_conditional=[{'if': {'column_id': 'Sale Date'},'width': '5%'},
-                                    {'if': {'column_id': 'Address'},'width': '5.5%'},],
             
             
             style_data={'padding-left': 7},
@@ -170,11 +169,11 @@ class Sample:
         listing_coord = (listing_lat,listing_long)
         
         # get the filtered dataframe
-        df = self.dataframe[['LATITUDE', 'LONGITUDE', 'BUILDING', 'Unit Price ($ PSM)']]
+        df = self.dataframe[['LATITUDE', 'LONGITUDE', 'BUILDING', 'Unit Price ($ PSF)']]
         
         # group the transactions
-        grp_df = df.groupby(['LATITUDE', 'LONGITUDE', 'BUILDING']).agg(avg_psm=('Unit Price ($ PSM)', 'mean'),
-                                                                       num_transactions =('Unit Price ($ PSM)', 'count')).reset_index()
+        grp_df = df.groupby(['LATITUDE', 'LONGITUDE', 'BUILDING']).agg(avg_psm=('Unit Price ($ PSF)', 'mean'),
+                                                                       num_transactions =('Unit Price ($ PSF)', 'count')).reset_index()
         grp_df['avg_psm'] = grp_df['avg_psm'].apply(lambda x: round(x,2))
         
         # check if filtered data has past transactions of the same listing, get the number of past transactions
@@ -195,24 +194,25 @@ class Sample:
         for index, row in grp_df.iterrows():
             long = row['LONGITUDE']
             lat = row['LATITUDE']
+            
+            pop_up_text = "<H4>" + row['BUILDING'] + "</H4>" + "<br>" + "<b>Average Unit Price ($PSF): <b>" + str(row['avg_psm']) + "<br>" + "<b>Number of Past Transactions: <b>" + str(row['num_transactions'])
 
             if (long == listing_long) & (lat == listing_lat):
                 continue 
             else: 
+               
+                pop_up_text = "<H4>" + row['BUILDING'] + "</H4>" + "<br>" + "<b>Average Unit Price ($PSF): </b>" + str(row['avg_psm']) + "<br>" + "<b>Number of Past Transactions: </b>" + str(row['num_transactions'])
+                
                 pop_up = folium.Marker(
                                 location=[lat, long],
-                                popup="<i>" + row['BUILDING']+ ', Average Unit Price ($PSM): '
-                                    + str(row['avg_psm'])+ ', Number of Past Transactions: ' 
-                                    + str(row['num_transactions'])+ "</i>",
+                                popup = folium.Popup(pop_up_text, 
+                                                     min_width = 250, max_width = 250),
                                 icon = folium.Icon(color= 'darkblue')
                         ).add_to(m)
-                
         # adding marker for listing in red
         pop_up = folium.Marker(
                         location=[listing_lat, listing_long],
-                        popup="<i>" + listing_building_name + 
-                            ', Predicted Unit Price ($PSM): ' + str(listing_price_psm_output)+ 
-                            ', Number of Past Transactions: ' + str(num_past_transactions) + "</i>",
+                        popup= folium.Popup(),
                         icon = folium.Icon(color='red')
                 ).add_to(m)
           
@@ -237,23 +237,6 @@ class Sample:
         
         return closest_PA.sort_values('distance', ascending = True).head(num_of_closest)['Planning Area'].tolist()
         
-        """
-        closest_PA = {}
-        for index, row in area_centroids.iterrows():
-            if row['Planning Area'] == listing_PA:
-                continue
-            else:
-                # find distance between 2set of coordinates using Haversine
-                PA_long = row['Centroid Longitude']
-                PA_lat = row['Centroid Latitude']
-                closest_PA[row['Planning Area']] = haversine(centroid_long, centroid_lat, PA_long, PA_lat)
-                
-        # get the closest N Planning Area       
-        sorted_list = sorted(closest_PA.items(), key = lambda kv: kv[1])
-        final_closest = list(map(lambda x: x[0], sorted_list[:num_of_closest]))
-        
-        return final_closest
-        """
         
     def plot_psm(self, historical_df, area_centroids, listing_PA, num_of_closest = 2):
         '''
@@ -275,10 +258,10 @@ class Sample:
         
         start_date = (datetime.datetime.now() - datetime.timedelta(days=time*365)).strftime('%Y-%m-%d')
         end_date = datetime.datetime.now().strftime('%Y-%m-%d')
-        filtered_df = historical_df[(historical_df['Sale Date']>= start_date) & (historical_df['Sale Date']< end_date) & (historical_df['Property Type'].isin(property_type))& (historical_df['Planning Area'].isin(closest_PA))][['Sale Date', 'Planning Area','Unit Price ($ PSM)']]
+        filtered_df = historical_df[(historical_df['Sale Date']>= start_date) & (historical_df['Sale Date']< end_date) & (historical_df['Property Type'].isin(property_type))& (historical_df['Planning Area'].isin(closest_PA))][['Sale Date', 'Planning Area','Unit Price ($ PSF)']]
         #print(filtered_df['Planning Area'].value_counts())
         
-        # Group data to find the mean PSM price
+        # Group data to find the mean PSF price
         filtered_df['Sale Month'] = filtered_df['Sale Date'].apply(lambda x : x.strftime('%Y-%m')) # to plot based on Year and Month
         filtered_df['Sale Year'] = filtered_df['Sale Date'].apply(lambda x : x.year) # to plot based on Year
         grp_df = filtered_df.groupby(['Sale Month', 'Planning Area']).mean().reset_index()
@@ -287,9 +270,9 @@ class Sample:
         # plot timeseries 
         fig = px.line(grp_df, 
                       x="Sale Month", 
-                      y="Unit Price ($ PSM)", 
+                      y="Unit Price ($ PSF)", 
                       color='Planning Area',
-                      labels = {"Sale Month":"Year", "Unit Price ($ PSM)":"Average Unit Price ($ PSM)"})
+                      labels = {"Sale Month":"Year", "Unit Price ($ PSF)":"Average Unit Price ($ PSF)"})
 
         fig.update_layout(plot_bgcolor = '#f8f4f0')
         
@@ -302,17 +285,6 @@ class Sample:
     
         return ts_plot
         
-        """
-        ts_plot = dcc.Graph(id='historical_timeseries', 
-                            figure = {'data': [ px.line(grp_df, 
-                                                x="Sale Month", 
-                                                y="Unit Price ($ PSM)", 
-                                                color='Planning Area',
-                                                labels = {"Sale Month":"Year", "Unit Price ($ PSM)":"Average Unit Price ($ PSM)"})],
-                                      'layout': {'plot_bgcolor': '#f8f4f0'}
-                            }
-        )
-        """
         
 
 '''

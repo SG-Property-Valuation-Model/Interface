@@ -146,7 +146,7 @@ class Listing:
     def convert_to_df(self, main_df_col, historical_postal_code_area, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc): # parse in list of training df col because predict df needs to be in same order
         # Create dataframe for property for prediction
         df = pd.DataFrame(columns=main_df_col, index=range(1))
-        df['Area (SQM)'] = self.floor_area
+        df['Area (SQM)'] = self.floor_area / 10.7639 #converting SQFT from input to SQM
         df['Floor Number'] = self.floor_num
         df['PPI'] = 153.3 #2020 Q4 PPI
         df['Average Cases Per Year'] = self.get_centre_avg_cases(police_centre_gdf, avg_cases_by_npc, historical_postal_code_area)
@@ -170,6 +170,8 @@ class Listing:
         return df
 
     def pred_psm(self, path, main_df_col, historical_postal_code_area, area_centroids, sch_gdf, train_gdf, police_centre_gdf, avg_cases_by_npc):
+        
+        
         '''
         :param path: takes in path where model weights and scalers are stored
         :param main_df_col: list of training dataset column names so that prediction df tallies
@@ -207,6 +209,9 @@ class Listing:
 
         # Use the loaded model to make predictions
         prediction = model.predict(property_df_scaled)[0]
+        
+        # Covert prediction in SQM to SQFT
+        prediction = prediction / 10.7639
         return prediction
 
 
