@@ -212,6 +212,7 @@ class Listing:
         
         # Covert prediction in SQM to SQFT
         prediction = prediction / 10.7639
+        
         return prediction
 
 

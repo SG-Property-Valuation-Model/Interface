@@ -108,8 +108,8 @@ class Sample:
     def get_transaction_table(self):
         
         df =  self.dataframe.copy()
-        df = df[['Sale Date', 'BUILDING','Floor Number', 'Area (SQFT)', 'Remaining Lease', 'Unit Price ($ PSF)']].copy()
-        df.rename(columns = {'Area (SQFT)': 'Floor Area', 'BUILDING': 'Building Name'}, inplace = True)
+        df = df[['Sale Date', 'address_trunc', 'BUILDING','Floor Number', 'Area (SQFT)', 'Remaining Lease', 'Unit Price ($ PSF)']].copy()
+        df.rename(columns = {'Area (SQFT)': 'Floor Area', 'address_trunc': 'Address', 'BUILDING': 'Building Name'}, inplace = True)
         df['Sale Date'] = df['Sale Date'].apply(lambda x: x.date())
         
         table = dash_table.DataTable(
@@ -156,7 +156,7 @@ class Sample:
         
         return table
     
-    def get_map(self, listing_long, listing_lat, listing_price_psm_output, listing_building_name, limit = 50):
+    def get_map(self, listing_long, listing_lat, listing_price_psm_output, listing_building_name, listing_address, limit = 50):
         '''
         Parameters
         - listing_long: Longitude of listing
@@ -169,18 +169,20 @@ class Sample:
         listing_coord = (listing_lat,listing_long)
         
         # get the filtered dataframe
-        df = self.dataframe[['LATITUDE', 'LONGITUDE', 'BUILDING', 'Unit Price ($ PSF)']]
+        df = self.dataframe[['LATITUDE', 'LONGITUDE', 'BUILDING', 'Unit Price ($ PSF)', 'address_trunc']]
         
         # group the transactions
-        grp_df = df.groupby(['LATITUDE', 'LONGITUDE', 'BUILDING']).agg(avg_psm=('Unit Price ($ PSF)', 'mean'),
+        grp_df = df.groupby(['LATITUDE', 'LONGITUDE', 'BUILDING', 'address_trunc']).agg(avg_psm=('Unit Price ($ PSF)', 'mean'),
                                                                        num_transactions =('Unit Price ($ PSF)', 'count')).reset_index()
         grp_df['avg_psm'] = grp_df['avg_psm'].apply(lambda x: round(x,2))
         
         # check if filtered data has past transactions of the same listing, get the number of past transactions
         if len(grp_df[(grp_df['LATITUDE'] == listing_lat) & (grp_df['LONGITUDE'] == listing_long)]) > 0:
             num_past_transactions = grp_df[(grp_df['LATITUDE'] == listing_lat) & (grp_df['LONGITUDE'] == listing_long)].iloc[0]['num_transactions']
+            avg_psm = grp_df[(grp_df['LATITUDE'] == listing_lat) & (grp_df['LONGITUDE'] == listing_long)].iloc[0]['avg_psm']
         else: 
             num_past_transactions = 0 
+            avg_psm = 'Not Available'
         
         # limit the number of points shown on the map
         if len(grp_df) > limit :
@@ -195,13 +197,11 @@ class Sample:
             long = row['LONGITUDE']
             lat = row['LATITUDE']
             
-            pop_up_text = "<H4>" + row['BUILDING'] + "</H4>" + "<br>" + "<b>Average Unit Price ($PSF): <b>" + str(row['avg_psm']) + "<br>" + "<b>Number of Past Transactions: <b>" + str(row['num_transactions'])
+            pop_up_text = "<H4>" + row['BUILDING'] + "</H4>" + row['address_trunc'] + "<br>" + "<b>Average Unit Price ($ PSF): <b>" + str(row['avg_psm']) + "<br>" + "<b>Number of Past Transactions: <b>" + str(row['num_transactions'])
 
             if (long == listing_long) & (lat == listing_lat):
                 continue 
             else: 
-               
-                pop_up_text = "<H4>" + row['BUILDING'] + "</H4>" + "<br>" + "<b>Average Unit Price ($PSF): </b>" + str(row['avg_psm']) + "<br>" + "<b>Number of Past Transactions: </b>" + str(row['num_transactions'])
                 
                 pop_up = folium.Marker(
                                 location=[lat, long],
@@ -209,10 +209,14 @@ class Sample:
                                                      min_width = 250, max_width = 250),
                                 icon = folium.Icon(color= 'darkblue')
                         ).add_to(m)
+        
         # adding marker for listing in red
+        pop_up_text = "<H4>" + listing_building_name + "</H4>"  + listing_address + "<br>" + "<b>Average Unit Price ($ PSF): <b>" + str(avg_psm) + "<br>" + "<b>Number of Past Transactions: <b>" + str(num_past_transactions)
+        
         pop_up = folium.Marker(
                         location=[listing_lat, listing_long],
-                        popup= folium.Popup(),
+                        popup= folium.Popup(pop_up_text, 
+                                                     min_width = 250, max_width = 250),
                         icon = folium.Icon(color='red')
                 ).add_to(m)
           
