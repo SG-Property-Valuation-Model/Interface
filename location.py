@@ -31,7 +31,7 @@ def postal_search(postal_code):
     lon = response['LONGITUDE']
     lat = response['LATITUDE']
     building = response['BUILDING']
-    road_name = response['ROAD_NAME']
+    road_name = response['BLK_NO'] + " " + response['ROAD_NAME']
     return lon, lat, building, road_name
 
 def area_region(postal_code, area_centroids):

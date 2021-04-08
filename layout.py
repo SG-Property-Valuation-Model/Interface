@@ -646,7 +646,7 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
         }
         curr_sample = Sample(params, prelim_ds)
         curr_sample.get_filtered_df(prelim_ds, curr_listing.get_lon(postal_code_area), curr_listing.get_lat(postal_code_area))
-        curr_sample.get_map(curr_listing.get_lon(postal_code_area), curr_listing.get_lat(postal_code_area), price_psm_output, curr_listing.get_building(), 100)
+        curr_sample.get_map(curr_listing.get_lon(postal_code_area), curr_listing.get_lat(postal_code_area), price_psm_output, curr_listing.get_building(), curr_listing.get_road_name(), 100)
         map_component = html.Iframe(srcDoc = open('sample_map.html', 'r').read(), height = '600')
     
         
@@ -705,7 +705,7 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
     
     
     # Transaction Table
-    df = prelim_ds[['Sale Date', 'Address', 'BUILDING', 'Floor Number', 'Area (SQFT)', 'Remaining Lease', 'Unit Price ($ PSF)']].copy()
+    df = prelim_ds[['Sale Date', 'Address', 'Floor Number', 'Area (SQFT)', 'Remaining Lease', 'Unit Price ($ PSF)']].copy()
     df = df.rename(columns ={'Area (SQFT)': 'Floor Area', 'BUILDING': 'Building Name'})
     df = df.sort_values(by = ['Sale Date'], ascending = False).head(100)
     df['Sale Date'] = df['Sale Date'].apply(lambda x: x.date())
