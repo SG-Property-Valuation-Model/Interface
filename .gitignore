@@ -5,6 +5,8 @@
 .idea*
 labelImg.egg-info*
 
+sample_map.html
+
 *.pyc
 .*.swp
 
