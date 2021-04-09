@@ -237,7 +237,17 @@ form_section = html.Div([
                        color = 'dark',
                        style = {'padding-left': 38, 'padding-right': 40, 'color': 'orange'}
                       
-           )    
+           ), 
+            width = 'auto'
+        ), 
+        
+        dbc.Col(
+            dbc.Button("DEMO Property", id='demo-button', 
+                       color = 'dark',
+                       style = {'padding-left': 38, 'padding-right': 40, 'color': 'orange'}
+                      
+           ), 
+           width = 'auto'
         )
 
 
@@ -763,7 +773,34 @@ def display_predicted_price(n_clicks, apt, ec, condo, time, radius, postal_input
     ])
     
     return ["", 'Island Wide', transaction_features(full_sample), map_component, transaction_table, ts_plot, "Showing all resale transactions of Apartments, Condominiums, Executive Condominiums within the past 10 years"]
-   
+
+
+@app.callback(
+    #Outputs of Callback
+    [dash.dependencies.Output("postal-input", "value"),
+     dash.dependencies.Output("floor-num-input", "value"),
+     dash.dependencies.Output("floor-area-input", "value"),
+     dash.dependencies.Output("lease-input", "value")],
+    
+    #Inputs of Callback
+    [dash.dependencies.Input('demo-button', 'n_clicks')]
+)
+
+def demo_prefill(n_clicks): 
+    
+    ctx = dash.callback_context
+
+    if not ctx.triggered:
+        return ["", "", "", ""]
+    
+    else:
+        button_id = ctx.triggered[0]["prop_id"].split(".")[0]
+        
+        if (button_id =='demo-button'):
+            return ["129960", '12', '1109', '93']
+        else: 
+            return ["", "", "", ""]
+
 
 
 if __name__ == '__main__': 

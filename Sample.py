@@ -254,7 +254,7 @@ class Sample:
         # get the closest Planning area
         closest_PA = self.get_closest_planning_area(area_centroids, listing_PA, num_of_closest = 2)
         closest_PA.append(listing_PA)
-        #print(closest_PA)
+        print(closest_PA)
         
         # get data based on time and property type filter, radius not applicable since we are filtering based on closest areas
         time = self.get_time()
@@ -263,13 +263,14 @@ class Sample:
         start_date = (datetime.datetime.now() - datetime.timedelta(days=time*365)).strftime('%Y-%m-%d')
         end_date = datetime.datetime.now().strftime('%Y-%m-%d')
         filtered_df = historical_df[(historical_df['Sale Date']>= start_date) & (historical_df['Sale Date']< end_date) & (historical_df['Property Type'].isin(property_type))& (historical_df['Planning Area'].isin(closest_PA))][['Sale Date', 'Planning Area','Unit Price ($ PSF)']]
-        #print(filtered_df['Planning Area'].value_counts())
+        print(filtered_df['Sale Date'].dtypes)
+        print(filtered_df['Planning Area'].unique())
         
         # Group data to find the mean PSF price
         filtered_df['Sale Month'] = filtered_df['Sale Date'].apply(lambda x : x.strftime('%Y-%m')) # to plot based on Year and Month
         filtered_df['Sale Year'] = filtered_df['Sale Date'].apply(lambda x : x.year) # to plot based on Year
         grp_df = filtered_df.groupby(['Sale Month', 'Planning Area']).mean().reset_index()
-        #print(grp_df['Planning Area'].value_counts())
+        print(grp_df['Planning Area'].unique())
         
         # plot timeseries 
         fig = px.line(grp_df, 
@@ -291,8 +292,9 @@ class Sample:
         
         
 
-'''
+
 ### TESTING
+"""
 params = {
     'radius' : [0,1], 
     'property' : [1,1,1],
@@ -301,6 +303,10 @@ params = {
 data = pd.read_csv('datasets/preliminary_dataset.csv')
 data['Sale Date'] = pd.to_datetime(data['Sale Date'], format='%Y-%m-%d')
 #data['Planning Area'] = data['Planning Area'].apply(lambda x: x.upper())
+
+#start_date = (datetime.datetime.now() - datetime.timedelta(days=time*365)).strftime('%Y-%m-%d')
+#end_date = datetime.datetime.now().strftime('%Y-%m-%d')
+#filtered_df = data[(data['Sale Date']>= start_date) & (data['Sale Date']< end_date) & (data['Property Type'].isin(property_type))& (data['Planning Area'].isin(closest_PA))][['Sale Date', 'Planning Area','Unit Price ($ PSF)']]
 
 area_df = pd.read_csv('datasets/area_centroid.csv')
 limit = 50
@@ -366,3 +372,4 @@ print('N transactions:' + str(sample_instance2.get_total_transactions()))
 sample_instance2.get_map(listing_long, listing_lat, listing_price_psm_output,listing_building_name,1) 
 #print(sample_instance2.get_closest_planning_area(area_df, listing_PA,2))
 #sample_instance2.plot_psm(data, area_df, listing_PA, 2)'''
+"""
