@@ -588,10 +588,8 @@ def time_input_dropdown(n1, n_clear):
      dash.dependencies.Output('transaction-description', 'children')],
     
     #Inputs of Callback
-    [dash.dependencies.Input('submit-val', 'n_clicks')],
-
-    #States of Callback
-    [dash.dependencies.State('apt-selected', 'checked'),
+    [dash.dependencies.Input('submit-val', 'n_clicks'),
+     dash.dependencies.State('apt-selected', 'checked'),
      dash.dependencies.State('ec-selected', 'checked'), 
      dash.dependencies.State('condo-selected', 'checked'),
      dash.dependencies.State("time-dropdown-input", "value"), 
