@@ -39,7 +39,7 @@ class Sample:
             elif self.radius[1] == 1:
                 radius = 2
             else: # no input, then set to maximum
-                radius = 100
+                radius = 2
         return radius
     
     def get_time(self): # take latest as filter
@@ -51,7 +51,7 @@ class Sample:
             elif self.time[1] == 1:
                 time = 10
             else: # no input, set to minimum, past 20 years 
-                time = 20
+                time = 5
         return time
     
     def get_property(self):
