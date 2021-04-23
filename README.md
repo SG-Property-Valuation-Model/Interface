@@ -55,3 +55,13 @@ The code might take a couple of minutes to load. Afterwhich a local link will be
 - Dataset of resale transactions and property price index (PPI) from Real Estate Information System (REALIS) provided by the Urban Redevelopment Authority of Singapore (URA)
 - Geographic information from OneMap API developed by the Singapore Land Authority (SLA)
 - All other information from Data.gov.sg
+
+# Authors
+- Cheryl Yeo Chin Yin - [cherylxyeo1998](https://github.com/cherylxyeo1998)
+- Chia Phui Yee Tricia - [triciacpy](https://github.com/triciacpy)
+- Ho Mun Yee, Mindy - [myndii](https://github.com/myndii)
+- See Hui Yee - [huiyeesee](https://github.com/huiyeesee)
+- Zhou Kai Jing - [jayzhoukj](https://github.com/jayzhoukj)
+
+# License
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/SG-Property-Valuation-Model/Modelling/blob/main/LICENSE) file for details
