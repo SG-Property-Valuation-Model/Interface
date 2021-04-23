@@ -1,7 +1,7 @@
 # TreeHouse Interface
 [TreeHouse](https://bt4222-treehouse.herokuapp.com/) is a webtool designed to provide property owners with a more holistic and data-driven valuation of their private estates. In addition to valuating resale property, a historic comparison of prices and evaluation of the associated resale market is also provided to allow for a more in depth understanding of the predicted valuation. Currently, the interface only targets resale Apartments, Condominiums and Executive Condominiums with a leasehold tenure within Singapore. 
 
-**Disclaimer:** The first launch of our web app might require additional loading time (~30s) for the Heroku server to load, sp please be patient with us!
+**Disclaimer:** The first launch of our web app might require additional loading time (~30s) for the Heroku server to load, so please be patient with us!
 
 
 # Technical Details
