@@ -1,9 +1,11 @@
 # TreeHouse Interface
 [TreeHouse](https://bt4222-treehouse.herokuapp.com/) is a webtool designed to provide property owners with a more holistic and data-driven valuation of their private estates. In addition to valuating resale property, a historic comparison of prices and evaluation of the associated resale market is also provided to allow for a more in depth understanding of the predicted valuation. Currently, the interface only targets resale Apartments, Condominiums and Executive Condominiums with a leasehold tenure within Singapore. 
 
+**Disclaimer:** The first launch of our web app might require additional loading time (~30s) for the Heroku server to load, sp please be patient with us!
+
 
 # Technical Details
-For the valuation of resale property, the interface takes in location information in the form of a <b>postal code</b>, as well as additional property specifications such as <b>property type</b>, <b>floor number</b> of unit, <b>floor area</b> in square foot, and <b>remaining lease</b>. The location information is then used to derive other critical details for consideration: 
+For the valuation of resale property, the interface takes in location information in the form of a `postal code`, as well as additional property specifications such as `property type`, `floor number` of unit, `floor area` in square foot, and `remaining lease`. The location information is then used to derive other critical details for consideration: 
 - Distance to the closest school
 - Access to the different MRT lines within a 1km radius
 - Distance to nearest MRT station
@@ -48,7 +50,7 @@ Type the following in anaconda prompt to run the interface on your local machine
 cd "your_file_directory"
 python layout.py
 ```
-The code might take a couple of minutes to load. Afterwhich a local link will be generated. Hightlight the link in anaconda prompt and right click it to copy. Finally, paste it within a browser of your choice. Enjoy!
+The code might take a couple of minutes to load. Afterwhich a local link will be generated. Highlight the link in anaconda prompt and right click it to copy. Finally, paste it within a browser of your choice. Enjoy!
 
 
 # Data Sources
