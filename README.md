@@ -35,7 +35,7 @@ conda create --name your_env_name python=3.8.8
 conda activate your_env_name
 ```
 
-2. To download the packages in the required versions using requirments.txt, enter the following in anaconda prompt
+2. To download the packages in the required versions using requirements.txt, enter the following in anaconda prompt
 ``` python
 cd "your_file_directory"
 pip install -r requirements.txt
