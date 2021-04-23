@@ -48,7 +48,7 @@ Type the following in anaconda prompt to run the interface on your local machine
 cd "your_file_directory"
 python layout.py
 ```
-The code might take a couple of minute to load. Afterwhich a local link will be generated. Copy the link and paste it within a browser of your choice. Enjoy!
+The code might take a couple of minutes to load. Afterwhich a local link will be generated. Hightlight the link in anaconda prompt and right click it to copy. Finally, paste it within a browser of your choice. Enjoy!
 
 
 # Data Sources
