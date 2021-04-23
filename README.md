@@ -67,4 +67,4 @@ The code might take a couple of minutes to load. Afterwhich a local link will be
 - Zhou Kai Jing - [jayzhoukj](https://github.com/jayzhoukj)
 
 # License
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/SG-Property-Valuation-Model/Modelling/blob/main/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/SG-Property-Valuation-Model/Interface/blob/main/LICENSE) file for details
